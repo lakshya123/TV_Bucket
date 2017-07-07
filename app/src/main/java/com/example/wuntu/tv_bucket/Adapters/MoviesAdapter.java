@@ -104,7 +104,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (holder instanceof MyViewHolder)
         {
             Result movie = moviesList.get(position);
-            ((MyViewHolder)holder).title.setText(movie.getOriginalTitle());
+            ((MyViewHolder)holder).title.setText(movie.getTitle());
             ((MyViewHolder)holder).date.setText(movie.getReleaseDate());
             String url = urlConstants.URL_Image + movie.getBackdropPath();
             Picasso.with(context)

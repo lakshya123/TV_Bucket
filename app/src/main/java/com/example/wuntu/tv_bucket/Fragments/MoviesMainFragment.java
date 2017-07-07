@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter;
+import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.Adapters.SimpleDividerItemDecoration;
 import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
 import com.example.wuntu.tv_bucket.Models.Result;
@@ -66,6 +68,21 @@ public class MoviesMainFragment extends Fragment{
         recyclerView.setAdapter(mAdapter);
 
 
+        recyclerView.addOnItemTouchListener(
+                new MoviesAdapter_OnClickListener(getContext(), recyclerView ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // do whatever
+                        Toast.makeText(getContext(), position+" ", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                        Toast.makeText(getContext(), position + " ", Toast.LENGTH_SHORT).show();
+                    }
+                })
+        );
+
+
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
@@ -100,13 +117,14 @@ public class MoviesMainFragment extends Fragment{
                 {
                     Result result = new Result();
                     result.setId(example.getResults().get(i).getId());
+                    result.setTitle(example.getResults().get(i).getTitle());
                     result.setOriginalTitle(example.getResults().get(i).getOriginalTitle());
                     result.setBackdropPath(example.getResults().get(i).getBackdropPath());
                     result.setReleaseDate(example.getResults().get(i).getReleaseDate());
                     result.setVoteAverage(example.getResults().get(i).getVoteAverage());
                     result.setPage(example.getPage());
                     result.setTotal_pages(example.getTotalPages());
-                    movie.add(result);
+                    movie.add(i,result);
                 }
                 mAdapter.notifyDataSetChanged();
 
@@ -125,18 +143,6 @@ public class MoviesMainFragment extends Fragment{
         AppSingleton.getInstance(getContext()).addToRequestQueue(stringRequest, tag_json_obj);
     }
 
-
-//    @Override
-//    public void Previous_Button_click()
-//    {
-//        prepareOnlineData(example.getPage() - 1);
-//    }
-//
-//    @Override
-//    public void Next_Button_Click()
-//    {
-//        prepareOnlineData(example.getPage() + 1);
-//    }
 
 
 }
