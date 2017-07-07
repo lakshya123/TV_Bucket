@@ -77,6 +77,7 @@ public class MoviesMainFragment extends Fragment{
 
     public void prepareOnlineData(int page_number)
     {
+        recyclerView.scrollToPosition(0);
         mAdapter.notifyDataSetChanged();
         String tag_json_obj = "json_obj_req";
 
