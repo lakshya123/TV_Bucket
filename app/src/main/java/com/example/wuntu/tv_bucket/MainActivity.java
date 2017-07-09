@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new TvMainFragment(), "TV Series");
         viewPager.setAdapter(adapter);
     }
+
+
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();

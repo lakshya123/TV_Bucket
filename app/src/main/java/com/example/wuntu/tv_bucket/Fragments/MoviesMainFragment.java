@@ -1,15 +1,21 @@
 package com.example.wuntu.tv_bucket.Fragments;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,6 +37,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.View.GONE;
 import static com.android.volley.VolleyLog.TAG;
 
 /**
@@ -46,6 +53,11 @@ public class MoviesMainFragment extends Fragment{
     private Gson gson;
     int page_number = 1;
     Popular_Movies_Model example;
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    FrameLayout frameLayout;
+
+
 
 
 
@@ -59,7 +71,6 @@ public class MoviesMainFragment extends Fragment{
 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-
         mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -68,10 +79,12 @@ public class MoviesMainFragment extends Fragment{
         recyclerView.setAdapter(mAdapter);
 
 
+
         recyclerView.addOnItemTouchListener(
                 new MoviesAdapter_OnClickListener(getContext(), recyclerView ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-                        // do whatever
+
+
                         Toast.makeText(getContext(), position+" ", Toast.LENGTH_SHORT).show();
                     }
 
