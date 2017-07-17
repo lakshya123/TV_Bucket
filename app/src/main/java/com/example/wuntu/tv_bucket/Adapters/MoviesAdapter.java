@@ -24,14 +24,15 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    Result movie;
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
-    private List<Result> moviesList = new ArrayList<>();
+    private ArrayList<Result> moviesList = new ArrayList<>();
     private Context context;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     Fragment fragment;
 
-    public MoviesAdapter(List<Result> moviesList,Fragment fragment) {
+    public MoviesAdapter(ArrayList<Result> moviesList,Fragment fragment) {
         this.moviesList = moviesList;
         this.fragment = fragment;
     }
@@ -72,7 +73,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private boolean isPositionItem(int position) {
-        return position != getItemCount()-1;
+        return position != getItemCount() -1;
     }
 
 
@@ -103,7 +104,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         if (holder instanceof MyViewHolder)
         {
-            Result movie = moviesList.get(position);
+            movie = moviesList.get(position);
             ((MyViewHolder)holder).title.setText(movie.getTitle());
             ((MyViewHolder)holder).date.setText(movie.getReleaseDate());
             String url = urlConstants.URL_Image + movie.getBackdropPath();
@@ -111,9 +112,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .load(url)
                     .into(((MyViewHolder)holder).backdrop_image);
         }
-        else
+        else if (holder instanceof FooterViewHolder)
         {
-            final Result movie = moviesList.get(position);
+            movie = moviesList.get(position);
             if(movie.getPage() == 1)
             {
                 ((FooterViewHolder)holder).previous_page.setVisibility(View.INVISIBLE);

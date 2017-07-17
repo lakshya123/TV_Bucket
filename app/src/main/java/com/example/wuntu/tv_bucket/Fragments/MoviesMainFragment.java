@@ -4,6 +4,7 @@ package com.example.wuntu.tv_bucket.Fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -28,6 +30,7 @@ import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.Adapters.SimpleDividerItemDecoration;
 import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
 import com.example.wuntu.tv_bucket.Models.Result;
+import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
@@ -46,17 +49,13 @@ import static com.android.volley.VolleyLog.TAG;
 public class MoviesMainFragment extends Fragment{
 
 
-    private List<Result> movie = new ArrayList<>();
+    private ArrayList<Result> movie = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
     UrlConstants URLconstants = UrlConstants.getSingletonRef();
     private Gson gson;
     int page_number = 1;
     Popular_Movies_Model example;
-    ViewPager viewPager;
-    TabLayout tabLayout;
-    FrameLayout frameLayout;
-
 
 
 
@@ -72,6 +71,7 @@ public class MoviesMainFragment extends Fragment{
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
@@ -80,10 +80,13 @@ public class MoviesMainFragment extends Fragment{
 
 
 
-        recyclerView.addOnItemTouchListener(
+     recyclerView.addOnItemTouchListener(
                 new MoviesAdapter_OnClickListener(getContext(), recyclerView ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
-
+                    @Override
+                    public void onItemClick(View view, int position)
+                    {
+                        /*Intent intent = new Intent(getActivity(), MovieView.class);
+                        startActivity(intent);*/
 
                         Toast.makeText(getContext(), position+" ", Toast.LENGTH_SHORT).show();
                     }
@@ -110,8 +113,9 @@ public class MoviesMainFragment extends Fragment{
         recyclerView.scrollToPosition(0);
         mAdapter.notifyDataSetChanged();
         String tag_json_obj = "json_obj_req";
+        String page_String = String.valueOf(page_number);
 
-        String url = URLconstants.URL_popular_movies+page_number;
+        String url = URLconstants.URL_popular_movies+page_String;
 
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
@@ -139,6 +143,17 @@ public class MoviesMainFragment extends Fragment{
                     result.setTotal_pages(example.getTotalPages());
                     movie.add(i,result);
                 }
+
+                Result result = new Result();
+                result.setId(0);
+                result.setTitle("a");
+                result.setOriginalTitle("b");
+                result.setBackdropPath("aas");
+                result.setReleaseDate("we");
+                result.setVoteAverage(1.2);
+                result.setPage(example.getPage());
+                result.setTotal_pages(example.getTotalPages());
+                movie.add(20,result);
                 mAdapter.notifyDataSetChanged();
 
                 pDialog.hide();
@@ -151,6 +166,11 @@ public class MoviesMainFragment extends Fragment{
                 pDialog.hide();
             }
         });
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
     // Adding request to request queue
         AppSingleton.getInstance(getContext()).addToRequestQueue(stringRequest, tag_json_obj);
