@@ -9,7 +9,9 @@
     android:paddingBottom="10dp"
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clipToPadding="false"
+    android:elevation="30dp">
 
     <ImageView
         android:id="@+id/backdrop_image"
