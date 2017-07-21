@@ -33,6 +33,7 @@ import com.example.wuntu.tv_bucket.Adapters.SimpleDividerItemDecoration;
 import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
 import com.example.wuntu.tv_bucket.Models.Result;
 
+import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
@@ -66,7 +67,6 @@ public class MoviesMainFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_movie_main, container, false);
 
@@ -94,17 +94,17 @@ public class MoviesMainFragment extends Fragment
                         }
                         else
                         {
-                            /*Intent intent = new Intent(getActivity(), MovieView.class);
-                            startActivity(intent);*/
+                            Intent intent = new Intent(getActivity(), MovieView.class);
+                            startActivity(intent);
                         }
 
 
-                        Toast.makeText(getContext(), position+" ", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
                         // do whatever
-                        Toast.makeText(getContext(), position + " ", Toast.LENGTH_SHORT).show();
+
                     }
                 })
         );

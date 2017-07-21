@@ -10,14 +10,12 @@
     android:clickable="true"
     android:background="?android:attr/selectableItemBackground"
     android:orientation="vertical"
-    android:clipToPadding="false"
-    android:elevation="30dp">
+    android:clipToPadding="false">
 
     <ImageView
+        android:contentDescription="@string/poster_image_desc"
         android:id="@+id/backdrop_image"
-        android:textSize="16dp"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
