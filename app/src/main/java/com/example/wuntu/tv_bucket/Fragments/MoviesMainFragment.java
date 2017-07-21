@@ -10,8 +10,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +32,7 @@ import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.Adapters.SimpleDividerItemDecoration;
 import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
 import com.example.wuntu.tv_bucket.Models.Result;
-import com.example.wuntu.tv_bucket.MovieView;
+
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
@@ -46,7 +48,8 @@ import static com.android.volley.VolleyLog.TAG;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviesMainFragment extends Fragment{
+public class MoviesMainFragment extends Fragment
+{
 
 
     private ArrayList<Result> movie = new ArrayList<>();
@@ -72,7 +75,7 @@ public class MoviesMainFragment extends Fragment{
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
 
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -85,8 +88,16 @@ public class MoviesMainFragment extends Fragment{
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        /*Intent intent = new Intent(getActivity(), MovieView.class);
-                        startActivity(intent);*/
+                        if (position == 20)
+                        {
+
+                        }
+                        else
+                        {
+                            /*Intent intent = new Intent(getActivity(), MovieView.class);
+                            startActivity(intent);*/
+                        }
+
 
                         Toast.makeText(getContext(), position+" ", Toast.LENGTH_SHORT).show();
                     }
