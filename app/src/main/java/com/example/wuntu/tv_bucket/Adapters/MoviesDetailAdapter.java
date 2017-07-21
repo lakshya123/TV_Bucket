@@ -22,6 +22,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private Activity a;
     ArrayList<MovieDetailModel> detailArrayList = new ArrayList<>();
+    MovieDetailModel movieDetailModel;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
 
@@ -31,14 +32,21 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.detailArrayList = detailArrayList;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder1 extends RecyclerView.ViewHolder
+    {
+        ImageView cast_profile_picture;
+        TextView cast_name,cast_character_name;
 
-        public MyViewHolder(View view) {
+        public MyViewHolder1(View view)
+        {
             super(view);
+            cast_profile_picture = (ImageView) view.findViewById(R.id.cast_profile_picture);
+            cast_name = (TextView) view.findViewById(R.id.cast_name);
+            cast_character_name = (TextView) view.findViewById(R.id.cast_character_name);
         }
     }
 
-    public class FooterViewHolder extends RecyclerView.ViewHolder
+   /* public class FooterViewHolder extends RecyclerView.ViewHolder
     {
 
         public FooterViewHolder(View itemView) {
@@ -58,26 +66,32 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private boolean isPositionItem(int position) {
         return position != getItemCount() -1;
     }
-
+*/
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        if (viewType == VIEW_ITEM) {
+
             View v =  LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.movie_list_row, parent, false);
-            return new MyViewHolder(v);
-        } else if (viewType == VIEW_PROG){
+                    .inflate(R.layout.cast_detail_row, parent, false);
+            return new MyViewHolder1(v);
+
+        /*} else if (viewType == VIEW_PROG){
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.footer_layout, parent, false);
             return new FooterViewHolder(v);
-        }
+        }*/
 
-        return null;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
+    {
+        if(holder instanceof MyViewHolder1)
+        {
+            movieDetailModel = detailArrayList.get(position);
+            ((MyViewHolder1)holder).cast_character_name.setText(movieDetailModel.getCharacter());
+            ((MyViewHolder1)holder).cast_name.setText(movieDetailModel.getName());
+        }
     }
 
     @Override
