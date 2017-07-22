@@ -11,6 +11,17 @@
     <string name="overview">Overview</string>
 
 
-    <string name="Title">Transformers Reunion</string>
-    <string name="Sub_Title">Transformers</string>
+
+    <string name="view_more"><u>View More</u></string>
+
+    <string name="facts"><b>Facts</b></string>
+
+    <string name="top_billed_cast">Top Billed Cast</string>
+    <string name="status">Status</string>
+    <string name="release_date">Release Date</string>
+    <string name="genres">Genres</string>
+    <string name="budget">Budget</string>
+    <string name="revenue">Revenue</string>
+    <string name="runtime">Runtime</string>
+    <string name="homepage">HomePage</string>
 </resources>

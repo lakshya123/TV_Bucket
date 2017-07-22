@@ -46,11 +46,13 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-   /* public class FooterViewHolder extends RecyclerView.ViewHolder
+    public class FooterViewHolder1 extends RecyclerView.ViewHolder
     {
+        TextView view_more;
 
-        public FooterViewHolder(View itemView) {
+        public FooterViewHolder1(View itemView) {
             super(itemView);
+            view_more = (TextView) itemView.findViewById(R.id.view_more);
 
 
         }
@@ -66,20 +68,22 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private boolean isPositionItem(int position) {
         return position != getItemCount() -1;
     }
-*/
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
 
+        if (viewType == VIEW_ITEM)
+        {
             View v =  LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.cast_details, parent, false);
             return new MyViewHolder1(v);
 
-        /*} else if (viewType == VIEW_PROG){
+        } else if (viewType == VIEW_PROG){
             View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.footer_layout, parent, false);
-            return new FooterViewHolder(v);
-        }*/
+                    .inflate(R.layout.footer_layout_movie_details, parent, false);
+            return new FooterViewHolder1(v);
+        }
+        return null;
 
     }
 
@@ -91,6 +95,10 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             movieDetailModel = detailArrayList.get(position);
             ((MyViewHolder1)holder).cast_character_name.setText(movieDetailModel.getCharacter());
             ((MyViewHolder1)holder).cast_name.setText(movieDetailModel.getName());
+        }
+        else if (holder instanceof FooterViewHolder1)
+        {
+
         }
     }
 

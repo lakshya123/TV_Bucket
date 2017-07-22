@@ -79,6 +79,11 @@ public class MovieView extends AppCompatActivity {
         movieDetailModel4.setCharacter("Transformers");
         detailArrayList.add(0,movieDetailModel4);
 
+        MovieDetailModel movieDetailModel5 = new MovieDetailModel();
+        movieDetailModel5.setName("Transformers Reunion");
+        movieDetailModel5.setCharacter("Transformers");
+        detailArrayList.add(0,movieDetailModel5);
+
         moviesDetailAdapter.notifyDataSetChanged();
 
     }
