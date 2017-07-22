@@ -1,5 +1,7 @@
 package com.example.wuntu.tv_bucket;
 
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -29,11 +31,13 @@ public class MovieView extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         toolbar.setContentInsetStartWithNavigation(0);
+        toolbar.setTitle("Tv Bucket");
         setSupportActionBar(toolbar);
+
 
         recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
 
-        getSupportActionBar().setTitle("Tv Bucket");
+
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
