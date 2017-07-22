@@ -36,7 +36,6 @@ public class MovieView extends AppCompatActivity {
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
         recycler_view.setLayoutManager(mLayoutManager);
-        //recycler_view.addItemDecoration(new SimpleDividerItemDecoration(MovieView.this));
         recycler_view.setItemAnimator(new DefaultItemAnimator());
         recycler_view.setAdapter(moviesDetailAdapter);
 
@@ -48,28 +47,28 @@ public class MovieView extends AppCompatActivity {
     private void prepareData()
     {
         MovieDetailModel movieDetailModel = new MovieDetailModel();
-        movieDetailModel.setName("Lakshya Punhani");
-        movieDetailModel.setCharacter("Lakshya");
+        movieDetailModel.setName("Transformers Reunion");
+        movieDetailModel.setCharacter("Transformers");
         detailArrayList.add(0,movieDetailModel);
 
         MovieDetailModel movieDetailModel1 = new MovieDetailModel();
-        movieDetailModel1.setName("Lakshya Punhani");
-        movieDetailModel1.setCharacter("Lakshya");
+        movieDetailModel1.setName("Transformers Reunion");
+        movieDetailModel1.setCharacter("Transformers");
         detailArrayList.add(0,movieDetailModel1);
 
         MovieDetailModel movieDetailModel2 = new MovieDetailModel();
-        movieDetailModel2.setName("Lakshya Punhani");
-        movieDetailModel2.setCharacter("Lakshya");
+        movieDetailModel2.setName("Transformers Reunion");
+        movieDetailModel2.setCharacter("Transformers");
         detailArrayList.add(0,movieDetailModel2);
 
         MovieDetailModel movieDetailModel3 = new MovieDetailModel();
-        movieDetailModel3.setName("Lakshya Punhani");
-        movieDetailModel3.setCharacter("Lakshya");
+        movieDetailModel3.setName("Transformers Reunion");
+        movieDetailModel3.setCharacter("Transformers");
         detailArrayList.add(0,movieDetailModel3);
 
         MovieDetailModel movieDetailModel4 = new MovieDetailModel();
-        movieDetailModel4.setName("Lakshya Punhani");
-        movieDetailModel4.setCharacter("Lakshya");
+        movieDetailModel4.setName("Transformers Reunion");
+        movieDetailModel4.setCharacter("Transformers");
         detailArrayList.add(0,movieDetailModel4);
 
         moviesDetailAdapter.notifyDataSetChanged();

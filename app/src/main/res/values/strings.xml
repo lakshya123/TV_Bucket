@@ -9,4 +9,8 @@
     <string name="play_trailer_desc">Play Trailer Image</string>
     <string name="play_trailer">Play Trailer</string>
     <string name="overview">Overview</string>
+
+
+    <string name="Title">Transformers Reunion</string>
+    <string name="Sub_Title">Transformers</string>
 </resources>

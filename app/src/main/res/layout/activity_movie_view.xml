@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
     android:fitsSystemWindows="true"
     >
 
@@ -57,8 +56,10 @@
         >
 
         <LinearLayout
+            android:background="@color/viewBg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:orientation="vertical">
 
 
@@ -100,7 +101,8 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_weight="50"
-                    android:padding="@dimen/activity_horizontal_margin"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
@@ -113,8 +115,8 @@
 
                     <TextView
                         android:id="@+id/text_play_trailer"
-                        android:layout_marginLeft="4dp"
-                        android:layout_marginStart="4dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:layout_width="wrap_content"
@@ -152,9 +154,18 @@
                     android:text="Autobots and Decepticons are at war, with humans on the sidelines. Optimus Prime is gone. The key to saving our future lies buried in the secrets of the past, in the hidden history of Transformers on Earth."/>
             </LinearLayout>
 
+            <TextView
+                android:padding="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Top Billed Cast"
+                android:textSize="20sp"/>
+
 
             <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
+                android:clipToPadding="false"
                 android:id="@+id/recycler_view"
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>

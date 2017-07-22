@@ -40,9 +40,9 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public MyViewHolder1(View view)
         {
             super(view);
-            cast_profile_picture = (ImageView) view.findViewById(R.id.cast_profile_picture);
-            cast_name = (TextView) view.findViewById(R.id.cast_name);
-            cast_character_name = (TextView) view.findViewById(R.id.cast_character_name);
+            cast_profile_picture = (ImageView) view.findViewById(R.id.thumbnail);
+            cast_name = (TextView) view.findViewById(R.id.title);
+            cast_character_name = (TextView) view.findViewById(R.id.count);
         }
     }
 
@@ -72,7 +72,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     {
 
             View v =  LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.cast_detail_row, parent, false);
+                    .inflate(R.layout.cast_details, parent, false);
             return new MyViewHolder1(v);
 
         /*} else if (viewType == VIEW_PROG){
