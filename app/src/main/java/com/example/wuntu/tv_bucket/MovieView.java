@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.example.wuntu.tv_bucket.Adapters.MoviesDetailAdapter;
 import com.example.wuntu.tv_bucket.Adapters.SimpleDividerItemDecoration;
@@ -27,9 +28,16 @@ public class MovieView extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        toolbar.setContentInsetStartWithNavigation(0);
+        setSupportActionBar(toolbar);
+
         recycler_view = (RecyclerView)findViewById(R.id.recycler_view);
 
-        toolbar.setTitle("Tv Bucket");
+        getSupportActionBar().setTitle("Tv Bucket");
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
 
         detailArrayList = new ArrayList<>();
         moviesDetailAdapter = new MoviesDetailAdapter(MovieView.this,detailArrayList);
@@ -73,5 +81,14 @@ public class MovieView extends AppCompatActivity {
 
         moviesDetailAdapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
