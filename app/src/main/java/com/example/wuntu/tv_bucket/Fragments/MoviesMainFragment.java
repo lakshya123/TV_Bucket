@@ -88,13 +88,14 @@ public class MoviesMainFragment extends Fragment
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        if (position == 20)
+                        if (position == movie.size() - 1)
                         {
 
                         }
                         else
                         {
                             Intent intent = new Intent(getActivity(), MovieView.class);
+                            intent.putExtra("ID",movie.get(position).getId().toString());
                             startActivity(intent);
                         }
 
