@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,12 +17,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter;
-import com.example.wuntu.tv_bucket.Adapters.MoviesDetailAdapter;
+import com.example.wuntu.tv_bucket.Adapters.CastDetailAdapter;
+import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.MovieDetailFull;
-import com.example.wuntu.tv_bucket.Models.MovieDetailModel;
-import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
-import com.example.wuntu.tv_bucket.Models.SpokenLanguage;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.google.gson.Gson;
@@ -34,15 +32,16 @@ public class MovieView extends AppCompatActivity {
 
     Toolbar toolbar;
     RecyclerView recycler_view;
-    MoviesDetailAdapter moviesDetailAdapter;
-    ArrayList<MovieDetailModel> detailArrayList;
+    CastDetailAdapter castDetailAdapter;
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Gson gson;
     MovieDetailFull movieDetailFull;
+    ArrayList<Cast> castArrayList;
 
 
-    TextView ratings,overview,status,release_date,genre1,genre2,genre3,genre4,budget,revenue,runtime,homepage;
+    TextView ratings,overview,status,release_date,genre1,genre2,genre3,genre4,genre5,genre6,budget,revenue,runtime,homepage;
     ImageView backdrop_image;
+    String url2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +51,7 @@ public class MovieView extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         movieDetailFull = new MovieDetailFull();
+        castArrayList = new ArrayList<>();
 
         toolbar.setContentInsetStartWithNavigation(0);
         toolbar.setTitle("");
@@ -73,6 +73,8 @@ public class MovieView extends AppCompatActivity {
         genre2 = (TextView) findViewById(R.id.genre2);
         genre3 = (TextView) findViewById(R.id.genre3);
         genre4 = (TextView) findViewById(R.id.genre4);
+        genre5 = (TextView) findViewById(R.id.genre5);
+        genre6 = (TextView) findViewById(R.id.genre6);
         budget = (TextView) findViewById(R.id.budget);
         revenue = (TextView) findViewById(R.id.revenue);
         runtime = (TextView) findViewById(R.id.runtime);
@@ -87,20 +89,18 @@ public class MovieView extends AppCompatActivity {
 
 
 
-        detailArrayList = new ArrayList<>();
-        moviesDetailAdapter = new MoviesDetailAdapter(MovieView.this,detailArrayList);
+        castDetailAdapter = new CastDetailAdapter(MovieView.this,castArrayList);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
         recycler_view.setLayoutManager(mLayoutManager);
         recycler_view.setItemAnimator(new DefaultItemAnimator());
-        recycler_view.setAdapter(moviesDetailAdapter);
+        recycler_view.setAdapter(castDetailAdapter);
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
         prepareOnlineData(url);
 
-        prepareData();
 
 
     }
@@ -119,6 +119,8 @@ public class MovieView extends AppCompatActivity {
             @Override
             public void onResponse(String response)
             {
+
+                //Setting text to the textviews
                 movieDetailFull = gson.fromJson(response,MovieDetailFull.class);
                 toolbar.setTitle(movieDetailFull.getTitle());
                 ratings.setText(String.valueOf(movieDetailFull.getVoteAverage()));
@@ -130,15 +132,103 @@ public class MovieView extends AppCompatActivity {
                 runtime.setText(String.valueOf(movieDetailFull.getRuntime()));
                 homepage.setText(movieDetailFull.getHomepage());
 
+                //Setting text to genres
+                int value = movieDetailFull.getGenres().size();
+                if (value >= 6)
+                {
+                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
+                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
+                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
+                    genre4.setText(movieDetailFull.getGenres().get(3).getName());
+                    genre5.setText(movieDetailFull.getGenres().get(4).getName());
+                    genre6.setText(movieDetailFull.getGenres().get(4).getName());
+                }
+                else if (value == 5)
+                {
+                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
+                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
+                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
+                    genre4.setText(movieDetailFull.getGenres().get(3).getName());
+                    genre5.setText(movieDetailFull.getGenres().get(4).getName());
+                    genre6.setVisibility(View.GONE);
+                }
+                else if (value == 4)
+                {
+                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
+                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
+                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
+                    genre4.setText(movieDetailFull.getGenres().get(3).getName());
+                    genre5.setVisibility(View.GONE);
+                    genre6.setVisibility(View.GONE);
+                }
+                else if (value == 3)
+                {
+                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
+                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
+                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
+                    genre4.setVisibility(View.GONE);
+                    genre5.setVisibility(View.GONE);
+                    genre6.setVisibility(View.GONE);
+                }
+                else if (value == 2)
+                {
+                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
+                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
+                    genre3.setVisibility(View.GONE);
+                    genre4.setVisibility(View.GONE);
+                    genre5.setVisibility(View.GONE);
+                    genre6.setVisibility(View.GONE);
+                }
+                else if (value == 1)
+                {
+                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
+                    genre2.setVisibility(View.GONE);
+                    genre3.setVisibility(View.GONE);
+                    genre4.setVisibility(View.GONE);
+                    genre5.setVisibility(View.GONE);
+                    genre6.setVisibility(View.GONE);
+                }
+                else
+                {
+                    genre1.setVisibility(View.GONE);
+                    genre2.setVisibility(View.GONE);
+                    genre3.setVisibility(View.GONE);
+                    genre4.setVisibility(View.GONE);
+                    genre5.setVisibility(View.GONE);
+                    genre6.setVisibility(View.GONE);
+                }
 
 
-                String url2 = movieDetailFull.getBackdropPath();
+                //Setting Image to BAckDrop Imageview
+                if (movieDetailFull.getBelongsToCollection() == null)
+                {
+                    url2 = movieDetailFull.getBackdropPath();
+                }
+                else
+                {
+                    url2 = movieDetailFull.getBelongsToCollection().getBackdropPath();
+                }
+
                 String url3 = urlConstants.URL_Image + url2;
-
 
                 Picasso.with(MovieView.this)
                         .load(url3)
                         .into(backdrop_image);
+
+
+                //Making Arraylist for RecyclerView
+                int i;
+                for (i=0;i<movieDetailFull.getCredits().getCast().size();i++)
+                {
+                    Cast cast = new Cast();
+                    cast.setName(movieDetailFull.getCredits().getCast().get(i).getName());
+                    cast.setCharacter(movieDetailFull.getCredits().getCast().get(i).getCharacter());
+                    cast.setId(movieDetailFull.getCredits().getCast().get(i).getId());
+                    cast.setProfilePath(movieDetailFull.getCredits().getCast().get(i).getProfilePath());
+                    castArrayList.add(i,cast);
+                    castDetailAdapter.notifyDataSetChanged();
+                }
+
 
 
                 pDialog.hide();
@@ -155,41 +245,6 @@ public class MovieView extends AppCompatActivity {
         AppSingleton.getInstance(this).addToRequestQueue(stringRequest1, tag_json_obj);
     }
 
-    private void prepareData()
-    {
-        MovieDetailModel movieDetailModel = new MovieDetailModel();
-        movieDetailModel.setName("Transformers Reunion");
-        movieDetailModel.setCharacter("Transformers");
-        detailArrayList.add(0,movieDetailModel);
-
-        MovieDetailModel movieDetailModel1 = new MovieDetailModel();
-        movieDetailModel1.setName("Transformers Reunion");
-        movieDetailModel1.setCharacter("Transformers");
-        detailArrayList.add(0,movieDetailModel1);
-
-        MovieDetailModel movieDetailModel2 = new MovieDetailModel();
-        movieDetailModel2.setName("Transformers Reunion");
-        movieDetailModel2.setCharacter("Transformers");
-        detailArrayList.add(0,movieDetailModel2);
-
-        MovieDetailModel movieDetailModel3 = new MovieDetailModel();
-        movieDetailModel3.setName("Transformers Reunion");
-        movieDetailModel3.setCharacter("Transformers");
-        detailArrayList.add(0,movieDetailModel3);
-
-        MovieDetailModel movieDetailModel4 = new MovieDetailModel();
-        movieDetailModel4.setName("Transformers Reunion");
-        movieDetailModel4.setCharacter("Transformers");
-        detailArrayList.add(0,movieDetailModel4);
-
-        MovieDetailModel movieDetailModel5 = new MovieDetailModel();
-        movieDetailModel5.setName("Transformers Reunion");
-        movieDetailModel5.setCharacter("Transformers");
-        detailArrayList.add(0,movieDetailModel5);
-
-        moviesDetailAdapter.notifyDataSetChanged();
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

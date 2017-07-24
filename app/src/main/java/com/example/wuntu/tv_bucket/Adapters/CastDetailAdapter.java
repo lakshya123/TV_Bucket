@@ -1,35 +1,51 @@
 package com.example.wuntu.tv_bucket.Adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.wuntu.tv_bucket.Models.MovieDetailModel;
+import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
+import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Wuntu on 21-07-2017.
  */
 
-public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Activity a;
-    ArrayList<MovieDetailModel> detailArrayList = new ArrayList<>();
-    MovieDetailModel movieDetailModel;
+    private List<Cast> detailArrayList ;
+    private UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    private Cast cast;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
+    private Context context;
 
-    public MoviesDetailAdapter(MovieView movieView, ArrayList<MovieDetailModel> detailArrayList)
+    public CastDetailAdapter(MovieView movieView, ArrayList<Cast> detailArrayList)
     {
-        a= movieView;
-        this.detailArrayList = detailArrayList;
+        Activity a = movieView;
+        Toast.makeText(a, detailArrayList.size() +" ", Toast.LENGTH_SHORT).show();
+        if (detailArrayList.size() > 6)
+        {
+            Toast.makeText(a, "IF", Toast.LENGTH_SHORT).show();
+            this.detailArrayList =  detailArrayList.subList(0,6);
+        }
+        else
+        {
+            Toast.makeText(a, "ELSE", Toast.LENGTH_SHORT).show();
+            this.detailArrayList = detailArrayList;
+        }
     }
 
     public class MyViewHolder1 extends RecyclerView.ViewHolder
@@ -71,6 +87,7 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
+        context = parent.getContext();
 
         if (viewType == VIEW_ITEM)
         {
@@ -92,9 +109,13 @@ public class MoviesDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     {
         if(holder instanceof MyViewHolder1)
         {
-            movieDetailModel = detailArrayList.get(position);
-            ((MyViewHolder1)holder).cast_character_name.setText(movieDetailModel.getCharacter());
-            ((MyViewHolder1)holder).cast_name.setText(movieDetailModel.getName());
+            cast = detailArrayList.get(position);
+            ((MyViewHolder1)holder).cast_character_name.setText(cast.getCharacter());
+            ((MyViewHolder1)holder).cast_name.setText(cast.getName());
+            String url3 = urlConstants.URL_Image + cast.getProfilePath();
+            Picasso.with(context)
+                    .load(url3)
+                    .into(((MyViewHolder1)holder).cast_profile_picture);
         }
         else if (holder instanceof FooterViewHolder1)
         {

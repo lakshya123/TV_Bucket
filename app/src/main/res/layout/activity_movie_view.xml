@@ -43,7 +43,8 @@
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_collapseMode="pin"
-            />
+            >
+        </android.support.v7.widget.Toolbar>
     </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -249,6 +250,15 @@
                             android:layout_height="wrap_content"
                             android:text="Adventure"
                             android:textSize="16sp"/>
+                        <TextView
+                            android:id="@+id/genre3"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Adventure"
+                            android:textSize="16sp"/>
 
                     </LinearLayout>
 
@@ -260,16 +270,26 @@
 
 
                         <TextView
-                            android:id="@+id/genre3"
+                            android:id="@+id/genre4"
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Adventure"
                             android:textSize="16sp"/>
                         <TextView
-                            android:id="@+id/genre4"
+                            android:id="@+id/genre5"
                             android:layout_marginLeft="10dp"
                             android:layout_marginStart="10dp"
+                            android:background="@color/white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Adventure"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:id="@+id/genre6"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
