@@ -85,7 +85,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         if (viewType == VIEW_ITEM) {
             View v =  LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.movie_list_row, parent, false);
+                    .inflate(R.layout.movie_list, parent, false);
             return new MyViewHolder(v);
         } else if (viewType == VIEW_PROG){
             View v = LayoutInflater.from(parent.getContext())

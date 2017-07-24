@@ -77,7 +77,6 @@ public class MoviesMainFragment extends Fragment
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
@@ -165,7 +164,7 @@ public class MoviesMainFragment extends Fragment
                 result.setVoteAverage(1.2);
                 result.setPage(example.getPage());
                 result.setTotal_pages(example.getTotalPages());
-                movie.add(20,result);
+                movie.add(example.getResults().size(),result);
                 mAdapter.notifyDataSetChanged();
 
                 pDialog.hide();

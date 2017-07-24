@@ -25,27 +25,17 @@ import java.util.List;
 
 public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Cast> detailArrayList ;
+    private ArrayList<Cast> detailArrayList = new ArrayList<>() ;
     private UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Cast cast;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     private Context context;
 
-    public CastDetailAdapter(MovieView movieView, ArrayList<Cast> detailArrayList)
+    public CastDetailAdapter(MovieView movieView, ArrayList<Cast> detailArrayList,ArrayList<Cast> subCastArrayList)
     {
         Activity a = movieView;
-        Toast.makeText(a, detailArrayList.size() +" ", Toast.LENGTH_SHORT).show();
-        if (detailArrayList.size() > 6)
-        {
-            Toast.makeText(a, "IF", Toast.LENGTH_SHORT).show();
-            this.detailArrayList =  detailArrayList.subList(0,6);
-        }
-        else
-        {
-            Toast.makeText(a, "ELSE", Toast.LENGTH_SHORT).show();
-            this.detailArrayList = detailArrayList;
-        }
+        this.detailArrayList = subCastArrayList;
     }
 
     public class MyViewHolder1 extends RecyclerView.ViewHolder

@@ -27,6 +27,7 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieView extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public class MovieView extends AppCompatActivity {
     private Gson gson;
     MovieDetailFull movieDetailFull;
     ArrayList<Cast> castArrayList;
+    ArrayList<Cast> subCastArrayList;
 
 
     TextView ratings,overview,status,release_date,genre1,genre2,genre3,genre4,genre5,genre6,budget,revenue,runtime,homepage;
@@ -52,6 +54,10 @@ public class MovieView extends AppCompatActivity {
 
         movieDetailFull = new MovieDetailFull();
         castArrayList = new ArrayList<>();
+        subCastArrayList = new ArrayList<>();
+
+
+
 
         toolbar.setContentInsetStartWithNavigation(0);
         toolbar.setTitle("");
@@ -89,7 +95,7 @@ public class MovieView extends AppCompatActivity {
 
 
 
-        castDetailAdapter = new CastDetailAdapter(MovieView.this,castArrayList);
+        castDetailAdapter = new CastDetailAdapter(MovieView.this,castArrayList,subCastArrayList);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
         recycler_view.setLayoutManager(mLayoutManager);
@@ -122,6 +128,8 @@ public class MovieView extends AppCompatActivity {
 
                 //Setting text to the textviews
                 movieDetailFull = gson.fromJson(response,MovieDetailFull.class);
+                String hours = String.valueOf(movieDetailFull.getRuntime() / 60);
+                String minutes = String.valueOf(movieDetailFull.getRuntime() % 60);
                 toolbar.setTitle(movieDetailFull.getTitle());
                 ratings.setText(String.valueOf(movieDetailFull.getVoteAverage()));
                 overview.setText(movieDetailFull.getOverview());
@@ -129,7 +137,7 @@ public class MovieView extends AppCompatActivity {
                 release_date.setText(movieDetailFull.getReleaseDate());
                 budget.setText("$" + String.valueOf(movieDetailFull.getBudget()));
                 revenue.setText("$" + String.valueOf(movieDetailFull.getRevenue()));
-                runtime.setText(String.valueOf(movieDetailFull.getRuntime()));
+                runtime.setText(hours + "h " + minutes  +"m");
                 homepage.setText(movieDetailFull.getHomepage());
 
                 //Setting text to genres
@@ -228,6 +236,27 @@ public class MovieView extends AppCompatActivity {
                     castArrayList.add(i,cast);
                     castDetailAdapter.notifyDataSetChanged();
                 }
+
+                Cast cast1 = new Cast();
+                cast1.setName("");
+                castArrayList.add(movieDetailFull.getCredits().getCast().size(),cast1);
+
+                castDetailAdapter.notifyDataSetChanged();
+
+                subCastArrayList.clear();
+
+                if (castArrayList.size() > 8)
+                {
+                    subCastArrayList.addAll(castArrayList.subList(0,8));
+                    castDetailAdapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    subCastArrayList.addAll(castArrayList);
+                    castDetailAdapter.notifyDataSetChanged();
+                }
+
+
 
 
 
