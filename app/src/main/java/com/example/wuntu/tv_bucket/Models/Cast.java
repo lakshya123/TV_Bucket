@@ -1,5 +1,8 @@
 package com.example.wuntu.tv_bucket.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Wuntu on 23-07-2017.
  */
 
-public class Cast {
+public class Cast implements Parcelable {
 
     @SerializedName("cast_id")
     @Expose
@@ -33,6 +36,29 @@ public class Cast {
     @SerializedName("profile_path")
     @Expose
     private String profilePath;
+
+    public Cast(){
+
+    }
+
+    protected Cast(Parcel in) {
+        character = in.readString();
+        creditId = in.readString();
+        name = in.readString();
+        profilePath = in.readString();
+    }
+
+    public static final Creator<Cast> CREATOR = new Creator<Cast>() {
+        @Override
+        public Cast createFromParcel(Parcel in) {
+            return new Cast(in);
+        }
+
+        @Override
+        public Cast[] newArray(int size) {
+            return new Cast[size];
+        }
+    };
 
     public Integer getCastId() {
         return castId;
@@ -98,4 +124,17 @@ public class Cast {
         this.profilePath = profilePath;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i)
+    {
+        parcel.writeString(name);
+        parcel.writeString(profilePath);
+        parcel.writeString(character);
+        parcel.writeInt(id);
+    }
 }

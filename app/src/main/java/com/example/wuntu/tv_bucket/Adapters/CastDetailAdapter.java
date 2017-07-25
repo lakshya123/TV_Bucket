@@ -109,7 +109,12 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
         else if (holder instanceof FooterViewHolder1)
         {
+            ((FooterViewHolder1)holder).view_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                }
+            });
         }
     }
 

@@ -37,6 +37,7 @@ public class MovieView extends AppCompatActivity {
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Gson gson;
     MovieDetailFull movieDetailFull;
+
     ArrayList<Cast> castArrayList;
     ArrayList<Cast> subCastArrayList;
 
