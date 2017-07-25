@@ -41,14 +41,14 @@ public class Cast implements Parcelable {
 
     }
 
-    protected Cast(Parcel in) {
+    public Cast(Parcel in) {
         character = in.readString();
-        creditId = in.readString();
+        id = in.readInt();
         name = in.readString();
         profilePath = in.readString();
     }
 
-    public static final Creator<Cast> CREATOR = new Creator<Cast>() {
+    public static final Parcelable.Creator<Cast> CREATOR = new Parcelable.Creator<Cast>() {
         @Override
         public Cast createFromParcel(Parcel in) {
             return new Cast(in);
@@ -132,9 +132,9 @@ public class Cast implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i)
     {
-        parcel.writeString(name);
-        parcel.writeString(profilePath);
         parcel.writeString(character);
         parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(profilePath);
     }
 }

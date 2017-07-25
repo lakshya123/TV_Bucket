@@ -27,7 +27,6 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MovieView extends AppCompatActivity {
 
@@ -238,10 +237,6 @@ public class MovieView extends AppCompatActivity {
                     castDetailAdapter.notifyDataSetChanged();
                 }
 
-                Cast cast1 = new Cast();
-                cast1.setName("");
-                castArrayList.add(movieDetailFull.getCredits().getCast().size(),cast1);
-
                 castDetailAdapter.notifyDataSetChanged();
 
                 subCastArrayList.clear();
@@ -276,6 +271,8 @@ public class MovieView extends AppCompatActivity {
     }
 
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -284,4 +281,6 @@ public class MovieView extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

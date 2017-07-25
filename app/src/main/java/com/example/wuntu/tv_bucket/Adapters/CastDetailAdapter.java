@@ -2,6 +2,7 @@ package com.example.wuntu.tv_bucket.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
@@ -31,12 +33,16 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     private Context context;
+    MovieView a;
+    ArrayList<Cast> FullArrayList = new ArrayList<>();
 
     public CastDetailAdapter(MovieView movieView, ArrayList<Cast> detailArrayList,ArrayList<Cast> subCastArrayList)
     {
-        Activity a = movieView;
+        a = movieView;
         this.detailArrayList = subCastArrayList;
+        this.FullArrayList = detailArrayList;
     }
+
 
     public class MyViewHolder1 extends RecyclerView.ViewHolder
     {
@@ -111,8 +117,11 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         {
             ((FooterViewHolder1)holder).view_more.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-
+                public void onClick(View view)
+                {
+                    Intent intent = new Intent(context,CastViewActivity.class);
+                    intent.putParcelableArrayListExtra("LIST",FullArrayList);
+                    context.startActivity(intent);
                 }
             });
         }
