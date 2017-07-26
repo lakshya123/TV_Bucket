@@ -120,6 +120,7 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View view)
                 {
                     Intent intent = new Intent(context,CastViewActivity.class);
+                    intent.putExtra("EVENT","FULL LIST CAST");
                     intent.putParcelableArrayListExtra("LIST",FullArrayList);
                     context.startActivity(intent);
                 }

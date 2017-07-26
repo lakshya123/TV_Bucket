@@ -15,6 +15,10 @@ public class UrlConstants
 
     public String Movie_2nd_URL = "?api_key=6d1c42e81f275fe7bcad0d4b020d010e&append_to_response=credits";
 
+    public String Person_1st_URL = "http://api.themoviedb.org/3/person/";
+
+    public String Person_2nd_URL = "?api_key=6d1c42e81f275fe7bcad0d4b020d010e";
+
     private static UrlConstants mSingletonRef;
 
     public static UrlConstants getSingletonRef() {

@@ -1,6 +1,7 @@
 package com.example.wuntu.tv_bucket;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.wuntu.tv_bucket.Adapters.CastDetailAdapter;
+import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.MovieDetailFull;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
@@ -101,6 +103,35 @@ public class MovieView extends AppCompatActivity {
         recycler_view.setLayoutManager(mLayoutManager);
         recycler_view.setItemAnimator(new DefaultItemAnimator());
         recycler_view.setAdapter(castDetailAdapter);
+
+
+        recycler_view.addOnItemTouchListener(
+                new MoviesAdapter_OnClickListener(MovieView.this, recycler_view ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position)
+                    {
+                        if (position == subCastArrayList.size() - 1)
+                        {
+
+                        }
+                        else
+                        {
+                            Intent intent = new Intent(MovieView.this,CastViewActivity.class);
+                            intent.putExtra("ID",subCastArrayList.get(position).getId());
+                            intent.putExtra("EVENT","TOUCH EVENT");
+                            startActivity(intent);
+                        }
+
+
+
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+
+                    }
+                })
+        );
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
