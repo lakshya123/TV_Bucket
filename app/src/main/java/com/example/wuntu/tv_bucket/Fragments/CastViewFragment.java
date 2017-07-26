@@ -2,8 +2,12 @@ package com.example.wuntu.tv_bucket.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +26,7 @@ import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 
 public class CastViewFragment extends Fragment {
@@ -81,7 +86,25 @@ public class CastViewFragment extends Fragment {
 
                 Picasso.with(getActivity())
                         .load(image_url)
-                        .into(person_image);
+                        .into(new Target() {
+                            @Override
+                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
+                            {
+                                person_image.setBackground(new BitmapDrawable(getContext().getResources(),bitmap));
+                            }
+
+                            @Override
+                            public void onBitmapFailed(Drawable errorDrawable)
+                            {
+                                Log.d("TAG", "FAILED");
+                            }
+
+                            @Override
+                            public void onPrepareLoad(Drawable placeHolderDrawable)
+                            {
+                                Log.d("TAG", "Prepare Load");
+                            }
+                        });
 
                 person_name.setText(castDetailModel.getName());
                 person_biography.setText(castDetailModel.getBiography());
