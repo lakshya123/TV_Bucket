@@ -2,6 +2,8 @@ package com.example.wuntu.tv_bucket;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -14,23 +16,37 @@ public class CastViewActivity extends AppCompatActivity
 {
     ArrayList<Cast> FullCastList = new ArrayList<>();
     CastViewListFragment castViewListFragment;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cast_view);
-        FrameLayout frameLayout;
-        frameLayout = (FrameLayout) findViewById(R.id.container);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         castViewListFragment = new CastViewListFragment();
 
         FullCastList = getIntent().getParcelableArrayListExtra("LIST");
-        Toast.makeText(this, FullCastList.get(0).getName() + "", Toast.LENGTH_SHORT).show();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container,castViewListFragment).commit();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("FULL CREW LIST",FullCastList);
+        castViewListFragment.setArguments(bundle);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,castViewListFragment).commit();
 
 
 
 
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
