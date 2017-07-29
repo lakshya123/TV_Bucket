@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieView" />
-        <activity android:name=".CastViewActivity"></activity>
+        <activity android:name=".CastViewActivity" />
+        <activity android:name=".YoutubeActivity"></activity>
     </application>
 
 </manifest>

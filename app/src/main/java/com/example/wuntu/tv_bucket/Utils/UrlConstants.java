@@ -19,6 +19,14 @@ public class UrlConstants
 
     public String Person_2nd_URL = "?api_key=6d1c42e81f275fe7bcad0d4b020d010e";
 
+    public String Videos_1st_URL = "http://api.themoviedb.org/3/movie/";
+
+    public String Videos_2nd_URL = "/videos?api_key=6d1c42e81f275fe7bcad0d4b020d010e";
+
+    public String Youtube_URL = "https://www.youtube.com/watch?v=";
+
+
+
     private static UrlConstants mSingletonRef;
 
     public static UrlConstants getSingletonRef() {

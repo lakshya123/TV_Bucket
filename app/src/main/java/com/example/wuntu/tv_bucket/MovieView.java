@@ -39,6 +39,8 @@ public class MovieView extends AppCompatActivity {
     private Gson gson;
     MovieDetailFull movieDetailFull;
 
+    TextView play_trailer;
+
     ArrayList<Cast> castArrayList;
     ArrayList<Cast> subCastArrayList;
 
@@ -68,9 +70,19 @@ public class MovieView extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        String ID = getIntent().getStringExtra("ID");
+        final String ID = getIntent().getStringExtra("ID");
         String url = urlConstants.Movie_1st_URL + ID + urlConstants.Movie_2nd_URL;
 
+        play_trailer = (TextView) findViewById(R.id.text_play_trailer);
+
+        play_trailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MovieView.this,YoutubeActivity.class);
+                intent.putExtra("ID",ID);
+                startActivity(intent);
+            }
+        });
 
 
         ratings = (TextView) findViewById(R.id.ratings);
