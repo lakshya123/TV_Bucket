@@ -1,7 +1,6 @@
 package com.example.wuntu.tv_bucket.Fragments;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Adapters.FullCastListAdapter;
 import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
@@ -52,11 +50,17 @@ public class CastViewListFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        ((CastViewActivity)getActivity()).setViewtoCastView(castArrayList.get(position).getId());
+                        CastViewFragment castViewFragment = new CastViewFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("ID",castArrayList.get(position).getId());
+                        castViewFragment.setArguments(bundle);
+                        getFragmentManager().beginTransaction().replace(R.id.container,castViewFragment).addToBackStack(null).commit();
+                        //((CastViewActivity)getActivity()).setViewtoCastView(castArrayList.get(position).getId());
                     }
 
-                    @Override public void onLongItemClick(View view, int position) {
-                        // do whatever
+                    @Override public void onLongItemClick(View view, int position)
+                    {
+
 
                     }
                 })

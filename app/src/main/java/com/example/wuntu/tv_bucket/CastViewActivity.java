@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -29,6 +30,18 @@ public class CastViewActivity extends AppCompatActivity
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setContentInsetStartWithNavigation(0);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (getSupportFragmentManager().getBackStackEntryCount()>0)
+                {
+                    getSupportFragmentManager().popBackStack();
+                }
+                else finish();
+
+            }
+        });
         castViewListFragment = new CastViewListFragment();
         castViewFragment = new CastViewFragment();
 
@@ -51,7 +64,7 @@ public class CastViewActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         bundle.putInt("ID",id);
         castViewFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,castViewFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,castViewFragment,"CAST VIEW FRAGMENT").commit();
     }
 
     public void setViewtoCastList()
@@ -60,15 +73,6 @@ public class CastViewActivity extends AppCompatActivity
         bundle.putParcelableArrayList("FULL CREW LIST",FullCastList);
         castViewListFragment.setArguments(bundle);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,castViewListFragment).commit();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-        }
-
-        return super.onOptionsItemSelected(item);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,castViewListFragment,"CAST VIEW LIST FRAGMENT").commit();
     }
 }
