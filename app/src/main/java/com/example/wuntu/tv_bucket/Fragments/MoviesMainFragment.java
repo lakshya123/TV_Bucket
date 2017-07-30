@@ -33,6 +33,7 @@ import com.example.wuntu.tv_bucket.Adapters.SimpleDividerItemDecoration;
 import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
 import com.example.wuntu.tv_bucket.Models.Result;
 
+import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
@@ -66,7 +67,6 @@ public class MoviesMainFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_movie_main, container, false);
 
@@ -77,7 +77,6 @@ public class MoviesMainFragment extends Fragment
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
 
@@ -88,23 +87,24 @@ public class MoviesMainFragment extends Fragment
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        if (position == 20)
+                        if (position == movie.size() - 1)
                         {
 
                         }
                         else
                         {
-                            /*Intent intent = new Intent(getActivity(), MovieView.class);
-                            startActivity(intent);*/
+                            Intent intent = new Intent(getActivity(), MovieView.class);
+                            intent.putExtra("ID",movie.get(position).getId().toString());
+                            startActivity(intent);
                         }
 
 
-                        Toast.makeText(getContext(), position+" ", Toast.LENGTH_SHORT).show();
+
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
                         // do whatever
-                        Toast.makeText(getContext(), position + " ", Toast.LENGTH_SHORT).show();
+
                     }
                 })
         );
@@ -164,7 +164,7 @@ public class MoviesMainFragment extends Fragment
                 result.setVoteAverage(1.2);
                 result.setPage(example.getPage());
                 result.setTotal_pages(example.getTotalPages());
-                movie.add(20,result);
+                movie.add(example.getResults().size(),result);
                 mAdapter.notifyDataSetChanged();
 
                 pDialog.hide();
