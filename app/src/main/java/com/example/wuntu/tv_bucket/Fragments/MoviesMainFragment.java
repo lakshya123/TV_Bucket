@@ -5,7 +5,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -18,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -37,6 +41,7 @@ import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.example.wuntu.tv_bucket.Utils.Utility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -52,7 +57,7 @@ import static com.android.volley.VolleyLog.TAG;
 public class MoviesMainFragment extends Fragment
 {
 
-
+    public RelativeLayout relativeLayout;
     private ArrayList<Result> movie = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
@@ -62,8 +67,6 @@ public class MoviesMainFragment extends Fragment
     Popular_Movies_Model example;
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -71,7 +74,7 @@ public class MoviesMainFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_movie_main, container, false);
 
 
-
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.relative_layout);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
 
@@ -121,6 +124,13 @@ public class MoviesMainFragment extends Fragment
 
     public void prepareOnlineData(int page_number)
     {
+
+        boolean b = Utility.isNetworkAvailable(getActivity());
+
+        if (!b)
+        {
+            Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();
+        }
         recyclerView.scrollToPosition(0);
         mAdapter.notifyDataSetChanged();
         String tag_json_obj = "json_obj_req";

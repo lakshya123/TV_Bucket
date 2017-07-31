@@ -2,10 +2,12 @@ package com.example.wuntu.tv_bucket;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,6 +18,7 @@ import com.example.wuntu.tv_bucket.Models.YoutubeLinksGettingModel;
 import com.example.wuntu.tv_bucket.Models.YoutubelinksFinalModel;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.example.wuntu.tv_bucket.Utils.Utility;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,6 +33,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
     ArrayList<YoutubelinksFinalModel> youtubelinks;
     YoutubeViewAdapter youtubeViewAdapter;
     android.widget.Toolbar toolbar;
+    LinearLayout linearLayout;
 
     UrlConstants URLconstants = UrlConstants.getSingletonRef();
     private Gson gson;
@@ -39,6 +43,8 @@ public class YoutubeActivity extends YouTubeBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube);
+
+        linearLayout = (LinearLayout) findViewById(R.id.activity_youtube);
 
 
         String ID = getIntent().getStringExtra("ID");
@@ -83,6 +89,13 @@ public class YoutubeActivity extends YouTubeBaseActivity {
     }
 
     public void getYoutubeLinks(String url) {
+
+        boolean b = Utility.isNetworkAvailable(YoutubeActivity.this);
+
+        if (!b)
+        {
+            Snackbar.make(linearLayout,"No Internet Connection",Snackbar.LENGTH_LONG).show();
+        }
         String tag_json_obj = "json_obj_req";
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");

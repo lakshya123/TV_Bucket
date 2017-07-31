@@ -62,6 +62,7 @@ public class FullCastListAdapter extends RecyclerView.Adapter {
         String url3 = urlConstants.URL_Image + cast.getProfilePath();
         Picasso.with(context)
                 .load(url3)
+                .placeholder(R.drawable.not_available)
                 .into(((ViewHolder)holder).cast_profile_picture);
 
     }

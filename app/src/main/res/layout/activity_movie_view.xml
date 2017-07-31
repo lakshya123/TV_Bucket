@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/coordinator_layout_movie_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -240,7 +241,6 @@
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Adventure"
                             android:textSize="16sp"/>
                         <TextView
                             android:id="@+id/genre2"
@@ -249,7 +249,6 @@
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Adventure"
                             android:textSize="16sp"/>
                         <TextView
                             android:id="@+id/genre3"
@@ -258,7 +257,6 @@
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Adventure"
                             android:textSize="16sp"/>
 
                     </LinearLayout>
@@ -275,7 +273,6 @@
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Adventure"
                             android:textSize="16sp"/>
                         <TextView
                             android:id="@+id/genre5"
@@ -284,7 +281,6 @@
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Adventure"
                             android:textSize="16sp"/>
 
                         <TextView
@@ -294,7 +290,6 @@
                             android:background="@color/white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Adventure"
                             android:textSize="16sp"/>
 
                     </LinearLayout>

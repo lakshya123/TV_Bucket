@@ -111,6 +111,7 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             String url3 = urlConstants.URL_Image + cast.getProfilePath();
             Picasso.with(context)
                     .load(url3)
+                    .placeholder(R.drawable.not_available)
                     .into(((MyViewHolder1)holder).cast_profile_picture);
         }
         else if (holder instanceof FooterViewHolder1)

@@ -3,6 +3,8 @@ package com.example.wuntu.tv_bucket;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +26,7 @@ import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.MovieDetailFull;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.example.wuntu.tv_bucket.Utils.Utility;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -38,6 +41,7 @@ public class MovieView extends AppCompatActivity {
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Gson gson;
     MovieDetailFull movieDetailFull;
+    CoordinatorLayout coordinator_layout_movie_view;
 
     TextView play_trailer;
 
@@ -53,6 +57,8 @@ public class MovieView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_view);
+
+        coordinator_layout_movie_view = (CoordinatorLayout) findViewById(R.id.coordinator_layout_movie_view);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -264,6 +270,7 @@ public class MovieView extends AppCompatActivity {
 
                 Picasso.with(MovieView.this)
                         .load(url3)
+                        .placeholder(R.drawable.not_available)
                         .into(backdrop_image);
 
 
@@ -304,7 +311,12 @@ public class MovieView extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MovieView.this, "Volley Error", Toast.LENGTH_SHORT).show();
+                boolean b = Utility.isNetworkAvailable(MovieView.this);
+
+                if (!b)
+                {
+                    Snackbar.make(coordinator_layout_movie_view,"No Internet Connection",Snackbar.LENGTH_LONG).show();
+                }
                 pDialog.hide();
 
             }

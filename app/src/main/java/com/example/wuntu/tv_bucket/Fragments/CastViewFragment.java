@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -23,6 +24,8 @@ import com.example.wuntu.tv_bucket.Models.CastDetailModel;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.example.wuntu.tv_bucket.Utils.Utility;
+import com.example.wuntu.tv_bucket.YoutubeActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -80,6 +83,13 @@ public class CastViewFragment extends Fragment {
 
     private void setdata(String url)
     {
+
+        boolean b = Utility.isNetworkAvailable(getActivity());
+
+        if (!b)
+        {
+            Snackbar.make(getActivity().findViewById(R.id.relative_layout_cast_view),"No Internet Connection",Snackbar.LENGTH_LONG).show();
+        }
         String tag_json_obj = "json_obj_req";
 
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
@@ -95,6 +105,7 @@ public class CastViewFragment extends Fragment {
 
                 Picasso.with(getActivity())
                         .load(image_url)
+                        .placeholder(R.drawable.not_available)
                         .into(new Target() {
                             @Override
                             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
@@ -126,7 +137,9 @@ public class CastViewFragment extends Fragment {
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(VolleyError error)
+            {
+                pDialog.hide();
 
             }
         });

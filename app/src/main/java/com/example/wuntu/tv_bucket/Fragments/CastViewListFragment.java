@@ -2,6 +2,7 @@ package com.example.wuntu.tv_bucket.Fragments;
 
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +18,7 @@ import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
+import com.example.wuntu.tv_bucket.Utils.Utility;
 
 import java.util.ArrayList;
 
@@ -38,6 +40,14 @@ public class CastViewListFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
         castArrayList = getArguments().getParcelableArrayList("FULL CREW LIST");
+
+
+        boolean b = Utility.isNetworkAvailable(getActivity());
+
+        if (!b)
+        {
+            Snackbar.make(getActivity().findViewById(R.id.relative_layout_cast_view),"No Internet Connection",Snackbar.LENGTH_LONG).show();
+        }
 
         FullCastListAdapter fullCastListAdapter = new FullCastListAdapter(castArrayList);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);

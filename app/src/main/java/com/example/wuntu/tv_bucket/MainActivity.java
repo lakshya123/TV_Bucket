@@ -1,5 +1,7 @@
 package com.example.wuntu.tv_bucket;
 
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +15,7 @@ import android.widget.FrameLayout;
 
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
 import com.example.wuntu.tv_bucket.Fragments.TvMainFragment;
+import com.example.wuntu.tv_bucket.Utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +25,13 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FrameLayout framelayout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        framelayout = (FrameLayout) findViewById(R.id.framelayout);
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
     private void setupViewPager(ViewPager viewPager) {

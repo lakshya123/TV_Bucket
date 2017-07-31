@@ -110,6 +110,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             String url = urlConstants.URL_Image + movie.getBackdropPath();
             Picasso.with(context)
                     .load(url)
+                    .placeholder(R.drawable.not_available)
                     .into(((MyViewHolder)holder).backdrop_image);
         }
         else if (holder instanceof FooterViewHolder)

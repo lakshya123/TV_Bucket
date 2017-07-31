@@ -4,6 +4,7 @@
     package="com.example.wuntu.tv_bucket">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,7 @@
         </activity>
         <activity android:name=".MovieView" />
         <activity android:name=".CastViewActivity" />
-        <activity android:name=".YoutubeActivity"></activity>
+        <activity android:name=".YoutubeActivity"/>
     </application>
 
 </manifest>
