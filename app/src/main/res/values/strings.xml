@@ -30,4 +30,9 @@
     <string name="birthday">Birthday</string>
     <string name="deathday">Death day</string>
     <string name="birth_place">Place of Birth</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="search_hint">Search for Movies,Tv Series...</string>
 </resources>

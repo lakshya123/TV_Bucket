@@ -16,4 +16,6 @@
     <dimen name="album_cover_height">160dp</dimen>
     <dimen name="album_title">15dp</dimen>
     <dimen name="songs_count">12dp</dimen>
+
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
 </resources>
