@@ -3,7 +3,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/relative_layout">
+    android:id="@+id/fragment_movie_main">
 
     <android.support.v7.widget.RecyclerView
         android:background="@color/viewBg"

@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.example.wuntu.tv_bucket.Adapters.ExpandListAdapter;
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
 import com.example.wuntu.tv_bucket.Fragments.TvMainFragment;
+import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.example.wuntu.tv_bucket.Utils.Utility;
 
 import java.util.ArrayList;
@@ -44,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
     HashMap<String,List<String>> listDataChild;
     ExpandableListView expListView;
     ExpandListAdapter listAdapter;
+    UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    MoviesMainFragment moviesMainFragment = null;
+    TvMainFragment tvMainFragment = null;
+    DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -83,8 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MoviesMainFragment(), "Movies");
-        adapter.addFragment(new TvMainFragment(), "TV Series");
+        moviesMainFragment = new MoviesMainFragment();
+        tvMainFragment = new TvMainFragment();
+        adapter.addFragment(moviesMainFragment, "Movies");
+        adapter.addFragment(tvMainFragment, "TV Series");
         viewPager.setAdapter(adapter);
     }
 
@@ -188,9 +195,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-                 Toast.makeText(getApplicationContext(),
+               /*  Toast.makeText(getApplicationContext(),
                  "Group Clicked " + listDataHeader.get(groupPosition),
-                 Toast.LENGTH_SHORT).show();
+                 Toast.LENGTH_SHORT).show();*/
                 return false;
             }
         });
@@ -199,9 +206,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
+              /*  Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
             }
         });
 
@@ -210,10 +217,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(),
+                /*Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Collapsed",
                         Toast.LENGTH_SHORT).show();
-
+*/
             }
         });
 
@@ -223,17 +230,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
+                /*Toast.makeText(MainActivity.this, String.valueOf(groupPosition), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, String.valueOf(childPosition), Toast.LENGTH_SHORT).show();*/
+                if (groupPosition == 0)
+                {
+                    switch (childPosition) {
+                        case 0:
+                            moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies, 1);
+                            drawer.closeDrawer(GravityCompat.START);
+                            break;
+                        case 1:
+                            moviesMainFragment.prepareOnlineData(urlConstants.URL_top_rated_movies, 1);
+                            drawer.closeDrawer(GravityCompat.START);
+                            break;
+                        case 2:
+                            moviesMainFragment.prepareOnlineData(urlConstants.URL_upcoming_movies, 1);
+                            drawer.closeDrawer(GravityCompat.START);
+                            break;
+                        case 3:
+                            moviesMainFragment.prepareOnlineData(urlConstants.URL_now_playing_movies, 1);
+                            drawer.closeDrawer(GravityCompat.START);
+                            break;
+                        default:
+                            moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies,1);
+                            drawer.closeDrawer(GravityCompat.START);
+                            break;
+                    }
+                }
 
-
-                // till here
-                Toast.makeText(
-                        getApplicationContext(),
-                        listDataHeader.get(groupPosition)
-                                + " : "
-                                + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
                 return false;
             }
         });}
@@ -243,32 +267,30 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Adding child data
-        listDataHeader.add("Product1");
-        listDataHeader.add("product2");
-        listDataHeader.add("Product3");
+        listDataHeader.add("Movies");
+        listDataHeader.add("TV Shows");
+        listDataHeader.add("People");
 
         // Adding child data
         List<String> top = new ArrayList<String>();
-        top.add("x1");
-        top.add("x2");
-        top.add("x3");
-        top.add("x4");
-        top.add("x5");
+        top.add("Popular");
+        top.add("Top Rated");
+        top.add("Upcoming");
+        top.add("Now Playing");
 
 
         List<String> mid = new ArrayList<String>();
-        mid.add("y1");
-        mid.add("y2");
-        mid.add("y3");
+        mid.add("Popular");
+        mid.add("Top Rated");
+        mid.add("On TV");
+        mid.add("Airing Today");
 
         List<String> bottom = new ArrayList<String>();
-        bottom.add("z1");
-        bottom.add("z2");
-        bottom.add("z3");
+        bottom.add("Popular People");
 
 
 
-        listDataChild.put(listDataHeader.get(0), top); // Header, Child data
+        listDataChild.put(listDataHeader.get(0), top);
         listDataChild.put(listDataHeader.get(1), mid);
         listDataChild.put(listDataHeader.get(2), bottom);
     }

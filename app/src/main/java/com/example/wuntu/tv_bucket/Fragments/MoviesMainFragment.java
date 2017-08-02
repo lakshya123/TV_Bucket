@@ -61,10 +61,12 @@ public class MoviesMainFragment extends Fragment
     private ArrayList<Result> movie = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
-    UrlConstants URLconstants = UrlConstants.getSingletonRef();
+    public UrlConstants URLconstants = UrlConstants.getSingletonRef();
     private Gson gson;
     int page_number = 1;
     Popular_Movies_Model example;
+    String url = URLconstants.URL_popular_movies;
+    String url1;
 
 
     @Override
@@ -74,9 +76,9 @@ public class MoviesMainFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_movie_main, container, false);
 
 
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.relative_layout);
+        relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_movie_main);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
+        mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this,url);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -117,12 +119,16 @@ public class MoviesMainFragment extends Fragment
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
-        prepareOnlineData(page_number);
+
+
+        prepareOnlineData(url,page_number);
 
         return view;
     }
 
-    public void prepareOnlineData(int page_number)
+
+
+    public void prepareOnlineData(String url,int page_number)
     {
 
         boolean b = Utility.isNetworkAvailable(getActivity());
@@ -136,13 +142,14 @@ public class MoviesMainFragment extends Fragment
         String tag_json_obj = "json_obj_req";
         String page_String = String.valueOf(page_number);
 
-        String url = URLconstants.URL_popular_movies+page_String;
+        url1 = url + page_String;
+        mAdapter.notifyDataSetChanged();
 
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url1, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {

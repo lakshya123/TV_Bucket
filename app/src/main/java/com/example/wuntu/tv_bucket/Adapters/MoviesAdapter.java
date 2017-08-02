@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
 import com.example.wuntu.tv_bucket.Models.Result;
@@ -31,10 +32,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     Fragment fragment;
+    String url;
 
-    public MoviesAdapter(ArrayList<Result> moviesList,Fragment fragment) {
+    public MoviesAdapter(ArrayList<Result> moviesList, Fragment fragment, String url) {
         this.moviesList = moviesList;
         this.fragment = fragment;
+        this.url = url;
     }
 
 
@@ -101,7 +104,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
 
-
         if (holder instanceof MyViewHolder)
         {
             movie = moviesList.get(position);
@@ -141,13 +143,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onClick(View v)
                 {
-                    ((MoviesMainFragment)fragment).prepareOnlineData(movie.getPage() - 1);
+                    ((MoviesMainFragment)fragment).prepareOnlineData(url,movie.getPage() - 1);
                 }
             });
             ((FooterViewHolder)holder).next_page.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((MoviesMainFragment)fragment).prepareOnlineData(movie.getPage() + 1);
+                    ((MoviesMainFragment)fragment).prepareOnlineData(url,movie.getPage() + 1);
                 }
             });
         }

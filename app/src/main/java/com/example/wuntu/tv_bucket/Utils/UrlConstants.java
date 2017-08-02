@@ -25,6 +25,12 @@ public class UrlConstants
 
     public String Youtube_URL = "https://www.youtube.com/watch?v=";
 
+    public String URL_upcoming_movies = "https://api.themoviedb.org/3/movie/upcoming?api_key=6d1c42e81f275fe7bcad0d4b020d010e&page=";
+
+    public String URL_top_rated_movies = "https://api.themoviedb.org/3/movie/top_rated?api_key=6d1c42e81f275fe7bcad0d4b020d010e&page=";
+
+    public String URL_now_playing_movies = "https://api.themoviedb.org/3/movie/now_playing?api_key=6d1c42e81f275fe7bcad0d4b020d010e&page=";
+
 
 
     private static UrlConstants mSingletonRef;
