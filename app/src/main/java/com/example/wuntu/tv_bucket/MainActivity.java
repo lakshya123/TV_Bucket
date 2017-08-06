@@ -2,19 +2,18 @@ package com.example.wuntu.tv_bucket;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,18 +22,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Adapters.ExpandListAdapter;
+import com.example.wuntu.tv_bucket.Adapters.SearchAdapter;
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
+import com.example.wuntu.tv_bucket.Fragments.SearchFragment;
 import com.example.wuntu.tv_bucket.Fragments.TvMainFragment;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
-import com.example.wuntu.tv_bucket.Utils.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,16 +52,22 @@ public class MainActivity extends AppCompatActivity {
     MoviesMainFragment moviesMainFragment = null;
     TvMainFragment tvMainFragment = null;
     DrawerLayout drawer;
+    SearchView searchView = null;
+    ActionBarDrawerToggle toggle;
+    SearchFragment searchFragment;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        frameLayout = (FrameLayout) findViewById(R.id.framelayout);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        searchFragment = new SearchFragment();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle("TV Bucket");
@@ -67,15 +76,17 @@ public class MainActivity extends AppCompatActivity {
         enableExpandableList();
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+
         setupViewPager(viewPager);
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+
         toggle.syncState();
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -130,11 +141,11 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
 
         SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
-        SearchView searchView = null;
+
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
         }
@@ -142,14 +153,62 @@ public class MainActivity extends AppCompatActivity {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
         }
 
+        final ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
+
+
+
         searchView.setQueryHint(getResources().getString(R.string.search_hint));
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                viewPager.setVisibility(GONE);
+                tabLayout.setVisibility(GONE);
+                //Toast.makeText(MainActivity.this, "Now Opened", Toast.LENGTH_SHORT).show();
+                toggle.setDrawerIndicatorEnabled(false);
+
+                frameLayout.setVisibility(View.VISIBLE);
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
+            }
+        });
+
+        searchClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(MainActivity.this, "Now CLosed", Toast.LENGTH_SHORT).show();
+                viewPager.setVisibility(View.VISIBLE);
+                tabLayout.setVisibility(View.VISIBLE);
+                toggle.setDrawerIndicatorEnabled(true);
+                if (getSupportFragmentManager().getBackStackEntryCount()>0)
+                {
+                    getSupportFragmentManager().popBackStack();
+                }
+                getSupportFragmentManager().beginTransaction().remove(searchFragment).commit();
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+                frameLayout.setVisibility(GONE);
+
+                searchView.onActionViewCollapsed();
+
+            }
+        });
+
+
+
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //Do your search
+
+                searchFragment = new SearchFragment();
                 String query1 = query.replaceAll(" ","%20");
-                Toast.makeText(MainActivity.this,query1+ "", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this,query1+ "", Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("QUERY",query1);
+                searchFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
                 return false;
             }
 
@@ -157,12 +216,23 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if(newText.isEmpty())
                 {
-                    Toast.makeText(MainActivity.this, "Empty", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Empty", Toast.LENGTH_SHORT).show();
+                    searchFragment = new SearchFragment();
+                    String query1 = newText.replaceAll(" ","%20");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("QUERY",query1);
+                    searchFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
                 }
                 else
                 {
+                    searchFragment = new SearchFragment();
                     String query1 = newText.replaceAll(" ","%20");
-                    Toast.makeText(MainActivity.this, query1+"", Toast.LENGTH_SHORT).show();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("QUERY",query1);
+                    searchFragment.setArguments(bundle);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
+                   // Toast.makeText(MainActivity.this, query1+"", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -198,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
                /*  Toast.makeText(getApplicationContext(),
                  "Group Clicked " + listDataHeader.get(groupPosition),
                  Toast.LENGTH_SHORT).show();*/
+
+
                 return false;
             }
         });
@@ -230,8 +302,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                /*Toast.makeText(MainActivity.this, String.valueOf(groupPosition), Toast.LENGTH_SHORT).show();
-                Toast.makeText(MainActivity.this, String.valueOf(childPosition), Toast.LENGTH_SHORT).show();*/
+
+
                 if (groupPosition == 0)
                 {
                     switch (childPosition) {

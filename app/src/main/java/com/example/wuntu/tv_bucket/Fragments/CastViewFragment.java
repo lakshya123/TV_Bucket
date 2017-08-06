@@ -40,6 +40,7 @@ public class CastViewFragment extends Fragment {
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Gson gson;
     CastDetailModel castDetailModel;
+    Integer id;
 
 
 
@@ -58,8 +59,10 @@ public class CastViewFragment extends Fragment {
 
 
 
-
-        Integer id = getArguments().getInt("ID");
+        if (getArguments() != null)
+        {
+            id = getArguments().getInt("ID");
+        }
         String id1 = String.valueOf(id);
 
         String url = urlConstants.Person_1st_URL + id1 + urlConstants.Person_2nd_URL;

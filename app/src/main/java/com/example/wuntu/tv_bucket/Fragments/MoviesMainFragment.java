@@ -131,7 +131,7 @@ public class MoviesMainFragment extends Fragment
     public void prepareOnlineData(String url,int page_number)
     {
 
-        boolean b = Utility.isNetworkAvailable(getActivity());
+        boolean b = Utility.isNetworkAvailable(getContext());
 
         if (!b)
         {

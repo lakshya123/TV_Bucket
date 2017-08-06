@@ -11,6 +11,8 @@ public class UrlConstants
 
     public String URL_Image = "https://image.tmdb.org/t/p/w500";
 
+    public String URL_Logo_Image = "https://image.tmdb.org/t/p/w92";
+
     public String Movie_1st_URL = "https://api.themoviedb.org/3/movie/";
 
     public String Movie_2nd_URL = "?api_key=6d1c42e81f275fe7bcad0d4b020d010e&append_to_response=credits";
@@ -31,7 +33,7 @@ public class UrlConstants
 
     public String URL_now_playing_movies = "https://api.themoviedb.org/3/movie/now_playing?api_key=6d1c42e81f275fe7bcad0d4b020d010e&page=";
 
-
+    public String URL_multi_search = "https://api.themoviedb.org/3/search/multi?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US&query=";
 
     private static UrlConstants mSingletonRef;
 
