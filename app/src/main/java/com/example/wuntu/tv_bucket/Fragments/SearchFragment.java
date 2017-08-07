@@ -158,7 +158,11 @@ public class SearchFragment extends Fragment {
 
                     searchModelArrayList.add(i,multiSearchResultModel);
                 }
-
+                if (multiSearchModel.getTotalResults() == 0)
+                {
+                    search_text.setText("No Results");
+                    search_text.setVisibility(View.VISIBLE);
+                }
                 searchAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {

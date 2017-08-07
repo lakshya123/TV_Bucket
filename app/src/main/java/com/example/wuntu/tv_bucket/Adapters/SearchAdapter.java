@@ -46,11 +46,12 @@ import java.util.ArrayList;
         public class MySearchViewHolder extends RecyclerView.ViewHolder {
 
             public ImageView search_image;
-            public TextView search_title;
+            public TextView search_title,color_textview;
             public MySearchViewHolder(View view) {
                 super(view);
                 search_image = (ImageView)view.findViewById(R.id.search_image);
                 search_title = (TextView) view.findViewById(R.id.search_title);
+                color_textview = (TextView) view.findViewById(R.id.color_textview);
             }
         }
 
@@ -80,6 +81,7 @@ import java.util.ArrayList;
                 if (multiSearchResultModel.getMediaType()!= null && multiSearchResultModel.getMediaType().equalsIgnoreCase("movie"))
                 {
                     ((MySearchViewHolder)holder).search_title.setText(multiSearchResultModel.getTitle());
+                    ((MySearchViewHolder)holder).color_textview.setText("Movie");
                     String url = urlConstants.URL_Logo_Image + multiSearchResultModel.getPosterPath();
                     Picasso.with(context)
                             .load(url)
@@ -90,6 +92,7 @@ import java.util.ArrayList;
                 {
                     ((MySearchViewHolder)holder).search_title.setText(multiSearchResultModel.getName());
                     String url = urlConstants.URL_Logo_Image + multiSearchResultModel.getProfilePath();
+                    ((MySearchViewHolder)holder).color_textview.setText("Person");
                     Picasso.with(context)
                             .load(url)
                             .placeholder(R.drawable.not_available)
@@ -99,6 +102,7 @@ import java.util.ArrayList;
                 {
                     ((MySearchViewHolder)holder).search_title.setText(multiSearchResultModel.getName());
                     String url = urlConstants.URL_Logo_Image + multiSearchResultModel.getPosterPath();
+                    ((MySearchViewHolder)holder).color_textview.setText("TV");
                     Picasso.with(context)
                             .load(url)
                             .placeholder(R.drawable.not_available)

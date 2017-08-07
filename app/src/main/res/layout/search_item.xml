@@ -13,29 +13,43 @@
         card_view:cardCornerRadius="@dimen/card_album_radius">
 
         <LinearLayout
+            android:weightSum="100"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
+                android:layout_weight="25"
                 android:src="@drawable/image92"
                 android:id="@+id/search_image"
-                android:layout_width="80dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:scaleType="fitXY" />
 
             <TextView
+                android:layout_weight="50"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:maxLines="1"
                 android:id="@+id/search_title"
                 android:text="Mad Max and the Fury Road"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:textSize="15sp"
                 android:textAppearance="?attr/textAppearanceLargePopupMenu"/>
+
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/color_textview"
+                android:text=""
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@drawable/border"
+                android:layout_weight="25"
+                android:layout_width="0dp"
+                android:layout_height="35dp" />
 
 
 
