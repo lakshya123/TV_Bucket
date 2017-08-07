@@ -1,6 +1,7 @@
 package com.example.wuntu.tv_bucket.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -19,10 +20,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.Adapters.SearchAdapter;
+import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.MultiSearchModel;
 import com.example.wuntu.tv_bucket.Models.MultiSearchResultModel;
 import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
+import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
@@ -55,7 +59,7 @@ public class SearchFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.search_recyler_view);
         searchModelArrayList = new ArrayList<>();
 
-        searchAdapter = new SearchAdapter(searchModelArrayList);
+        searchAdapter = new SearchAdapter(searchModelArrayList,SearchFragment.this);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -72,29 +76,66 @@ public class SearchFragment extends Fragment {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
-        if (query.length()>0)
+        if (query.length() > 0)
         {
             search_text.setVisibility(View.GONE);
+        }
+
+        if (query.length()>2)
+        {
             preparedata(query);
         }
 
 
 
+        recyclerView.addOnItemTouchListener(
+                new MoviesAdapter_OnClickListener(getContext(), recyclerView ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position)
+                    {
+                        if (searchModelArrayList.get(position).getMediaType().equalsIgnoreCase("person"))
+                        {
+                            Intent intent = new Intent(getActivity(), CastViewActivity.class);
+                            intent.putExtra("EVENT","TOUCH EVENT");
+                            intent.putExtra("ID",searchModelArrayList.get(position).getId());
+                            startActivity(intent);
+                        }
+                        else if (searchModelArrayList.get(position).getMediaType().equalsIgnoreCase("movie"))
+                        {
+                            Intent intent = new Intent(getActivity(), MovieView.class);
+                            String ID = String.valueOf(searchModelArrayList.get(position).getId());
+                            intent.putExtra("ID",ID);
+                            startActivity(intent);
+                        }
+                        else if (searchModelArrayList.get(position).getMediaType().equalsIgnoreCase("tv"))
+                        {
 
+                        }
+                    }
+
+                    @Override public void onLongItemClick(View view, int position)
+                    {
+
+
+                    }
+                })
+        );
 
         return view;
     }
 
-    private void preparedata(String query)
+    public void preparedata(String query)
     {
         String tag_json_obj = "json_obj_req";
         boolean b = Utility.isNetworkAvailable(getContext());
+
 
         if (!b)
         {
             Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();
         }
         String url = urlConstants.URL_multi_search + query;
+
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -131,5 +172,7 @@ public class SearchFragment extends Fragment {
 
         AppSingleton.getInstance(getContext()).addToRequestQueue(stringRequest, tag_json_obj);
     }
+
+
 
 }

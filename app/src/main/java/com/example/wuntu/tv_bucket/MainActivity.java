@@ -2,6 +2,7 @@ package com.example.wuntu.tv_bucket;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle toggle;
     SearchFragment searchFragment;
     FrameLayout frameLayout;
+    AppBarLayout.LayoutParams params;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
 
         searchFragment = new SearchFragment();
 
@@ -169,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 toggle.setDrawerIndicatorEnabled(false);
 
                 frameLayout.setVisibility(View.VISIBLE);
+                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
                 getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
             }
         });
@@ -180,6 +185,8 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toggle.setDrawerIndicatorEnabled(true);
+                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                        | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
                 if (getSupportFragmentManager().getBackStackEntryCount()>0)
                 {
                     getSupportFragmentManager().popBackStack();

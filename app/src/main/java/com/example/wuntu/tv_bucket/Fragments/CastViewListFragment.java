@@ -65,7 +65,6 @@ public class CastViewListFragment extends Fragment {
                         bundle.putInt("ID",castArrayList.get(position).getId());
                         castViewFragment.setArguments(bundle);
                         getFragmentManager().beginTransaction().replace(R.id.container,castViewFragment).addToBackStack(null).commit();
-                        //((CastViewActivity)getActivity()).setViewtoCastView(castArrayList.get(position).getId());
                     }
 
                     @Override public void onLongItemClick(View view, int position)

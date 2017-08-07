@@ -35,6 +35,8 @@ public class UrlConstants
 
     public String URL_multi_search = "https://api.themoviedb.org/3/search/multi?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US&query=";
 
+    public String URL_multi_search_2 = "&page=";
+
     private static UrlConstants mSingletonRef;
 
     public static UrlConstants getSingletonRef() {

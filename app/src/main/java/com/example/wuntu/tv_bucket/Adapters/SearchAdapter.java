@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
+import com.example.wuntu.tv_bucket.Fragments.SearchFragment;
 import com.example.wuntu.tv_bucket.Models.MultiSearchResultModel;
 import com.example.wuntu.tv_bucket.Models.Result;
 import com.example.wuntu.tv_bucket.R;
@@ -35,8 +36,9 @@ import java.util.ArrayList;
         String url;
         MultiSearchResultModel multiSearchResultModel = new MultiSearchResultModel();
 
-        public SearchAdapter(ArrayList<MultiSearchResultModel> searchModelArrayList) {
+        public SearchAdapter(ArrayList<MultiSearchResultModel> searchModelArrayList,Fragment fragment) {
             this.searchModelArrayList = searchModelArrayList;
+            this.fragment = fragment;
         }
 
 
@@ -52,30 +54,7 @@ import java.util.ArrayList;
             }
         }
 
-        public class SearchFooterViewHolder extends RecyclerView.ViewHolder
-        {
-            public TextView tag_text,previous_page,next_page,between_text;
 
-            public SearchFooterViewHolder(View itemView) {
-                super(itemView);
-                between_text = (TextView) itemView.findViewById(R.id.between_text);
-                tag_text = (TextView)itemView.findViewById(R.id.tag_text);
-                previous_page = (TextView)itemView.findViewById(R.id.previous_page);
-                next_page = (TextView) itemView.findViewById(R.id.next_page);
-
-            }
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            if (isPositionItem(position))
-                return VIEW_ITEM;
-            return VIEW_PROG;
-        }
-
-        private boolean isPositionItem(int position) {
-            return position != getItemCount() -1;
-        }
 
 
 
@@ -84,17 +63,10 @@ import java.util.ArrayList;
 
             context = parent.getContext();
 
-            if (viewType == VIEW_ITEM) {
+
                 View v =  LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.search_item, parent, false);
                 return new MySearchViewHolder(v);
-            } else if (viewType == VIEW_PROG){
-                View v = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.footer_layout, parent, false);
-                return new SearchFooterViewHolder(v);
-            }
-
-            return null;
         }
 
 
@@ -134,47 +106,6 @@ import java.util.ArrayList;
                 }
 
             }
-            else if (holder instanceof SearchFooterViewHolder)
-            {
-                /*movie = moviesList.get(position);
-                if(movie.getPage() == 1)
-                {
-                    ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).previous_page.setVisibility(View.INVISIBLE);
-                    ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).between_text.setVisibility(View.INVISIBLE);
-                }
-                else
-                {
-                    ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).previous_page.setVisibility(View.VISIBLE);
-                    ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).between_text.setVisibility(View.VISIBLE);
-                }
-                if (movie.getPage() == movie.getTotal_pages())
-                {
-                    ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).between_text.setVisibility(View.INVISIBLE);
-                    ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).next_page.setVisibility(View.INVISIBLE);
-                }
-                else
-                {
-                    ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).next_page.setVisibility(View.VISIBLE);
-                }
-
-                ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).tag_text.setText("Viewing " + movie.getPage() + " of " + movie.getTotal_pages() + " Pages" );
-                ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).previous_page.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v)
-                    {
-                        ((MoviesMainFragment)fragment).prepareOnlineData(url,movie.getPage() - 1);
-                    }
-                });
-                ((com.example.wuntu.tv_bucket.Adapters.MoviesAdapter.FooterViewHolder)holder).next_page.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((MoviesMainFragment)fragment).prepareOnlineData(url,movie.getPage() + 1);
-                    }
-                });*/
-            }
-
-
-
         }
 
         @Override

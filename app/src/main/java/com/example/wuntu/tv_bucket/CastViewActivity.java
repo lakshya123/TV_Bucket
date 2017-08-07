@@ -45,8 +45,16 @@ public class CastViewActivity extends AppCompatActivity
         castViewListFragment = new CastViewListFragment();
         castViewFragment = new CastViewFragment();
 
-        check = getIntent().getStringExtra("EVENT");
-        FullCastList = getIntent().getParcelableArrayListExtra("LIST");
+        if (getIntent().getStringExtra("EVENT") != null)
+        {
+            check = getIntent().getStringExtra("EVENT");
+        }
+
+        if (getIntent().getParcelableArrayExtra("LIST") != null)
+        {
+            FullCastList = getIntent().getParcelableArrayListExtra("LIST");
+        }
+
         id = getIntent().getIntExtra("ID",0);
 
         if (check.equals("TOUCH EVENT") )
