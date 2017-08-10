@@ -37,6 +37,14 @@ public class UrlConstants
 
     public String URL_multi_search_2 = "&page=";
 
+    public String URL_tv_airing_today = "https://api.themoviedb.org/3/tv/airing_today?api_key=6d1c42e81f275fe7bcad0d4b020d010e&page=";
+
+    public String URL_tv_on_air = "https://api.themoviedb.org/3/tv/on_the_air?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US&page=";
+
+    public String URL_popular_tv_shows = "https://api.themoviedb.org/3/tv/popular?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US&page=";
+
+    public String URL_top_rated_tv_shows = "https://api.themoviedb.org/3/tv/top_rated?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US&page=";
+
     private static UrlConstants mSingletonRef;
 
     public static UrlConstants getSingletonRef() {
