@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Adapters.FullCastListAdapter;
 import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
@@ -40,6 +41,8 @@ public class CastViewListFragment extends Fragment {
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
         castArrayList = getArguments().getParcelableArrayList("FULL CREW LIST");
+
+//        Toast.makeText(getActivity(), castArrayList.get(0).getCharacter() +"", Toast.LENGTH_SHORT).show();
 
 
         boolean b = Utility.isNetworkAvailable(getActivity());

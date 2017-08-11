@@ -58,12 +58,11 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public class FooterViewHolder extends RecyclerView.ViewHolder
     {
-        public TextView tag_text,previous_page,next_page,between_text;
+        public TextView previous_page,next_page;
 
         public FooterViewHolder(View itemView) {
             super(itemView);
-            between_text = (TextView) itemView.findViewById(R.id.between_text);
-            tag_text = (TextView)itemView.findViewById(R.id.tag_text);
+
             previous_page = (TextView)itemView.findViewById(R.id.previous_page);
             next_page = (TextView) itemView.findViewById(R.id.next_page);
 
@@ -123,16 +122,13 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             if(resultModel.getPage() == 1)
             {
                 ((FooterViewHolder)holder).previous_page.setVisibility(View.INVISIBLE);
-                ((FooterViewHolder)holder).between_text.setVisibility(View.INVISIBLE);
             }
             else
             {
                 ((FooterViewHolder)holder).previous_page.setVisibility(View.VISIBLE);
-                ((FooterViewHolder)holder).between_text.setVisibility(View.VISIBLE);
             }
             if (resultModel.getPage() == resultModel.getTotalPages())
             {
-                ((FooterViewHolder)holder).between_text.setVisibility(View.INVISIBLE);
                 ((FooterViewHolder)holder).next_page.setVisibility(View.INVISIBLE);
             }
             else
@@ -140,7 +136,6 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 ((FooterViewHolder)holder).next_page.setVisibility(View.VISIBLE);
             }
 
-            ((FooterViewHolder)holder).tag_text.setText("Viewing " + resultModel.getPage() + " of " + resultModel.getTotalPages() + " Pages" );
             ((FooterViewHolder)holder).previous_page.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v)

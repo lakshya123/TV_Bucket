@@ -45,6 +45,10 @@ public class UrlConstants
 
     public String URL_top_rated_tv_shows = "https://api.themoviedb.org/3/tv/top_rated?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US&page=";
 
+    public String TV_1st_URL = "https://api.themoviedb.org/3/tv/";
+
+    public String TV_2nd_URL = "?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US&append_to_response=credits";
+
     private static UrlConstants mSingletonRef;
 
     public static UrlConstants getSingletonRef() {

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class CastViewActivity extends AppCompatActivity
 {
-    ArrayList<Cast> FullCastList = new ArrayList<>();
+    ArrayList<Cast> fullCastList;
     CastViewListFragment castViewListFragment;
     Toolbar toolbar;
     String check;
@@ -42,6 +42,8 @@ public class CastViewActivity extends AppCompatActivity
 
             }
         });
+
+        fullCastList = new ArrayList<>();
         castViewListFragment = new CastViewListFragment();
         castViewFragment = new CastViewFragment();
 
@@ -50,10 +52,9 @@ public class CastViewActivity extends AppCompatActivity
             check = getIntent().getStringExtra("EVENT");
         }
 
-        if (getIntent().getParcelableArrayExtra("LIST") != null)
-        {
-            FullCastList = getIntent().getParcelableArrayListExtra("LIST");
-        }
+      /*  if (getIntent().getParcelableArrayExtra("LIST") != null)
+        {*/
+            fullCastList = getIntent().getParcelableArrayListExtra("LIST");
 
         id = getIntent().getIntExtra("ID",0);
 
@@ -77,8 +78,9 @@ public class CastViewActivity extends AppCompatActivity
 
     public void setViewtoCastList()
     {
+        //Toast.makeText(this, fullCastList.get(0).getName() + " ", Toast.LENGTH_SHORT).show();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("FULL CREW LIST",FullCastList);
+        bundle.putParcelableArrayList("FULL CREW LIST",fullCastList);
         castViewListFragment.setArguments(bundle);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container,castViewListFragment,"CAST VIEW LIST FRAGMENT").commit();

@@ -11,6 +11,19 @@ import java.util.List;
 
 public class Result {
 
+
+    @SerializedName("URL")
+    @Expose
+    private String URL;
+
+    public String getURL() {
+        return URL;
+    }
+
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
     @SerializedName("page")
     @Expose
     private Integer page;

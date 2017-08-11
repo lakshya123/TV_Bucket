@@ -27,20 +27,20 @@ import java.util.List;
 
 public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<Cast> detailArrayList = new ArrayList<>() ;
+    private ArrayList<Cast> subArrayList = new ArrayList<>() ;
     private UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Cast cast;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
     private Context context;
     MovieView a;
-    ArrayList<Cast> FullArrayList = new ArrayList<>();
+    ArrayList<Cast> fullArrayList = new ArrayList<>();
 
     public CastDetailAdapter(MovieView movieView, ArrayList<Cast> detailArrayList,ArrayList<Cast> subCastArrayList)
     {
         a = movieView;
-        this.detailArrayList = subCastArrayList;
-        this.FullArrayList = detailArrayList;
+        this.subArrayList = subCastArrayList;
+        this.fullArrayList = detailArrayList;
     }
 
 
@@ -105,7 +105,7 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     {
         if(holder instanceof MyViewHolder1)
         {
-            cast = detailArrayList.get(position);
+            cast = subArrayList.get(position);
             ((MyViewHolder1)holder).cast_character_name.setText(cast.getCharacter());
             ((MyViewHolder1)holder).cast_name.setText(cast.getName());
             String url3 = urlConstants.URL_Image + cast.getProfilePath();
@@ -122,7 +122,7 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 {
                     Intent intent = new Intent(context,CastViewActivity.class);
                     intent.putExtra("EVENT","FULL LIST CAST");
-                    intent.putParcelableArrayListExtra("LIST",FullArrayList);
+                    intent.putParcelableArrayListExtra("LIST",fullArrayList);
                     context.startActivity(intent);
                 }
             });
@@ -131,7 +131,7 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemCount() {
-        return this.detailArrayList.size();
+        return this.subArrayList.size();
     }
 
 }

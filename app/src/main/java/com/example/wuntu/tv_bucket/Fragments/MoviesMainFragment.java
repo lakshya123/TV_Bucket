@@ -63,10 +63,10 @@ public class MoviesMainFragment extends Fragment
     private MoviesAdapter mAdapter;
     public UrlConstants URLconstants = UrlConstants.getSingletonRef();
     private Gson gson;
-    int page_number = 1;
+    Integer page_number = 1;
     Popular_Movies_Model example;
     String url = URLconstants.URL_popular_movies;
-    String url1;
+    String url1 = " ";
 
 
     @Override
@@ -78,7 +78,7 @@ public class MoviesMainFragment extends Fragment
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_movie_main);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this,url);
+        mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -100,6 +100,7 @@ public class MoviesMainFragment extends Fragment
                         {
                             Intent intent = new Intent(getActivity(), MovieView.class);
                             intent.putExtra("ID",movie.get(position).getId().toString());
+                            intent.putExtra("VIEW","MOVIE");
                             startActivity(intent);
                         }
 
@@ -128,7 +129,7 @@ public class MoviesMainFragment extends Fragment
 
 
 
-    public void prepareOnlineData(String url,int page_number)
+    public void prepareOnlineData(final String url, Integer page_number)
     {
 
         boolean b = Utility.isNetworkAvailable(getContext());
@@ -169,6 +170,7 @@ public class MoviesMainFragment extends Fragment
                     result.setVoteAverage(example.getResults().get(i).getVoteAverage());
                     result.setPage(example.getPage());
                     result.setTotal_pages(example.getTotalPages());
+                    result.setURL(url);
                     movie.add(i,result);
                 }
 
@@ -181,6 +183,7 @@ public class MoviesMainFragment extends Fragment
                 result.setVoteAverage(1.2);
                 result.setPage(example.getPage());
                 result.setTotal_pages(example.getTotalPages());
+                result.setURL(url);
                 movie.add(example.getResults().size(),result);
                 mAdapter.notifyDataSetChanged();
 

@@ -42,6 +42,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:contentInsetStart="0dp"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:layout_collapseMode="pin"
             >
@@ -131,13 +132,14 @@
 
 
             <LinearLayout
-                android:background="#CD853F"
+                android:id="@+id/overview_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/activity_horizontal_margin">
 
                 <TextView
+                    android:id="@+id/overview_title"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,10 +158,10 @@
 
             <TextView
                 android:padding="@dimen/activity_horizontal_margin"
+                android:textAppearance="?android:textAppearanceLarge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/top_billed_cast"
-                android:textSize="20sp"/>
+                android:text="@string/top_billed_cast" />
 
 
             <android.support.v7.widget.RecyclerView
@@ -171,9 +173,11 @@
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
 
+            <include  layout="@layout/season_layout"></include>
+
             <LinearLayout
+                android:id="@+id/facts_layout"
                 android:layout_marginTop="10dp"
-                android:background="#CD853F"
                 android:padding="@dimen/activity_horizontal_margin"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -188,6 +192,7 @@
                     android:textColor="@color/white"/>
 
                 <TextView
+                    android:id="@+id/status_title"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -202,6 +207,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
+                    android:id="@+id/release_date_title"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -216,6 +222,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
+                    android:id="@+id/genres_title"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -225,7 +232,6 @@
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:background="#CD853F"
                     android:padding="@dimen/activity_horizontal_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -299,6 +305,7 @@
 
 
                 <TextView
+                    android:id="@+id/budget_title"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -313,6 +320,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
+                    android:id="@+id/revenue_title"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -327,6 +335,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
+                    android:id="@+id/runtime_title"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
@@ -341,6 +350,7 @@
                     android:textSize="16sp"/>
 
                 <TextView
+                    android:id="@+id/homepage_title"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"

@@ -101,10 +101,10 @@ public class TvMainFragment extends Fragment
                         }
                         else
                         {
-                            Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
-                            /*Intent intent = new Intent(getActivity(), MovieView.class);
+                            Intent intent = new Intent(getActivity(), MovieView.class);
                             intent.putExtra("ID",tv_list.get(position).getId().toString());
-                            startActivity(intent);*/
+                            intent.putExtra("VIEW","TV");
+                            startActivity(intent);
                         }
 
 
