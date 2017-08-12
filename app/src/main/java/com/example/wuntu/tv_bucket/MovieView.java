@@ -38,7 +38,13 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class MovieView extends AppCompatActivity {
 
@@ -59,12 +65,14 @@ public class MovieView extends AppCompatActivity {
     ArrayList<Cast> castArrayList;
     ArrayList<Cast> subCastArrayList;
 
-    TextView ratings,overview,status,release_date,genre1,genre2,genre3,genre4,genre5,genre6,budget,revenue,runtime,homepage;
-    ImageView backdrop_image;
+    TextView ratings,overview,status,release_date,genre1,budget,revenue,runtime,homepage;
+    ImageView backdrop_image,image_play_trailer;
     TextView budget_title,revenue_title,current_season,season_number,current_season_year,current_season_episodes,current_season_tagline,view_all_seasons;
     TextView release_date_title,overview_title,status_title,genres_title,runtime_title,homepage_title,facts;
     String url2;
     String ID;
+    int i;
+    StringBuilder sb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +151,7 @@ public class MovieView extends AppCompatActivity {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
-        String view = getIntent().getStringExtra("VIEW");
+        final String view = getIntent().getStringExtra("VIEW");
         if (view.equals("MOVIE"))
         {
             season_layout.setVisibility(View.GONE);
@@ -167,12 +175,34 @@ public class MovieView extends AppCompatActivity {
             prepareTvData(url);
         }
 
+        play_trailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View View) {
+                if (view.equals("MOVIE"))
+                {
+                    Intent intent = new Intent(MovieView.this,YoutubeActivity.class);
+                    intent.putExtra("ID",ID);
+                    startActivity(intent);
+                }
+                else Toast.makeText(MovieView.this, "Under Development", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        view_all_seasons.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MovieView.this, "Under Development", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
     }
 
     private void initviews()
     {
+        image_play_trailer= (ImageView)findViewById(R.id.image_play_trailer);
         coordinator_layout_movie_view = (CoordinatorLayout) findViewById(R.id.coordinator_layout_movie_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         season_layout = (LinearLayout)findViewById(R.id.season_layout);
@@ -181,12 +211,8 @@ public class MovieView extends AppCompatActivity {
         overview = (TextView) findViewById(R.id.overview);
         status = (TextView) findViewById(R.id.status);
         release_date = (TextView) findViewById(R.id.release_date);
-        genre1= (TextView) findViewById(R.id.genre1);
-        genre2 = (TextView) findViewById(R.id.genre2);
-        genre3 = (TextView) findViewById(R.id.genre3);
-        genre4 = (TextView) findViewById(R.id.genre4);
-        genre5 = (TextView) findViewById(R.id.genre5);
-        genre6 = (TextView) findViewById(R.id.genre6);
+
+        genre1 = (TextView) findViewById(R.id.genres);
         budget = (TextView) findViewById(R.id.budget);
         revenue = (TextView) findViewById(R.id.revenue);
         runtime = (TextView) findViewById(R.id.runtime);
@@ -243,71 +269,77 @@ public class MovieView extends AppCompatActivity {
                 status.setText(tvExampleModel.getStatus());
                 release_date.setText(tvExampleModel.getFirstAirDate());
 
-                //Setting text to genres
-                int value = tvExampleModel.getGenres().size();
-                if (value >= 6)
-                {
-                    genre1.setText(tvExampleModel.getGenres().get(0).getName());
-                    genre2.setText(tvExampleModel.getGenres().get(1).getName());
-                    genre3.setText(tvExampleModel.getGenres().get(2).getName());
-                    genre4.setText(tvExampleModel.getGenres().get(3).getName());
-                    genre5.setText(tvExampleModel.getGenres().get(4).getName());
-                    genre6.setText(tvExampleModel.getGenres().get(4).getName());
+                //Season Layout
+
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar calendar = Calendar.getInstance();
+                String date = dateFormat.format(calendar.getTime());
+                String last_air_Date_string = tvExampleModel.getLastAirDate();
+                String last_season_air_date_string;
+                int size = tvExampleModel.getSeasons().size();
+                last_season_air_date_string = tvExampleModel.getSeasons().get(size - 1).getAirDate();
+
+                String last_season_year = last_season_air_date_string.substring(0,4);
+                current_season_year.setText(last_season_year);
+
+                season_number.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+
+                current_season_episodes.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getEpisodeCount()));
+
+                try {
+                    Date today_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date);
+                    Date last_air_date = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(last_air_Date_string);
+                    Date last_season_air_date = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(last_season_air_date_string);
+
+                    if (last_air_date.compareTo(today_date) < 0)
+                    {
+                        current_season.setText("Last Season");
+                    }
+                    else if (last_air_date.compareTo(today_date) > 0)
+                    {
+                        if (last_season_air_date.compareTo(today_date) > 0)
+                        {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append("Season ");
+                            stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                            stringBuilder.append(" of ");
+                            stringBuilder.append(tvExampleModel.getName());
+                            stringBuilder.append(" will be premiered on ");
+                            stringBuilder.append(last_season_air_date_string);
+                            current_season_tagline.setText(stringBuilder);
+                            current_season.setText("Upcoming Season");
+                        }
+                        else if (last_season_air_date.compareTo(today_date) < 0)
+                        {
+                            StringBuilder stringBuilder = new StringBuilder();
+                            stringBuilder.append("Season ");
+                            stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                            stringBuilder.append(" of ");
+                            stringBuilder.append(tvExampleModel.getName());
+                            stringBuilder.append(" premiered on ");
+                            stringBuilder.append(last_season_air_date_string);
+                            current_season_tagline.setText(stringBuilder);
+                            current_season.setText("Current Season");
+                        }
+                    }
+
+                } catch (ParseException e) {
+                    Toast.makeText(MovieView.this, "try catch error", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
                 }
-                else if (value == 5)
+
+
+                sb = new StringBuilder();
+                String prefix = "";
+                for (i = 0;i<tvExampleModel.getGenres().size();i++)
                 {
-                    genre1.setText(tvExampleModel.getGenres().get(0).getName());
-                    genre2.setText(tvExampleModel.getGenres().get(1).getName());
-                    genre3.setText(tvExampleModel.getGenres().get(2).getName());
-                    genre4.setText(tvExampleModel.getGenres().get(3).getName());
-                    genre5.setText(tvExampleModel.getGenres().get(4).getName());
-                    genre6.setVisibility(View.GONE);
+                    sb.append(prefix);
+                    prefix = ",";
+                    sb.append(tvExampleModel.getGenres().get(i).getName());
                 }
-                else if (value == 4)
-                {
-                    genre1.setText(tvExampleModel.getGenres().get(0).getName());
-                    genre2.setText(tvExampleModel.getGenres().get(1).getName());
-                    genre3.setText(tvExampleModel.getGenres().get(2).getName());
-                    genre4.setText(tvExampleModel.getGenres().get(3).getName());
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else if (value == 3)
-                {
-                    genre1.setText(tvExampleModel.getGenres().get(0).getName());
-                    genre2.setText(tvExampleModel.getGenres().get(1).getName());
-                    genre3.setText(tvExampleModel.getGenres().get(2).getName());
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else if (value == 2)
-                {
-                    genre1.setText(tvExampleModel.getGenres().get(0).getName());
-                    genre2.setText(tvExampleModel.getGenres().get(1).getName());
-                    genre3.setVisibility(View.GONE);
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else if (value == 1)
-                {
-                    genre1.setText(tvExampleModel.getGenres().get(0).getName());
-                    genre2.setVisibility(View.GONE);
-                    genre3.setVisibility(View.GONE);
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else
-                {
-                    genre1.setVisibility(View.GONE);
-                    genre2.setVisibility(View.GONE);
-                    genre3.setVisibility(View.GONE);
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
+                genre1.setText(sb);
+
+
 
                 runtime.setText(String.valueOf(tvExampleModel.getEpisodeRunTime()));
                 homepage.setText(tvExampleModel.getHomepage());
@@ -349,6 +381,7 @@ public class MovieView extends AppCompatActivity {
                                                     runtime_title.setTextColor(textSwatch.getTitleTextColor());
                                                     homepage_title.setTextColor(textSwatch.getTitleTextColor());
                                                     homepage.setTextColor(textSwatch.getTitleTextColor());
+                                                    genre1.setTextColor(textSwatch.getTitleTextColor());
                                                 }
                                             });
                                 }
@@ -454,70 +487,16 @@ public class MovieView extends AppCompatActivity {
 
                 //Setting text to genres
                 int value = movieDetailFull.getGenres().size();
-                if (value >= 6)
-                {
-                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
-                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
-                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
-                    genre4.setText(movieDetailFull.getGenres().get(3).getName());
-                    genre5.setText(movieDetailFull.getGenres().get(4).getName());
-                    genre6.setText(movieDetailFull.getGenres().get(4).getName());
-                }
-                else if (value == 5)
-                {
-                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
-                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
-                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
-                    genre4.setText(movieDetailFull.getGenres().get(3).getName());
-                    genre5.setText(movieDetailFull.getGenres().get(4).getName());
-                    genre6.setVisibility(View.GONE);
-                }
-                else if (value == 4)
-                {
-                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
-                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
-                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
-                    genre4.setText(movieDetailFull.getGenres().get(3).getName());
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else if (value == 3)
-                {
-                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
-                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
-                    genre3.setText(movieDetailFull.getGenres().get(2).getName());
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else if (value == 2)
-                {
-                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
-                    genre2.setText(movieDetailFull.getGenres().get(1).getName());
-                    genre3.setVisibility(View.GONE);
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else if (value == 1)
-                {
-                    genre1.setText(movieDetailFull.getGenres().get(0).getName());
-                    genre2.setVisibility(View.GONE);
-                    genre3.setVisibility(View.GONE);
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
-                else
-                {
-                    genre1.setVisibility(View.GONE);
-                    genre2.setVisibility(View.GONE);
-                    genre3.setVisibility(View.GONE);
-                    genre4.setVisibility(View.GONE);
-                    genre5.setVisibility(View.GONE);
-                    genre6.setVisibility(View.GONE);
-                }
 
+                sb = new StringBuilder();
+                String prefix = "";
+                for (i = 0;i<value;i++)
+                {
+                    sb.append(prefix);
+                    prefix = ",";
+                    sb.append(movieDetailFull.getGenres().get(i).getName());
+                }
+                genre1.setText(sb);
 
                 //Setting Image to BAckDrop Imageview
                 if (movieDetailFull.getBelongsToCollection() == null)
@@ -531,10 +510,7 @@ public class MovieView extends AppCompatActivity {
 
                 String url3 = urlConstants.URL_Image + url2;
 
-                /*Picasso.with(MovieView.this)
-                        .load(url3)
-                        .placeholder(R.drawable.not_available)
-                        .into(backdrop_image);*/
+
 
                 Target target = new Target() {
                     @Override
@@ -569,6 +545,7 @@ public class MovieView extends AppCompatActivity {
                                         budget.setTextColor(textSwatch.getTitleTextColor());
                                         revenue.setTextColor(textSwatch.getTitleTextColor());
                                         revenue_title.setTextColor(textSwatch.getTitleTextColor());
+                                        genre1.setTextColor(textSwatch.getTitleTextColor());
                                     }
                                 });
                     }
