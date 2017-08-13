@@ -48,6 +48,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
 
 
         String ID = getIntent().getStringExtra("ID");
+        String view = getIntent().getStringExtra("VIEW");
 
         youtube_recyclerview = (RecyclerView) findViewById(R.id.youtube_recyclerview);
 
@@ -65,7 +66,9 @@ public class YoutubeActivity extends YouTubeBaseActivity {
 
 
 
-        String url = URLconstants.Videos_1st_URL + ID + URLconstants.Videos_2nd_URL;
+        String movie_url = URLconstants.Movies_Videos_1st_URL + ID + URLconstants.Movies_Videos_2nd_URL;
+
+        String tv_url = URLconstants.Tv_Videos_1st_URL + ID + URLconstants.Tv_Videos_2nd_URL;
 
 
         youtubeViewAdapter = new YoutubeViewAdapter(this, youtubelinks);
@@ -80,7 +83,16 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
-        getYoutubeLinks(url);
+        if (view.equals("MOVIE"))
+        {
+            getYoutubeLinks(movie_url);
+        }
+        else if (view.equals("TV"))
+        {
+            getYoutubeLinks(tv_url);
+        }
+
+
 
 
         // youTubePlayerView.initialize(DEVELOPER_KEY, this);

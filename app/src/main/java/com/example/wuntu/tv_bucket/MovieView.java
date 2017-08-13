@@ -65,7 +65,7 @@ public class MovieView extends AppCompatActivity {
     ArrayList<Cast> castArrayList;
     ArrayList<Cast> subCastArrayList;
 
-    TextView ratings,overview,status,release_date,genre1,budget,revenue,runtime,homepage;
+    TextView ratings,overview,status,release_date,genre1,budget,revenue,runtime,homepage,top_billed_cast;
     ImageView backdrop_image,image_play_trailer;
     TextView budget_title,revenue_title,current_season,season_number,current_season_year,current_season_episodes,current_season_tagline,view_all_seasons;
     TextView release_date_title,overview_title,status_title,genres_title,runtime_title,homepage_title,facts;
@@ -127,6 +127,7 @@ public class MovieView extends AppCompatActivity {
                     {
                         if (position == subCastArrayList.size() - 1)
                         {
+                            // Done things in Adapter for this
 
                         }
                         else
@@ -181,10 +182,17 @@ public class MovieView extends AppCompatActivity {
                 if (view.equals("MOVIE"))
                 {
                     Intent intent = new Intent(MovieView.this,YoutubeActivity.class);
+                    intent.putExtra("VIEW","MOVIE");
                     intent.putExtra("ID",ID);
                     startActivity(intent);
                 }
-                else Toast.makeText(MovieView.this, "Under Development", Toast.LENGTH_SHORT).show();
+                else if (view.equals("TV"))
+                {
+                    Intent intent = new Intent(MovieView.this,YoutubeActivity.class);
+                    intent.putExtra("VIEW","TV");
+                    intent.putExtra("ID",ID);
+                    startActivity(intent);
+                }
 
             }
         });
@@ -247,6 +255,8 @@ public class MovieView extends AppCompatActivity {
 
         facts = (TextView)findViewById(R.id.facts);
 
+        top_billed_cast = (TextView) findViewById(R.id.top_billed_cast);
+
     }
 
     private void prepareTvData(String url)
@@ -263,6 +273,12 @@ public class MovieView extends AppCompatActivity {
             {
                 tvExampleModel = gson.fromJson(response,TvExampleModel.class);
 
+
+
+                if (tvExampleModel.getCredits().getCast().size() == 0)
+                {
+                    top_billed_cast.setVisibility(View.GONE);
+                }
                 toolbar.setTitle(tvExampleModel.getName());
                 overview.setText(tvExampleModel.getOverview());
                 ratings.setText(String.valueOf(tvExampleModel.getVoteAverage()));
@@ -341,7 +357,9 @@ public class MovieView extends AppCompatActivity {
 
 
 
-                runtime.setText(String.valueOf(tvExampleModel.getEpisodeRunTime()));
+                String runtimestring = String.valueOf(tvExampleModel.getEpisodeRunTime());
+                String runtimefinal = runtimestring.substring(1,runtimestring.length()-1);
+                runtime.setText(runtimefinal + " min");
                 homepage.setText(tvExampleModel.getHomepage());
 
                if (tvExampleModel.getBackdropPath()!= null)
@@ -382,6 +400,7 @@ public class MovieView extends AppCompatActivity {
                                                     homepage_title.setTextColor(textSwatch.getTitleTextColor());
                                                     homepage.setTextColor(textSwatch.getTitleTextColor());
                                                     genre1.setTextColor(textSwatch.getTitleTextColor());
+                                                    homepage.setLinkTextColor(textSwatch.getTitleTextColor());
                                                 }
                                             });
                                 }
@@ -424,6 +443,8 @@ public class MovieView extends AppCompatActivity {
                         castDetailAdapter.notifyDataSetChanged();
                     }
 
+
+
                     castDetailAdapter.notifyDataSetChanged();
 
                     subCastArrayList.clear();
@@ -446,7 +467,15 @@ public class MovieView extends AppCompatActivity {
             }
         }, new Response.ErrorListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onErrorResponse(VolleyError error)
+            {
+                boolean b = Utility.isNetworkAvailable(MovieView.this);
+
+                if (!b)
+                {
+                    Snackbar.make(coordinator_layout_movie_view,"No Internet Connection",Snackbar.LENGTH_LONG).show();
+                }
+                pDialog.hide();
 
             }
         });
@@ -546,6 +575,7 @@ public class MovieView extends AppCompatActivity {
                                         revenue.setTextColor(textSwatch.getTitleTextColor());
                                         revenue_title.setTextColor(textSwatch.getTitleTextColor());
                                         genre1.setTextColor(textSwatch.getTitleTextColor());
+                                        homepage.setLinkTextColor(textSwatch.getTitleTextColor());
                                     }
                                 });
                     }

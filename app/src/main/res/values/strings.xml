@@ -34,7 +34,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="search_hint">Search for Movies,Tv Series...</string>
+    <string name="search_hint">Search for Movies,Tv Series &#8230;</string>
 
     <string name="next_page"><b><i><u>Next Page</u></i></b></string>
     <string name="previous_page"><b><i><u>Previous Page</u></i></b></string>

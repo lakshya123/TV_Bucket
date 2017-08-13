@@ -76,9 +76,9 @@
                     android:orientation="horizontal"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_weight="50"
+                    android:layout_weight="40"
                     android:padding="@dimen/activity_horizontal_margin"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content">
 
                     <ImageView
@@ -101,11 +101,11 @@
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_weight="50"
+                    android:layout_weight="60"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent">
 
                     <ImageView
                         android:contentDescription="@string/play_trailer_desc"
@@ -157,6 +157,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/top_billed_cast"
                 android:padding="@dimen/activity_horizontal_margin"
                 android:textAppearance="?android:textAppearanceLarge"
                 android:layout_width="match_parent"
@@ -290,6 +291,9 @@
                     android:text="@string/homepage"
                     android:textSize="20sp"/>
                 <TextView
+                    android:autoLink="web"
+                    android:clickable="true"
+                    android:linksClickable="true"
                     android:id="@+id/homepage"
                     android:textColor="@color/white"
                     android:layout_width="match_parent"
