@@ -4,18 +4,24 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,6 +44,9 @@ import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
+
+import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -73,6 +82,7 @@ public class MovieView extends AppCompatActivity {
     String ID;
     int i;
     StringBuilder sb;
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +90,12 @@ public class MovieView extends AppCompatActivity {
         setContentView(R.layout.activity_movie_view);
 
         initviews();
+
+        collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
+        final Typeface tf = Typeface.createFromAsset(this.getAssets(), "Titillium-Bold.otf");
+        collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
+        collapsingToolbarLayout.setExpandedTitleTypeface(tf);
+
 
 
 
@@ -103,14 +119,11 @@ public class MovieView extends AppCompatActivity {
         ID = getIntent().getStringExtra("ID");
 
 
-        play_trailer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MovieView.this,YoutubeActivity.class);
-                intent.putExtra("ID",ID);
-                startActivity(intent);
-            }
-        });
+
+
+
+
+
 
         castDetailAdapter = new CastDetailAdapter(MovieView.this,castArrayList,subCastArrayList);
 
@@ -208,8 +221,12 @@ public class MovieView extends AppCompatActivity {
 
     }
 
+
+
     private void initviews()
     {
+
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
         image_play_trailer= (ImageView)findViewById(R.id.image_play_trailer);
         coordinator_layout_movie_view = (CoordinatorLayout) findViewById(R.id.coordinator_layout_movie_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -279,7 +296,11 @@ public class MovieView extends AppCompatActivity {
                 {
                     top_billed_cast.setVisibility(View.GONE);
                 }
+
+
+
                 toolbar.setTitle(tvExampleModel.getName());
+
                 overview.setText(tvExampleModel.getOverview());
                 ratings.setText(String.valueOf(tvExampleModel.getVoteAverage()));
                 status.setText(tvExampleModel.getStatus());
@@ -401,6 +422,8 @@ public class MovieView extends AppCompatActivity {
                                                     homepage.setTextColor(textSwatch.getTitleTextColor());
                                                     genre1.setTextColor(textSwatch.getTitleTextColor());
                                                     homepage.setLinkTextColor(textSwatch.getTitleTextColor());
+                                                    collapsingToolbarLayout.setExpandedTitleColor(textSwatch.getBodyTextColor());
+
                                                 }
                                             });
                                 }
@@ -576,6 +599,7 @@ public class MovieView extends AppCompatActivity {
                                         revenue_title.setTextColor(textSwatch.getTitleTextColor());
                                         genre1.setTextColor(textSwatch.getTitleTextColor());
                                         homepage.setLinkTextColor(textSwatch.getTitleTextColor());
+                                        collapsingToolbarLayout.setExpandedTitleColor(textSwatch.getTitleTextColor());
                                     }
                                 });
                     }
@@ -668,6 +692,8 @@ public class MovieView extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
 }
