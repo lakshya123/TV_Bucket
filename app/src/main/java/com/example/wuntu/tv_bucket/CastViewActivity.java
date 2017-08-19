@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Fragments.CastViewFragment;
 import com.example.wuntu.tv_bucket.Fragments.CastViewListFragment;
+import com.example.wuntu.tv_bucket.Fragments.SeasonView;
 import com.example.wuntu.tv_bucket.Models.Cast;
+import com.example.wuntu.tv_bucket.Models.TvSeasons;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,7 @@ public class CastViewActivity extends AppCompatActivity
     String check;
     CastViewFragment castViewFragment;
     Integer id;
+    ArrayList<TvSeasons> seasonsArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class CastViewActivity extends AppCompatActivity
         });
 
         fullCastList = new ArrayList<>();
+        seasonsArrayList = new ArrayList<>();
         castViewListFragment = new CastViewListFragment();
         castViewFragment = new CastViewFragment();
 
@@ -52,20 +56,36 @@ public class CastViewActivity extends AppCompatActivity
             check = getIntent().getStringExtra("EVENT");
         }
 
-      /*  if (getIntent().getParcelableArrayExtra("LIST") != null)
-        {*/
-            fullCastList = getIntent().getParcelableArrayListExtra("LIST");
 
-        id = getIntent().getIntExtra("ID",0);
+
+
 
         if (check.equals("TOUCH EVENT") )
         {
+            id = getIntent().getIntExtra("ID",0);
             setViewtoCastView(id);
         }
         else if (check.equals("FULL LIST CAST"))
         {
+            fullCastList = getIntent().getParcelableArrayListExtra("LIST");
             setViewtoCastList();
         }
+        else if (check.equals("VIEW_SEASONS"))
+        {
+
+            setViewtoSeasonList();
+
+        }
+    }
+
+    public void setViewtoSeasonList()
+    {
+        seasonsArrayList = getIntent().getParcelableArrayListExtra("SEASONS_LIST");
+        SeasonView seasonView = new SeasonView();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("SEASON_LIST",seasonsArrayList);
+        seasonView.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,seasonView).commit();
     }
 
     public void setViewtoCastView(Integer id)

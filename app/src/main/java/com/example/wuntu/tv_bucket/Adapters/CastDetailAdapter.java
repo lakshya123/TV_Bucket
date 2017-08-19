@@ -36,9 +36,9 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     MovieView a;
     ArrayList<Cast> fullArrayList = new ArrayList<>();
 
-    public CastDetailAdapter(MovieView movieView, ArrayList<Cast> detailArrayList,ArrayList<Cast> subCastArrayList)
+    public CastDetailAdapter( ArrayList<Cast> detailArrayList,ArrayList<Cast> subCastArrayList)
     {
-        a = movieView;
+
         this.subArrayList = subCastArrayList;
         this.fullArrayList = detailArrayList;
     }

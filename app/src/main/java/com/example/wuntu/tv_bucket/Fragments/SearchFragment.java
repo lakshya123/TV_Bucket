@@ -104,12 +104,17 @@ public class SearchFragment extends Fragment {
                         {
                             Intent intent = new Intent(getActivity(), MovieView.class);
                             String ID = String.valueOf(searchModelArrayList.get(position).getId());
+                            intent.putExtra("VIEW","MOVIE");
                             intent.putExtra("ID",ID);
                             startActivity(intent);
                         }
                         else if (searchModelArrayList.get(position).getMediaType().equalsIgnoreCase("tv"))
                         {
-
+                            Intent intent = new Intent(getActivity(), MovieView.class);
+                            String ID = String.valueOf(searchModelArrayList.get(position).getId());
+                            intent.putExtra("VIEW","TV");
+                            intent.putExtra("ID",ID);
+                            startActivity(intent);
                         }
                     }
 

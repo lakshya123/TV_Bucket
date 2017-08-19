@@ -81,5 +81,5 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="160dp"
             android:dividerHeight="0dp" />
-        </android.support.design.widget.NavigationView>
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

@@ -87,7 +87,7 @@ public class MoviesMainFragment extends Fragment
 
 
 
-     recyclerView.addOnItemTouchListener(
+        recyclerView.addOnItemTouchListener(
                 new MoviesAdapter_OnClickListener(getContext(), recyclerView ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position)
@@ -203,7 +203,7 @@ public class MoviesMainFragment extends Fragment
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-    // Adding request to request queue
+        // Adding request to request queue
         AppSingleton.getInstance(getContext()).addToRequestQueue(stringRequest, tag_json_obj);
     }
 

@@ -1,11 +1,14 @@
 package com.example.wuntu.tv_bucket;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -22,6 +25,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +41,7 @@ import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.MovieDetailFull;
 import com.example.wuntu.tv_bucket.Models.TvExampleModel;
+import com.example.wuntu.tv_bucket.Models.TvSeasons;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.example.wuntu.tv_bucket.Utils.Utility;
@@ -73,9 +79,15 @@ public class MovieView extends AppCompatActivity {
 
     ArrayList<Cast> castArrayList;
     ArrayList<Cast> subCastArrayList;
+    ArrayList<TvSeasons> seasonsArrayList;
+
+
+    //View season_cardview_layout;
+
+    LinearLayout season_list;
 
     TextView ratings,overview,status,release_date,genre1,budget,revenue,runtime,homepage,top_billed_cast;
-    ImageView backdrop_image,image_play_trailer;
+    ImageView backdrop_image,image_play_trailer,poster_image;
     TextView budget_title,revenue_title,current_season,season_number,current_season_year,current_season_episodes,current_season_tagline,view_all_seasons;
     TextView release_date_title,overview_title,status_title,genres_title,runtime_title,homepage_title,facts;
     String url2;
@@ -99,10 +111,12 @@ public class MovieView extends AppCompatActivity {
 
 
 
+
         movieDetailFull = new MovieDetailFull();
         castArrayList = new ArrayList<>();
         subCastArrayList = new ArrayList<>();
         tvExampleModel = new TvExampleModel();
+        seasonsArrayList = new ArrayList<>();
 
 
 
@@ -125,7 +139,7 @@ public class MovieView extends AppCompatActivity {
 
 
 
-        castDetailAdapter = new CastDetailAdapter(MovieView.this,castArrayList,subCastArrayList);
+        castDetailAdapter = new CastDetailAdapter(castArrayList,subCastArrayList);
 
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
         recycler_view.setLayoutManager(mLayoutManager);
@@ -213,10 +227,19 @@ public class MovieView extends AppCompatActivity {
         view_all_seasons.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MovieView.this, "Under Development", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MovieView.this,CastViewActivity.class);
+                intent.putExtra("EVENT","VIEW_SEASONS");
+                intent.putExtra("SEASONS_LIST",seasonsArrayList);
+                startActivity(intent);
             }
         });
 
+        season_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MovieView.this, "Clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
@@ -225,6 +248,10 @@ public class MovieView extends AppCompatActivity {
 
     private void initviews()
     {
+
+
+        season_list = (LinearLayout) findViewById(R.id.season_list);
+        poster_image = (ImageView) findViewById(R.id.poster_image);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing);
         image_play_trailer= (ImageView)findViewById(R.id.image_play_trailer);
@@ -274,6 +301,8 @@ public class MovieView extends AppCompatActivity {
 
         top_billed_cast = (TextView) findViewById(R.id.top_billed_cast);
 
+        //season_cardview_layout = (View)findViewById(R.id.season_cardview_layout).findViewById(R.id.included_season_list).findViewById(R.id.season_list);
+
     }
 
     private void prepareTvData(String url)
@@ -301,19 +330,64 @@ public class MovieView extends AppCompatActivity {
 
                 toolbar.setTitle(tvExampleModel.getName());
 
-                overview.setText(tvExampleModel.getOverview());
+                if (tvExampleModel.getOverview() != null)
+                {
+                    overview.setText(tvExampleModel.getOverview());
+                }
+                else
+                {
+                    overview_layout.setVisibility(View.GONE);
+                }
+
                 ratings.setText(String.valueOf(tvExampleModel.getVoteAverage()));
                 status.setText(tvExampleModel.getStatus());
                 release_date.setText(tvExampleModel.getFirstAirDate());
 
                 //Season Layout
 
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                for (i = 0;i<tvExampleModel.getSeasons().size();i++)
+                {
+                    TvSeasons tvSeasons = new TvSeasons();
+                    tvSeasons.setAirDate(tvExampleModel.getSeasons().get(i).getAirDate());
+                    tvSeasons.setEpisodeCount(tvExampleModel.getSeasons().get(i).getEpisodeCount());
+                    tvSeasons.setId(tvExampleModel.getId());
+                    tvSeasons.setPosterPath(tvExampleModel.getSeasons().get(i).getPosterPath());
+                    tvSeasons.setSeasonNumber(tvExampleModel.getSeasons().get(i).getSeasonNumber());
+                    tvSeasons.setLastAirDate(tvExampleModel.getLastAirDate());
+                    seasonsArrayList.add(tvSeasons);
+                }
+                int size = tvExampleModel.getSeasons().size();
+
+                Target target1 = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
+                    {
+                        poster_image.setImageBitmap(bitmap);
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable)
+                    {
+                        poster_image.setImageDrawable(placeHolderDrawable);
+                    }
+                };
+                String season_poster_image = urlConstants.URL_Image + tvExampleModel.getSeasons().get(size - 1).getPosterPath();
+                Picasso.with(MovieView.this)
+                        .load(season_poster_image)
+                        .placeholder(R.drawable.not_available)
+                        .into(target1);
+
+                poster_image.setTag(target1);
+                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
                 Calendar calendar = Calendar.getInstance();
                 String date = dateFormat.format(calendar.getTime());
                 String last_air_Date_string = tvExampleModel.getLastAirDate();
                 String last_season_air_date_string;
-                int size = tvExampleModel.getSeasons().size();
                 last_season_air_date_string = tvExampleModel.getSeasons().get(size - 1).getAirDate();
 
                 String last_season_year = last_season_air_date_string.substring(0,4);
@@ -331,6 +405,14 @@ public class MovieView extends AppCompatActivity {
                     if (last_air_date.compareTo(today_date) < 0)
                     {
                         current_season.setText("Last Season");
+                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder.append("Season ");
+                        stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                        stringBuilder.append(" of ");
+                        stringBuilder.append(tvExampleModel.getName());
+                        stringBuilder.append(" premiered on ");
+                        stringBuilder.append(last_season_air_date_string);
+                        current_season_tagline.setText(stringBuilder);
                     }
                     else if (last_air_date.compareTo(today_date) > 0)
                     {
@@ -383,108 +465,131 @@ public class MovieView extends AppCompatActivity {
                 runtime.setText(runtimefinal + " min");
                 homepage.setText(tvExampleModel.getHomepage());
 
-               if (tvExampleModel.getBackdropPath()!= null)
-               {
-                   image_url = urlConstants.URL_Image + tvExampleModel.getBackdropPath();
-               }
+                if (tvExampleModel.getBackdropPath()!= null)
+                {
+                    image_url = urlConstants.URL_Image + tvExampleModel.getBackdropPath();
+                }
+                else
+                {
+                    overview_layout.setBackgroundColor(Color.GRAY);
+                    facts_layout.setBackgroundColor(Color.GRAY);
+                }
 
 
-                                Target target = new Target() {
-                                @Override
-                                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
-                                {
-                                    backdrop_image.setImageBitmap(bitmap);
-
-                                    Palette.from(bitmap)
-                                            .generate(new Palette.PaletteAsyncListener() {
-                                                @Override
-                                                public void onGenerated(Palette palette) {
-                                                    Palette.Swatch textSwatch = palette.getDominantSwatch();
-                                                    if (textSwatch == null ) {
-                                                        Toast.makeText(MovieView.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
-                                                        overview_layout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                                                        facts_layout.setBackgroundColor(Color.GRAY);
-                                                        return;
-                                                    }
-                                                    overview_layout.setBackgroundColor(textSwatch.getRgb());
-                                                    overview.setTextColor(textSwatch.getTitleTextColor());
-                                                    overview_title.setTextColor(textSwatch.getTitleTextColor());
-                                                    facts_layout.setBackgroundColor(textSwatch.getRgb());
-                                                    facts.setTextColor(textSwatch.getTitleTextColor());
-                                                    status_title.setTextColor(textSwatch.getTitleTextColor());
-                                                    status.setTextColor(textSwatch.getTitleTextColor());
-                                                    release_date_title.setTextColor(textSwatch.getTitleTextColor());
-                                                    release_date.setTextColor(textSwatch.getTitleTextColor());
-                                                    genres_title.setTextColor(textSwatch.getTitleTextColor());
-                                                    runtime.setTextColor(textSwatch.getTitleTextColor());
-                                                    runtime_title.setTextColor(textSwatch.getTitleTextColor());
-                                                    homepage_title.setTextColor(textSwatch.getTitleTextColor());
-                                                    homepage.setTextColor(textSwatch.getTitleTextColor());
-                                                    genre1.setTextColor(textSwatch.getTitleTextColor());
-                                                    homepage.setLinkTextColor(textSwatch.getTitleTextColor());
-                                                    collapsingToolbarLayout.setExpandedTitleColor(textSwatch.getBodyTextColor());
-
-                                                }
-                                            });
-                                }
-
-                                @Override
-                                public void onBitmapFailed(Drawable errorDrawable)
-                                {
-                                    overview_layout.setBackgroundColor(Color.GRAY);
-                                    facts_layout.setBackgroundColor(Color.GRAY);
-                                    backdrop_image.setImageDrawable(errorDrawable);
-
-                                }
-
-                                @Override
-                                public void onPrepareLoad(Drawable placeHolderDrawable)
-                                {
-
-
-                                }
-                            };
-
-                    Picasso.with(MovieView.this)
-                            .load(image_url)
-                            .placeholder(R.drawable.not_available)
-                            .into(target);
-
-                    backdrop_image.setTag(target);
-
-
-                    //Making Arraylist for RecyclerView
-                    int i;
-                    for (i=0;i<tvExampleModel.getCredits().getCast().size();i++)
+                Target target = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
                     {
-                        Cast cast = new Cast();
-                        cast.setName(tvExampleModel.getCredits().getCast().get(i).getName());
-                        cast.setCharacter(tvExampleModel.getCredits().getCast().get(i).getCharacter());
-                        cast.setId(tvExampleModel.getCredits().getCast().get(i).getId());
-                        cast.setProfilePath(tvExampleModel.getCredits().getCast().get(i).getProfilePath());
-                        castArrayList.add(i,cast);
-                        castDetailAdapter.notifyDataSetChanged();
+                        backdrop_image.setImageBitmap(bitmap);
+
+                        Palette.from(bitmap)
+                                .generate(new Palette.PaletteAsyncListener() {
+                                    @Override
+                                    public void onGenerated(Palette palette) {
+                                        Palette.Swatch textSwatch = palette.getDominantSwatch();
+                                        Palette.Swatch swatch = palette.getVibrantSwatch();
+
+                                        if (textSwatch == null ) {
+                                            return;
+                                        }
+                                        if (swatch == null)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            collapsingToolbarLayout.setExpandedTitleColor(swatch.getRgb());
+                                        }
+
+
+                                        overview_layout.setBackgroundColor(textSwatch.getRgb());
+                                        overview.setTextColor(textSwatch.getTitleTextColor());
+                                        overview_title.setTextColor(textSwatch.getTitleTextColor());
+                                        facts_layout.setBackgroundColor(textSwatch.getRgb());
+                                        facts.setTextColor(textSwatch.getTitleTextColor());
+                                        status_title.setTextColor(textSwatch.getTitleTextColor());
+                                        status.setTextColor(textSwatch.getTitleTextColor());
+                                        release_date_title.setTextColor(textSwatch.getTitleTextColor());
+                                        release_date.setTextColor(textSwatch.getTitleTextColor());
+                                        genres_title.setTextColor(textSwatch.getTitleTextColor());
+                                        runtime.setTextColor(textSwatch.getTitleTextColor());
+                                        runtime_title.setTextColor(textSwatch.getTitleTextColor());
+                                        homepage_title.setTextColor(textSwatch.getTitleTextColor());
+                                        homepage.setTextColor(textSwatch.getTitleTextColor());
+                                        genre1.setTextColor(textSwatch.getTitleTextColor());
+                                        homepage.setLinkTextColor(textSwatch.getTitleTextColor());
+                                        collapsingToolbarLayout.setContentScrimColor(textSwatch.getRgb());
+
+                                        Activity activity = MovieView.this;
+                                        Window window = activity.getWindow();
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                                            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                                            window.setStatusBarColor(textSwatch.getRgb());
+                                        }
+
+
+                                    }
+                                });
                     }
 
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable)
+                    {
+                        overview_layout.setBackgroundColor(Color.GRAY);
+                        facts_layout.setBackgroundColor(Color.GRAY);
+                        backdrop_image.setImageDrawable(errorDrawable);
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable)
+                    {
 
 
+                    }
+                };
+
+                Picasso.with(MovieView.this)
+                        .load(image_url)
+                        .placeholder(R.drawable.not_available)
+                        .into(target);
+
+                backdrop_image.setTag(target);
+
+
+                //Making Arraylist for RecyclerView
+                int i;
+                for (i=0;i<tvExampleModel.getCredits().getCast().size();i++)
+                {
+                    Cast cast = new Cast();
+                    cast.setName(tvExampleModel.getCredits().getCast().get(i).getName());
+                    cast.setCharacter(tvExampleModel.getCredits().getCast().get(i).getCharacter());
+                    cast.setId(tvExampleModel.getCredits().getCast().get(i).getId());
+                    cast.setProfilePath(tvExampleModel.getCredits().getCast().get(i).getProfilePath());
+                    castArrayList.add(i,cast);
                     castDetailAdapter.notifyDataSetChanged();
-
-                    subCastArrayList.clear();
-
-                    if (castArrayList.size() > 8)
-                    {
-                        subCastArrayList.addAll(castArrayList.subList(0,8));
-                        castDetailAdapter.notifyDataSetChanged();
-                    }
-                    else
-                    {
-                        subCastArrayList.addAll(castArrayList);
-                        castDetailAdapter.notifyDataSetChanged();
-                    }
+                }
 
 
-                    pDialog.hide();
+
+                castDetailAdapter.notifyDataSetChanged();
+
+                subCastArrayList.clear();
+
+                if (castArrayList.size() > 8)
+                {
+                    subCastArrayList.addAll(castArrayList.subList(0,8));
+                    castDetailAdapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    subCastArrayList.addAll(castArrayList);
+                    castDetailAdapter.notifyDataSetChanged();
+                }
+
+
+                pDialog.hide();
 
 
             }
@@ -529,6 +634,18 @@ public class MovieView extends AppCompatActivity {
                 String minutes = String.valueOf(movieDetailFull.getRuntime() % 60);
                 toolbar.setTitle(movieDetailFull.getTitle());
                 ratings.setText(String.valueOf(movieDetailFull.getVoteAverage()));
+
+                if (movieDetailFull.getOverview() != null)
+                {
+                    overview.setText(movieDetailFull.getOverview());
+                }
+                else
+                {
+                    overview_layout.setVisibility(View.GONE);
+                }
+
+
+
                 overview.setText(movieDetailFull.getOverview());
                 status.setText(movieDetailFull.getStatus());
                 release_date.setText(movieDetailFull.getReleaseDate());
@@ -575,10 +692,23 @@ public class MovieView extends AppCompatActivity {
                                     @Override
                                     public void onGenerated(Palette palette) {
                                         Palette.Swatch textSwatch = palette.getDominantSwatch();
+                                        Palette.Swatch vibrantSwatch = palette.getVibrantSwatch();
+
+
                                         if (textSwatch == null ) {
                                             Toast.makeText(MovieView.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
                                             return;
                                         }
+                                        if (vibrantSwatch == null)
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            collapsingToolbarLayout.setExpandedTitleColor(vibrantSwatch.getRgb());
+
+                                        }
+
                                         overview_layout.setBackgroundColor(textSwatch.getRgb());
                                         overview.setTextColor(textSwatch.getTitleTextColor());
                                         overview_title.setTextColor(textSwatch.getTitleTextColor());
@@ -599,7 +729,16 @@ public class MovieView extends AppCompatActivity {
                                         revenue_title.setTextColor(textSwatch.getTitleTextColor());
                                         genre1.setTextColor(textSwatch.getTitleTextColor());
                                         homepage.setLinkTextColor(textSwatch.getTitleTextColor());
-                                        collapsingToolbarLayout.setExpandedTitleColor(textSwatch.getTitleTextColor());
+                                        collapsingToolbarLayout.setContentScrimColor(textSwatch.getRgb());
+
+
+                                        Activity activity = MovieView.this;
+                                        Window window = activity.getWindow();
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                                            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                                            window.setStatusBarColor(textSwatch.getRgb());
+                                        }
                                     }
                                 });
                     }

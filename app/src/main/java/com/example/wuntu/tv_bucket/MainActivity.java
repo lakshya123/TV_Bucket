@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("QUERY",query1);
                     searchFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
-                   // Toast.makeText(MainActivity.this, query1+"", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(MainActivity.this, query1+"", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
