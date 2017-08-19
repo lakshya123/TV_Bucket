@@ -10,13 +10,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/season_num"
-            android:textAppearance="?android:textAppearanceLarge"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Season 1 "/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/season_num"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Season 1 "/>
+
+            <TextView
+                android:clickable="true"
+                android:textColor="@color/white"
+                android:text="@string/videos"
+                android:gravity="end|center"
+                android:layout_gravity="end|center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
         <TextView
             android:id="@+id/season_overview"
             android:layout_marginTop="3dp"
@@ -41,6 +57,35 @@
         android:layout_width="match_parent"
         android:clipToPadding="false"
         android:id="@+id/recycler_view_season_view"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Episodes "/>
+
+        <TextView
+            android:textAppearance="?android:textAppearanceLarge"
+            android:text="11"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:padding="10dp"
+        android:background="@color/viewBg"
+        android:layout_width="match_parent"
+        android:clipToPadding="false"
+        android:id="@+id/recycler_view_episodes_view"
         android:layout_height="wrap_content">
     </android.support.v7.widget.RecyclerView>
 

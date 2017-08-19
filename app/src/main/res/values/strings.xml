@@ -38,4 +38,7 @@
 
     <string name="next_page"><b><i><u>Next Page</u></i></b></string>
     <string name="previous_page"><b><i><u>Previous Page</u></i></b></string>
+
+
+    <string name="videos"><u>Videos</u></string>
 </resources>

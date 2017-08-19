@@ -27,6 +27,7 @@ import com.example.wuntu.tv_bucket.Adapters.CastDetailAdapter;
 import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.Cast;
+import com.example.wuntu.tv_bucket.Models.Episode;
 import com.example.wuntu.tv_bucket.Models.SeasonDetailGettingModel;
 import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
@@ -52,9 +53,10 @@ public class SeasonEpisodesFragment extends Fragment {
     CastDetailAdapter castDetailAdapter;
     ArrayList<Cast> castArrayList;
     ArrayList<Cast> subCastArrayList;
+    ArrayList<Episode> episodeArrayList;
+    ArrayList<Cast> episodeGuestList;
     SeasonDetailGettingModel seasonDetailGettingModel;
 
-    ImageView season_poster_image;
     TextView season_num,season_overview;
     int i;
 
@@ -81,6 +83,8 @@ public class SeasonEpisodesFragment extends Fragment {
 
         castArrayList = new ArrayList<>();
         subCastArrayList = new ArrayList<>();
+        episodeArrayList = new ArrayList<>();
+        episodeGuestList = new ArrayList<>();
 
         seasonDetailGettingModel = new SeasonDetailGettingModel();
 
@@ -154,6 +158,33 @@ public class SeasonEpisodesFragment extends Fragment {
             public void onResponse(String response)
             {
                 seasonDetailGettingModel = gson.fromJson(response,SeasonDetailGettingModel.class);
+
+
+                if (seasonDetailGettingModel.getEpisodes().size() > 0)
+                {
+                    for (i = 0;i<seasonDetailGettingModel.getEpisodes().size();i++)
+                    {
+                        Episode episode = new Episode();
+                        episode.setStillPath(seasonDetailGettingModel.getEpisodes().get(i).getStillPath());
+                        episode.setEpisodeNumber(seasonDetailGettingModel.getEpisodes().get(i).getEpisodeNumber());
+                        episode.setName(seasonDetailGettingModel.getEpisodes().get(i).getName());
+                        episode.setAirDate(seasonDetailGettingModel.getEpisodes().get(i).getAirDate());
+                        episode.setOverview(seasonDetailGettingModel.getEpisodes().get(i).getOverview());
+                        episode.setVoteAverage(seasonDetailGettingModel.getEpisodes().get(i).getVoteAverage());
+
+                        int j;
+                        for (j= 0;j<seasonDetailGettingModel.getEpisodes().get(i).getGuestStars().size();j++)
+                        {
+                            Cast cast = new Cast();
+                            cast.setName(seasonDetailGettingModel.getEpisodes().get(i).getGuestStars().get(j).getName());
+                            cast.setCharacter(seasonDetailGettingModel.getEpisodes().get(i).getGuestStars().get(j).getCharacter());
+                            cast.setId(seasonDetailGettingModel.getEpisodes().get(i).getGuestStars().get(j).getId());
+                            cast.setProfilePath(seasonDetailGettingModel.getEpisodes().get(i).getGuestStars().get(j).getProfilePath());
+                            episodeGuestList.add(j,cast);
+                        }
+                        episode.setGuestStars(episodeGuestList);
+                    }
+                }
 
 
                 if (seasonDetailGettingModel.getName() != null)
