@@ -1,93 +1,105 @@
-<LinearLayout android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:padding="10dp"
-        android:background="#504141"
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        xmlns:android="http://schemas.android.com/apk/res/android" >
 
         <LinearLayout
+            android:padding="10dp"
+            android:background="#504141"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/season_num"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Season 1 "/>
+
+                <TextView
+                    android:clickable="true"
+                    android:textColor="@color/white"
+                    android:text="@string/videos"
+                    android:gravity="end|center"
+                    android:layout_gravity="end|center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/season_overview"
+                android:layout_marginTop="3dp"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Families, friends, enemies and lovers experience life-changing events in the large upstate New York city of Port Charles, which has a busy hospital, upscale hotel, cozy diner and dangerous waterfront frequented by the criminal underworld."/>
+        </LinearLayout>
+
+        <TextView
+            android:padding="10dp"
+            android:id="@+id/regular_cast"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Regular Cast" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:padding="10dp"
+            android:background="@color/viewBg"
+            android:layout_width="match_parent"
+            android:clipToPadding="false"
+            android:id="@+id/recycler_view_season_view"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:padding="10dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/season_num"
                 android:textAppearance="?android:textAppearanceLarge"
-                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Season 1 "/>
+                android:text="Episodes "/>
 
             <TextView
-                android:clickable="true"
-                android:textColor="@color/white"
-                android:text="@string/videos"
-                android:gravity="end|center"
-                android:layout_gravity="end|center"
+                android:id="@+id/episode_total"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:text="11"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-        <TextView
-            android:id="@+id/season_overview"
-            android:layout_marginTop="3dp"
-            android:textColor="@color/white"
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_margin="5dp"
+            android:id="@+id/recycler_view_episodes_view"
+            android:background="@color/viewBg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Families, friends, enemies and lovers experience life-changing events in the large upstate New York city of Port Charles, which has a busy hospital, upscale hotel, cozy diner and dangerous waterfront frequented by the criminal underworld."/>
-    </LinearLayout>
+            android:clipToPadding="false"
+            android:layout_height="wrap_content">
+        </android.support.v7.widget.RecyclerView>
 
-    <TextView
-        android:padding="10dp"
-        android:id="@+id/regular_cast"
-        android:textAppearance="?android:textAppearanceLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Regular Cast" />
-
-
-    <android.support.v7.widget.RecyclerView
-        android:padding="10dp"
-        android:background="@color/viewBg"
-        android:layout_width="match_parent"
-        android:clipToPadding="false"
-        android:id="@+id/recycler_view_season_view"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
-
-    <LinearLayout
-        android:padding="10dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:textAppearance="?android:textAppearanceLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Episodes "/>
-
-        <TextView
-            android:textAppearance="?android:textAppearanceLarge"
-            android:text="11"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="30dp">
+        </View>
+
 
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:padding="10dp"
-        android:background="@color/viewBg"
-        android:layout_width="match_parent"
-        android:clipToPadding="false"
-        android:id="@+id/recycler_view_episodes_view"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
-
-
-</LinearLayout>
+</ScrollView>

@@ -11,6 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Adapters.FullCastListAdapter;
@@ -27,6 +28,7 @@ public class CastViewListFragment extends Fragment {
 
     RecyclerView recyclerView;
     ArrayList<Cast> castArrayList = new ArrayList<>();
+    TextView no_results;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,7 +42,17 @@ public class CastViewListFragment extends Fragment {
 
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);
+        no_results = (TextView) view.findViewById(R.id.no_results);
+
         castArrayList = getArguments().getParcelableArrayList("FULL CREW LIST");
+
+
+        if (castArrayList.size()  == 0)
+        {
+            no_results.setVisibility(View.VISIBLE);
+            //Toast.makeText(getActivity(), "No Results", Toast.LENGTH_SHORT).show();
+        }
+        else no_results.setVisibility(View.GONE);
 
 //        Toast.makeText(getActivity(), castArrayList.get(0).getCharacter() +"", Toast.LENGTH_SHORT).show();
 

@@ -40,7 +40,7 @@ public class Episode
     private Integer seasonNumber;
     @SerializedName("still_path")
     @Expose
-    private Object stillPath;
+    private String stillPath;
     @SerializedName("vote_average")
     @Expose
     private Double voteAverage;
@@ -120,11 +120,11 @@ public class Episode
         this.seasonNumber = seasonNumber;
     }
 
-    public Object getStillPath() {
+    public String getStillPath() {
         return stillPath;
     }
 
-    public void setStillPath(Object stillPath) {
+    public void setStillPath(String stillPath) {
         this.stillPath = stillPath;
     }
 

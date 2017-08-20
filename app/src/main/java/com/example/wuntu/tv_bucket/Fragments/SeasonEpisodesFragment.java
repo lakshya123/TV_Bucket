@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.wuntu.tv_bucket.Adapters.CastDetailAdapter;
+import com.example.wuntu.tv_bucket.Adapters.EpisodeAdapter;
 import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
 import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.Cast;
@@ -35,6 +38,7 @@ import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -56,8 +60,10 @@ public class SeasonEpisodesFragment extends Fragment {
     ArrayList<Episode> episodeArrayList;
     ArrayList<Cast> episodeGuestList;
     SeasonDetailGettingModel seasonDetailGettingModel;
+    EpisodeAdapter episodeAdapter;
+    RecyclerView recycler_view_episodes_view;
 
-    TextView season_num,season_overview;
+    TextView season_num,season_overview,episode_total;
     int i;
 
     @Override
@@ -67,9 +73,15 @@ public class SeasonEpisodesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_season_episodes, container, false);
 
         recycler_view_season_view = (RecyclerView) view.findViewById(R.id.recycler_view_season_view);
+        recycler_view_episodes_view = (RecyclerView) view.findViewById(R.id.recycler_view_episodes_view);
+
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(recycler_view_episodes_view);
 
         season_num = (TextView) view.findViewById(R.id.season_num);
         season_overview = (TextView) view.findViewById(R.id.season_overview);
+
+        episode_total = (TextView) view.findViewById(R.id.episode_total);
 
 
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("TV Bucket");
@@ -98,7 +110,6 @@ public class SeasonEpisodesFragment extends Fragment {
 
         String url = urlConstants.TV_Episodes_1st_URL + id  + urlConstants.TV_Episodes_2nd_URL + season_number + urlConstants.TV_Episodes_3rd_URL;
 
-        Toast.makeText(getActivity(), url, Toast.LENGTH_LONG).show();
 
 
 
@@ -108,6 +119,16 @@ public class SeasonEpisodesFragment extends Fragment {
         recycler_view_season_view.setLayoutManager(mLayoutManager);
         recycler_view_season_view.setItemAnimator(new DefaultItemAnimator());
         recycler_view_season_view.setAdapter(castDetailAdapter);
+
+
+
+
+        episodeAdapter = new EpisodeAdapter(episodeArrayList);
+
+        RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+        recycler_view_episodes_view.setLayoutManager(layoutManager);
+        recycler_view_episodes_view.setItemAnimator(new DefaultItemAnimator());
+        recycler_view_episodes_view.setAdapter(episodeAdapter);
 
 
         recycler_view_season_view.addOnItemTouchListener(
@@ -159,6 +180,8 @@ public class SeasonEpisodesFragment extends Fragment {
             {
                 seasonDetailGettingModel = gson.fromJson(response,SeasonDetailGettingModel.class);
 
+                episode_total.setText(String.valueOf(seasonDetailGettingModel.getEpisodes().size()));
+
 
                 if (seasonDetailGettingModel.getEpisodes().size() > 0)
                 {
@@ -181,8 +204,11 @@ public class SeasonEpisodesFragment extends Fragment {
                             cast.setId(seasonDetailGettingModel.getEpisodes().get(i).getGuestStars().get(j).getId());
                             cast.setProfilePath(seasonDetailGettingModel.getEpisodes().get(i).getGuestStars().get(j).getProfilePath());
                             episodeGuestList.add(j,cast);
+                            episodeAdapter.notifyDataSetChanged();
                         }
                         episode.setGuestStars(episodeGuestList);
+                        episodeArrayList.add(i,episode);
+                        episodeAdapter.notifyDataSetChanged();
                     }
                 }
 

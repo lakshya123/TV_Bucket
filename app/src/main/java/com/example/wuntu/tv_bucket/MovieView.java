@@ -234,12 +234,7 @@ public class MovieView extends AppCompatActivity {
             }
         });
 
-        season_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MovieView.this, "Clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
+
 
 
     }
@@ -356,7 +351,7 @@ public class MovieView extends AppCompatActivity {
                     tvSeasons.setLastAirDate(tvExampleModel.getLastAirDate());
                     seasonsArrayList.add(tvSeasons);
                 }
-                int size = tvExampleModel.getSeasons().size();
+                final int size = tvExampleModel.getSeasons().size();
 
                 Target target1 = new Target() {
                     @Override
@@ -446,6 +441,19 @@ public class MovieView extends AppCompatActivity {
                     Toast.makeText(MovieView.this, "try catch error", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
+
+
+                season_list.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MovieView.this,CastViewActivity.class);
+                        intent.putExtra("ID",tvExampleModel.getId());
+                        intent.putExtra("SEASON_NUM",tvExampleModel.getSeasons().get(size - 1).getSeasonNumber());
+                        intent.putExtra("EVENT","SEASON_EPISODES");
+                        startActivity(intent);
+
+                    }
+                });
 
 
                 sb = new StringBuilder();

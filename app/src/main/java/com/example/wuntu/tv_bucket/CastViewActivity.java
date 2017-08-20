@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Fragments.CastViewFragment;
 import com.example.wuntu.tv_bucket.Fragments.CastViewListFragment;
+import com.example.wuntu.tv_bucket.Fragments.SeasonEpisodesFragment;
 import com.example.wuntu.tv_bucket.Fragments.SeasonView;
 import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.TvSeasons;
@@ -76,6 +77,22 @@ public class CastViewActivity extends AppCompatActivity
             setViewtoSeasonList();
 
         }
+        else if (check.equals("SEASON_EPISODES"))
+        {
+            setViewtoSeasonEpisodes();
+        }
+    }
+
+    private void setViewtoSeasonEpisodes()
+    {
+        Integer ID = getIntent().getIntExtra("ID",0);
+        Integer SEASON_NUM = getIntent().getIntExtra("SEASON_NUM",0);
+        SeasonEpisodesFragment seasonEpisodesFragment = new SeasonEpisodesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("ID",ID);
+        bundle.putInt("SEASON_NUM",SEASON_NUM);
+        seasonEpisodesFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,seasonEpisodesFragment).commit();
     }
 
     public void setViewtoSeasonList()
