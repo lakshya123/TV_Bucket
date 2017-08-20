@@ -36,6 +36,7 @@ import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.example.wuntu.tv_bucket.YoutubeActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
@@ -62,6 +63,7 @@ public class SeasonEpisodesFragment extends Fragment {
     SeasonDetailGettingModel seasonDetailGettingModel;
     EpisodeAdapter episodeAdapter;
     RecyclerView recycler_view_episodes_view;
+    TextView season_videos;
 
     TextView season_num,season_overview,episode_total;
     int i;
@@ -80,6 +82,7 @@ public class SeasonEpisodesFragment extends Fragment {
 
         season_num = (TextView) view.findViewById(R.id.season_num);
         season_overview = (TextView) view.findViewById(R.id.season_overview);
+        season_videos = (TextView) view.findViewById(R.id.season_videos);
 
         episode_total = (TextView) view.findViewById(R.id.episode_total);
 
@@ -98,12 +101,23 @@ public class SeasonEpisodesFragment extends Fragment {
         episodeArrayList = new ArrayList<>();
         episodeGuestList = new ArrayList<>();
 
+
+
         seasonDetailGettingModel = new SeasonDetailGettingModel();
 
-        String id = String.valueOf(id1);
-        String season_number = String.valueOf(season_num1);
+        final String id = String.valueOf(id1);
+        final String season_number = String.valueOf(season_num1);
 
-
+        season_videos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),YoutubeActivity.class);
+                intent.putExtra("VIEW","SEASON");
+                intent.putExtra("ID",id);
+                intent.putExtra("SEASON_NUMBER",season_number);
+                startActivity(intent);
+            }
+        });
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
@@ -188,6 +202,8 @@ public class SeasonEpisodesFragment extends Fragment {
                     for (i = 0;i<seasonDetailGettingModel.getEpisodes().size();i++)
                     {
                         Episode episode = new Episode();
+                        episode.setId(id1);
+                        episode.setSeasonNumber(seasonDetailGettingModel.getSeasonNumber());
                         episode.setStillPath(seasonDetailGettingModel.getEpisodes().get(i).getStillPath());
                         episode.setEpisodeNumber(seasonDetailGettingModel.getEpisodes().get(i).getEpisodeNumber());
                         episode.setName(seasonDetailGettingModel.getEpisodes().get(i).getName());

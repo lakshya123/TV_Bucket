@@ -29,6 +29,20 @@ public class UrlConstants
 
     public String Tv_Videos_2nd_URL = "/videos?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US";
 
+    public String Season_Videos_1st_URL = "https://api.themoviedb.org/3/tv/";
+
+    public String Season_Videos_2nd_URL = "/season/";
+
+    public String Season_Videos_3rd_URL = "/videos?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US";
+
+    public String Episodes_Videos_1st_URL = "https://api.themoviedb.org/3/tv/";
+
+    public String Episodes_Videos_2nd_URL = "/season/";
+
+    public String Episodes_Videos_3rd_URL = "/episode/";
+
+    public String Episodes_Videos_4th_URL = "/videos?api_key=6d1c42e81f275fe7bcad0d4b020d010e&language=en-US";
+
     public String Youtube_URL = "https://www.youtube.com/watch?v=";
 
     public String URL_upcoming_movies = "https://api.themoviedb.org/3/movie/upcoming?api_key=6d1c42e81f275fe7bcad0d4b020d010e&page=";

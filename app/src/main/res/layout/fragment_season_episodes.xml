@@ -29,6 +29,7 @@
                     android:text="Season 1 "/>
 
                 <TextView
+                    android:id="@+id/season_videos"
                     android:clickable="true"
                     android:textColor="@color/white"
                     android:text="@string/videos"

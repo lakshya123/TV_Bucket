@@ -8,6 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -49,6 +50,8 @@ public class YoutubeActivity extends YouTubeBaseActivity {
 
         String ID = getIntent().getStringExtra("ID");
         String view = getIntent().getStringExtra("VIEW");
+        String Season_number = getIntent().getStringExtra("SEASON_NUMBER");
+        String Episode_number = getIntent().getStringExtra("EPISODE_NUMBER");
 
         youtube_recyclerview = (RecyclerView) findViewById(R.id.youtube_recyclerview);
 
@@ -70,6 +73,10 @@ public class YoutubeActivity extends YouTubeBaseActivity {
 
         String tv_url = URLconstants.Tv_Videos_1st_URL + ID + URLconstants.Tv_Videos_2nd_URL;
 
+        String seasons_url = URLconstants.Season_Videos_1st_URL + ID + URLconstants.Season_Videos_2nd_URL + Season_number + URLconstants.Season_Videos_3rd_URL;
+
+        String episodes_url = URLconstants.Episodes_Videos_1st_URL + ID + URLconstants.Episodes_Videos_2nd_URL + Season_number + URLconstants.Episodes_Videos_3rd_URL + Episode_number + URLconstants.Episodes_Videos_4th_URL;
+
 
         youtubeViewAdapter = new YoutubeViewAdapter(this, youtubelinks);
 
@@ -90,6 +97,14 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         else if (view.equals("TV"))
         {
             getYoutubeLinks(tv_url);
+        }
+        else if (view.equals("SEASON"))
+        {
+            getYoutubeLinks(seasons_url);
+        }
+        else if (view.equals("EPISODE"))
+        {
+            getYoutubeLinks(episodes_url);
         }
 
 

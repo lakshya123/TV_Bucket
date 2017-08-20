@@ -1,6 +1,7 @@
 package com.example.wuntu.tv_bucket.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.Episode;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.example.wuntu.tv_bucket.YoutubeActivity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -67,7 +69,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position)
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position)
     {
 
         for (i = 0;i<episodeArrayList.get(position).getGuestStars().size();i++)
@@ -122,6 +124,19 @@ public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ((EpisodeViewholder)holder).episode_air_date.setText(episodeArrayList.get(position).getAirDate());
         ((EpisodeViewholder)holder).episode_overview.setText(episodeArrayList.get(position).getOverview());
         ((EpisodeViewholder)holder).episode_ratings.setText(String.valueOf(episodeArrayList.get(position).getVoteAverage()));
+
+
+        ((EpisodeViewholder)holder).episode_videos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,YoutubeActivity.class);
+                intent.putExtra("VIEW","EPISODE");
+                intent.putExtra("ID",String.valueOf(episodeArrayList.get(position).getId()));
+                intent.putExtra("SEASON_NUMBER",String.valueOf(episodeArrayList.get(position).getSeasonNumber()));
+                intent.putExtra("EPISODE_NUMBER",String.valueOf(episodeArrayList.get(position).getEpisodeNumber()));
+                context.startActivity(intent);
+            }
+        });
 
     }
 
