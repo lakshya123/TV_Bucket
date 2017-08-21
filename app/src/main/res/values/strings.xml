@@ -1,20 +1,17 @@
 <resources>
-    <string name="app_name">TV_Bucket</string>
+    <string name="app_name">TV Bucket</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
+    <!--MOVIE VIEW XML-->
     <string name="poster_image_desc">Poster Image of Movie</string>
     <string name="star_image_desc">User Rating Image</string>
     <string name="play_trailer_desc">Play Trailer Image</string>
     <string name="play_trailer">Play Trailer</string>
     <string name="overview"><b>Overview</b></string>
-
-
     <string name="view_more"><u>View More</u></string>
-
     <string name="facts"><b>Facts</b></string>
-
     <string name="top_billed_cast">Top Billed Cast</string>
     <string name="status">Status</string>
     <string name="release_date">Release Date</string>
@@ -24,6 +21,7 @@
     <string name="runtime">Runtime</string>
     <string name="homepage">Homepage</string>
 
+    <!--CAST VIEW XML-->
     <string name="cast_image_description">Image of Cast</string>
     <string name="biography">Biography</string>
     <string name="personal_info">Personal Info</string>
@@ -31,14 +29,51 @@
     <string name="deathday">Death day</string>
     <string name="birth_place">Place of Birth</string>
 
+    <!--NAVIGATION DRAWER-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+
+    <!--SEARCH VIEW -->
     <string name="search_hint">Search for Movies,Tv Series &#8230;</string>
 
+    <!--MOVIES MAIN FRAGMENT-->
     <string name="next_page"><b><i><u>Next Page</u></i></b></string>
     <string name="previous_page"><b><i><u>Previous Page</u></i></b></string>
 
-
+    <!--EPISODE VIEW XML -->
+    <string name="episode_image_description">Episode Still Image</string>
+    <string name="aired_on">Aired on :</string>
+    <string name="rated">Rated :</string>
+    <string name="guest_casts"><u>Guest Casts</u></string>
     <string name="videos"><u>Videos</u></string>
+
+
+    <string name="no_results">No Results</string>
+
+    <string name="search_view">Search for Movies,Tv Series and Superstars</string>
+
+    <!--SEASON EPISODES FRAGMENT XML-->
+    <string name="regular_cast">Regular Cast</string>
+    <string name="episodes">Episodes</string>
+
+
+    <!--MOVIE LIST XML-->
+    <string name="movie_list_backdrop_description">Backdrop Image of Movie in List</string>
+    <string name="calendar_image_description">Image of Calendar</string>
+
+    <string name="logo_image_description">Search Result Logo Image</string>
+
+    <!--SEASON LAYOUT-->
+    <string name="view_all_seasons"><b><u>View All Seasons</u></b></string>
+    <string name="season_image_description">Poster Image of Season</string>
+    <string name="season">Season</string>
+    <string name="middle_stop">|</string>
+
+
+    <!--YOUTUBE ACTIVITY-->
+    <string name="youtube_thumbnail_description">Thumbnail of Youtube Video</string>
+
+
+
 </resources>

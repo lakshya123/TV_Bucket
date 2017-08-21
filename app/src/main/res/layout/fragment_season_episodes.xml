@@ -1,10 +1,9 @@
 <ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         xmlns:android="http://schemas.android.com/apk/res/android" >
 
@@ -25,8 +24,7 @@
                     android:textAppearance="?android:textAppearanceLarge"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Season 1 "/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/season_videos"
@@ -44,8 +42,8 @@
                 android:layout_marginTop="3dp"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Families, friends, enemies and lovers experience life-changing events in the large upstate New York city of Port Charles, which has a busy hospital, upscale hotel, cozy diner and dangerous waterfront frequented by the criminal underworld."/>
+                android:layout_height="wrap_content">
+            </TextView>
         </LinearLayout>
 
         <TextView
@@ -54,7 +52,7 @@
             android:textAppearance="?android:textAppearanceLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Regular Cast" />
+            android:text="@string/regular_cast" />
 
 
         <android.support.v7.widget.RecyclerView
@@ -76,13 +74,14 @@
                 android:textAppearance="?android:textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Episodes "/>
+                android:text="@string/episodes"/>
 
             <TextView
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
                 android:id="@+id/episode_total"
                 android:textAppearance="?android:textAppearanceLarge"
-                android:text="11"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
         </LinearLayout>

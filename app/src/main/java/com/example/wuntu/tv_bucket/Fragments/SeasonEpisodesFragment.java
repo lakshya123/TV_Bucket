@@ -3,8 +3,6 @@ package com.example.wuntu.tv_bucket.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +14,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,16 +28,12 @@ import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.Episode;
 import com.example.wuntu.tv_bucket.Models.SeasonDetailGettingModel;
-import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.example.wuntu.tv_bucket.YoutubeActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 
@@ -150,11 +142,7 @@ public class SeasonEpisodesFragment extends Fragment {
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        if (position == subCastArrayList.size() - 1)
-                        {
-                            // Done things in Adapter for this
-
-                        }
+                        if (position == subCastArrayList.size() - 1) {}
                         else
                         {
                             Intent intent = new Intent(getActivity(),CastViewActivity.class);
@@ -174,13 +162,13 @@ public class SeasonEpisodesFragment extends Fragment {
                 })
         );
 
-        preparedata(url);
+        prepareData(url);
 
 
         return view;
     }
 
-    private void preparedata(String url)
+    private void prepareData(String url)
     {
         String tag = "TAG";
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());

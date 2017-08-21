@@ -92,7 +92,6 @@
                         android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:text="5.6"
                         android:textSize="20sp"/>
 
                 </LinearLayout>
@@ -148,15 +147,15 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Autobots and Decepticons are at war, with humans on the sidelines. Optimus Prime is gone. The key to saving our future lies buried in the secrets of the past, in the hidden history of Transformers on Earth."/>
+                    android:layout_height="wrap_content">
+                </TextView>
             </LinearLayout>
             
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" 
-                android:text="Top Billed Cast"
+                android:text="@string/top_billed_cast"
                 android:textSize="20sp"/>
 
 

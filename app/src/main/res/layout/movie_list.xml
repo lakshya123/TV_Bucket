@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="270dp">
 
@@ -10,13 +11,15 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_margin"
         android:elevation="7dp"
-        card_view:cardCornerRadius="@dimen/card_album_radius">
+        card_view:cardCornerRadius="@dimen/card_album_radius"
+        tools:targetApi="lollipop">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
+                android:contentDescription="@string/movie_list_backdrop_description"
                 android:id="@+id/backdrop_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/poster_height"
@@ -48,6 +51,7 @@
                 >
 
                 <ImageView
+                    android:contentDescription="@string/calendar_image_description"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/calendar"

@@ -15,6 +15,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:contentDescription="@string/season_image_description"
                 android:id="@+id/poster_image"
                 android:layout_gravity="center"
                 android:layout_width="150dp"
@@ -36,15 +37,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Season"
+                    android:text="@string/season"
                     android:textAppearance="?android:textAppearanceLarge"/>
 
                 <TextView
                     android:id="@+id/season_number"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7"
                     android:textAppearance="?android:textAppearanceLarge"/>
             </LinearLayout>
 
@@ -59,31 +60,31 @@
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2017"
                     android:textSize="18sp"/>
 
                 <TextView
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="|"
+                    android:text="@string/middle_stop"
                     android:textSize="18sp"/>
 
                 <TextView
                     android:id="@+id/current_season_episodes"
                     android:textColor="@color/black"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="7"
                     android:textSize="18sp"/>
 
                 <TextView
                     android:textColor="@color/black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Episodes"
+                    android:text="@string/episodes"
                     android:textSize="18sp"/>
 
 
@@ -94,8 +95,8 @@
                 android:textSize="15sp"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Season 7 of Game of Thrones premiered on July 16, 2017."/>
+                android:layout_height="match_parent">
+            </TextView>
 
         </LinearLayout>
 

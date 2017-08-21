@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Fragments.CastViewListFragment;
-import com.example.wuntu.tv_bucket.Fragments.SeasonEpisodesFragment;
 import com.example.wuntu.tv_bucket.Models.Cast;
 import com.example.wuntu.tv_bucket.Models.Episode;
 import com.example.wuntu.tv_bucket.R;
@@ -24,7 +23,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 /**
  * Created by Wuntu on 20-08-2017.
@@ -33,21 +31,21 @@ import java.util.zip.Inflater;
 public class EpisodeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     Context context;
-    ArrayList<Episode> episodeArrayList = new ArrayList<>();
-    UrlConstants urlConstants = UrlConstants.getSingletonRef();
-    ArrayList<Cast> castArrayList = new ArrayList<>();
-    int i;
+    private ArrayList<Episode> episodeArrayList = new ArrayList<>();
+    private UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    private ArrayList<Cast> castArrayList = new ArrayList<>();
+    private int i;
 
     public EpisodeAdapter(ArrayList<Episode> episodeArrayList)
     {
         this.episodeArrayList = episodeArrayList;
     }
 
-    class EpisodeViewholder extends RecyclerView.ViewHolder
+    private class EpisodeViewholder extends RecyclerView.ViewHolder
     {
         ImageView still_image;
         TextView episode_number,episode_name,episode_air_date,episode_overview,episode_ratings,guest_cast,episode_videos;
-        public EpisodeViewholder(View itemView) {
+         EpisodeViewholder(View itemView) {
             super(itemView);
             still_image = (ImageView) itemView.findViewById(R.id.still_image);
             episode_name = (TextView) itemView.findViewById(R.id.episode_name);

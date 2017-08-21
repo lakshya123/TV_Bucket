@@ -6,6 +6,7 @@
 
 
     <TextView
+        android:textColor="@color/black"
         android:id="@+id/view_more"
         android:layout_gravity="center"
         android:gravity="center"

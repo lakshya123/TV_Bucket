@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
+<android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator_layout_movie_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -41,7 +41,7 @@
                     android:contentInsetStart="0dp"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_collapseMode="pin"
-                    >
+                    tools:targetApi="lollipop">
                 </android.support.v7.widget.Toolbar>
 
         </net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout>
@@ -171,7 +171,8 @@
                 android:layout_height="wrap_content">
             </android.support.v7.widget.RecyclerView>
 
-            <include  layout="@layout/season_layout"></include>
+            <include  layout="@layout/season_layout">
+            </include>
 
             <LinearLayout
                 android:id="@+id/facts_layout"
@@ -299,10 +300,10 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
                 android:layout_height="40dp">
-            </LinearLayout>
+            </View>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

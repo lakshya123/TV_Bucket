@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp">
 
@@ -10,7 +11,8 @@
         android:layout_gravity="center"
         android:layout_margin="@dimen/card_margin"
         android:elevation="7dp"
-        card_view:cardCornerRadius="@dimen/card_album_radius">
+        card_view:cardCornerRadius="@dimen/card_album_radius"
+        tools:targetApi="lollipop">
 
         <LinearLayout
             android:weightSum="100"
@@ -19,6 +21,7 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:contentDescription="@string/logo_image_description"
                 android:layout_weight="25"
                 android:id="@+id/search_image"
                 android:layout_width="0dp"
