@@ -7,7 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,6 +37,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
     YoutubeViewAdapter youtubeViewAdapter;
     android.widget.Toolbar toolbar;
     LinearLayout linearLayout;
+    TextView no_videos;
 
     UrlConstants URLconstants = UrlConstants.getSingletonRef();
     private Gson gson;
@@ -46,6 +49,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         setContentView(R.layout.activity_youtube);
 
         linearLayout = (LinearLayout) findViewById(R.id.activity_youtube);
+        no_videos = (TextView) findViewById(R.id.no_videos);
 
 
         String ID = getIntent().getStringExtra("ID");
@@ -142,6 +146,11 @@ public class YoutubeActivity extends YouTubeBaseActivity {
                     youtubelinksFinalModel.setKey(youtubeLinksGettingModel.getResults().get(i).getKey());
 
                     youtubelinks.add(i, youtubelinksFinalModel);
+                }
+
+                if (youtubeLinksGettingModel.getResults().size() == 0)
+                {
+                    no_videos.setVisibility(View.VISIBLE);
                 }
 
                 youtubeViewAdapter.notifyDataSetChanged();

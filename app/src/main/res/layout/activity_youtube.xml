@@ -17,12 +17,27 @@
         android:popupTheme="@android:style/ThemeOverlay.Material.Light"
         tools:targetApi="lollipop" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/no_videos"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:gravity="center"
+            android:text="No Videos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
 
     <android.support.v7.widget.RecyclerView
         android:background="@color/viewBg"
         android:id="@+id/youtube_recyclerview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
 
 
 </LinearLayout>

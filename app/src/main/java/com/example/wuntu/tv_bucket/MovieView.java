@@ -99,6 +99,7 @@ public class MovieView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_movie_view);
 
         initviews();
@@ -187,7 +188,7 @@ public class MovieView extends AppCompatActivity {
             budget.setVisibility(View.VISIBLE);
             revenue_title.setVisibility(View.VISIBLE);
             revenue.setVisibility(View.VISIBLE);
-            release_date_title.setText("Release Date");
+            release_date_title.setText(R.string.release_date);
             String url = urlConstants.Movie_1st_URL + ID + urlConstants.Movie_2nd_URL;
             prepareMovieData(url);
         }
@@ -199,9 +200,34 @@ public class MovieView extends AppCompatActivity {
             revenue.setVisibility(View.GONE);
             revenue_title.setVisibility(View.GONE);
             String url = urlConstants.TV_1st_URL + ID + urlConstants.TV_2nd_URL;
-            release_date_title.setText("First Air Date");
+            release_date_title.setText(R.string.first_air_date);
             prepareTvData(url);
         }
+
+
+
+
+        image_play_trailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View View) {
+                if (view.equals("MOVIE"))
+                {
+                    Intent intent = new Intent(MovieView.this,YoutubeActivity.class);
+                    intent.putExtra("VIEW","MOVIE");
+                    intent.putExtra("ID",ID);
+                    startActivity(intent);
+                }
+                else if (view.equals("TV"))
+                {
+                    Intent intent = new Intent(MovieView.this,YoutubeActivity.class);
+                    intent.putExtra("VIEW","TV");
+                    intent.putExtra("ID",ID);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
 
         play_trailer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,7 +349,11 @@ public class MovieView extends AppCompatActivity {
 
 
 
-                toolbar.setTitle(tvExampleModel.getName());
+                if (tvExampleModel.getName() != null)
+                {
+                    toolbar.setTitle(tvExampleModel.getName());
+                }
+
 
                 if (tvExampleModel.getOverview() != null)
                 {
@@ -333,98 +363,86 @@ public class MovieView extends AppCompatActivity {
                 {
                     overview_layout.setVisibility(View.GONE);
                 }
-
-                ratings.setText(String.valueOf(tvExampleModel.getVoteAverage()));
-                status.setText(tvExampleModel.getStatus());
-                release_date.setText(tvExampleModel.getFirstAirDate());
-
-                //Season Layout
-
-                for (i = 0;i<tvExampleModel.getSeasons().size();i++)
+                if (tvExampleModel.getVoteAverage() != null)
                 {
-                    TvSeasons tvSeasons = new TvSeasons();
-                    tvSeasons.setAirDate(tvExampleModel.getSeasons().get(i).getAirDate());
-                    tvSeasons.setEpisodeCount(tvExampleModel.getSeasons().get(i).getEpisodeCount());
-                    tvSeasons.setId(tvExampleModel.getId());
-                    tvSeasons.setPosterPath(tvExampleModel.getSeasons().get(i).getPosterPath());
-                    tvSeasons.setSeasonNumber(tvExampleModel.getSeasons().get(i).getSeasonNumber());
-                    tvSeasons.setLastAirDate(tvExampleModel.getLastAirDate());
-                    seasonsArrayList.add(tvSeasons);
+                    ratings.setText(String.valueOf(tvExampleModel.getVoteAverage()));
                 }
-                final int size = tvExampleModel.getSeasons().size();
+                if (tvExampleModel.getStatus() != null)
+                {
+                    status.setText(tvExampleModel.getStatus());
+                }
 
-                Target target1 = new Target() {
-                    @Override
-                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
-                    {
-                        poster_image.setImageBitmap(bitmap);
+                if (tvExampleModel.getFirstAirDate() != null)
+                {
+                    release_date.setText(tvExampleModel.getFirstAirDate());
+                }
+
+
+                if (tvExampleModel.getSeasons().size() == 0)
+                {
+                    season_layout.setVisibility(View.GONE);
+                }
+                else {
+
+
+                    //Season Layout
+
+                    for (i = 0; i < tvExampleModel.getSeasons().size(); i++) {
+                        TvSeasons tvSeasons = new TvSeasons();
+                        tvSeasons.setAirDate(tvExampleModel.getSeasons().get(i).getAirDate());
+                        tvSeasons.setEpisodeCount(tvExampleModel.getSeasons().get(i).getEpisodeCount());
+                        tvSeasons.setId(tvExampleModel.getId());
+                        tvSeasons.setPosterPath(tvExampleModel.getSeasons().get(i).getPosterPath());
+                        tvSeasons.setSeasonNumber(tvExampleModel.getSeasons().get(i).getSeasonNumber());
+                        tvSeasons.setLastAirDate(tvExampleModel.getLastAirDate());
+                        seasonsArrayList.add(tvSeasons);
                     }
+                    final int size = tvExampleModel.getSeasons().size();
 
-                    @Override
-                    public void onBitmapFailed(Drawable errorDrawable) {
-
-                    }
-
-                    @Override
-                    public void onPrepareLoad(Drawable placeHolderDrawable)
-                    {
-                        poster_image.setImageDrawable(placeHolderDrawable);
-                    }
-                };
-                String season_poster_image = urlConstants.URL_Image + tvExampleModel.getSeasons().get(size - 1).getPosterPath();
-                Picasso.with(MovieView.this)
-                        .load(season_poster_image)
-                        .placeholder(R.drawable.not_available)
-                        .into(target1);
-
-                poster_image.setTag(target1);
-                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH);
-                Calendar calendar = Calendar.getInstance();
-                String date = dateFormat.format(calendar.getTime());
-                String last_air_Date_string = tvExampleModel.getLastAirDate();
-                String last_season_air_date_string;
-                last_season_air_date_string = tvExampleModel.getSeasons().get(size - 1).getAirDate();
-
-                String last_season_year = last_season_air_date_string.substring(0,4);
-                current_season_year.setText(last_season_year);
-
-                season_number.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
-
-                current_season_episodes.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getEpisodeCount()));
-
-                try {
-                    Date today_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date);
-                    Date last_air_date = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(last_air_Date_string);
-                    Date last_season_air_date = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(last_season_air_date_string);
-
-                    if (last_air_date.compareTo(today_date) < 0)
-                    {
-                        current_season.setText("Last Season");
-                        StringBuilder stringBuilder = new StringBuilder();
-                        stringBuilder.append("Season ");
-                        stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
-                        stringBuilder.append(" of ");
-                        stringBuilder.append(tvExampleModel.getName());
-                        stringBuilder.append(" premiered on ");
-                        stringBuilder.append(last_season_air_date_string);
-                        current_season_tagline.setText(stringBuilder);
-                    }
-                    else if (last_air_date.compareTo(today_date) > 0)
-                    {
-                        if (last_season_air_date.compareTo(today_date) > 0)
-                        {
-                            StringBuilder stringBuilder = new StringBuilder();
-                            stringBuilder.append("Season ");
-                            stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
-                            stringBuilder.append(" of ");
-                            stringBuilder.append(tvExampleModel.getName());
-                            stringBuilder.append(" will be premiered on ");
-                            stringBuilder.append(last_season_air_date_string);
-                            current_season_tagline.setText(stringBuilder);
-                            current_season.setText("Upcoming Season");
+                    Target target1 = new Target() {
+                        @Override
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            poster_image.setImageBitmap(bitmap);
                         }
-                        else if (last_season_air_date.compareTo(today_date) < 0)
-                        {
+
+                        @Override
+                        public void onBitmapFailed(Drawable errorDrawable) {
+
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+                            poster_image.setImageDrawable(placeHolderDrawable);
+                        }
+                    };
+                    String season_poster_image = urlConstants.URL_Image + tvExampleModel.getSeasons().get(size - 1).getPosterPath();
+                    Picasso.with(MovieView.this)
+                            .load(season_poster_image)
+                            .placeholder(R.drawable.not_available)
+                            .into(target1);
+
+                    poster_image.setTag(target1);
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    Calendar calendar = Calendar.getInstance();
+                    String date = dateFormat.format(calendar.getTime());
+                    String last_air_Date_string = tvExampleModel.getLastAirDate();
+                    String last_season_air_date_string;
+                    last_season_air_date_string = tvExampleModel.getSeasons().get(size - 1).getAirDate();
+
+                    String last_season_year = last_season_air_date_string.substring(0, 4);
+                    current_season_year.setText(last_season_year);
+
+                    season_number.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+
+                    current_season_episodes.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getEpisodeCount()));
+
+                    try {
+                        Date today_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date);
+                        Date last_air_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(last_air_Date_string);
+                        Date last_season_air_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(last_season_air_date_string);
+
+                        if (last_air_date.compareTo(today_date) < 0) {
+                            current_season.setText(R.string.last_season);
                             StringBuilder stringBuilder = new StringBuilder();
                             stringBuilder.append("Season ");
                             stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
@@ -433,27 +451,49 @@ public class MovieView extends AppCompatActivity {
                             stringBuilder.append(" premiered on ");
                             stringBuilder.append(last_season_air_date_string);
                             current_season_tagline.setText(stringBuilder);
-                            current_season.setText("Current Season");
+                        } else if (last_air_date.compareTo(today_date) > 0) {
+                            if (last_season_air_date.compareTo(today_date) > 0) {
+                                StringBuilder stringBuilder = new StringBuilder();
+                                stringBuilder.append("Season ");
+                                stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                                stringBuilder.append(" of ");
+                                stringBuilder.append(tvExampleModel.getName());
+                                stringBuilder.append(" will be premiered on ");
+                                stringBuilder.append(last_season_air_date_string);
+                                current_season_tagline.setText(stringBuilder);
+                                current_season.setText(R.string.upcoming_season);
+                            } else if (last_season_air_date.compareTo(today_date) < 0) {
+                                StringBuilder stringBuilder = new StringBuilder();
+                                stringBuilder.append("Season ");
+                                stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                                stringBuilder.append(" of ");
+                                stringBuilder.append(tvExampleModel.getName());
+                                stringBuilder.append(" premiered on ");
+                                stringBuilder.append(last_season_air_date_string);
+                                current_season_tagline.setText(stringBuilder);
+                                current_season.setText(R.string.current_season);
+                            }
                         }
+
+                    } catch (ParseException e) {
+                        Toast.makeText(MovieView.this, "try catch error", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
                     }
 
-                } catch (ParseException e) {
-                    Toast.makeText(MovieView.this, "try catch error", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
+
+                    season_list.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(MovieView.this, CastViewActivity.class);
+                            intent.putExtra("ID", tvExampleModel.getId());
+                            intent.putExtra("SEASON_NUM", tvExampleModel.getSeasons().get(size - 1).getSeasonNumber());
+                            intent.putExtra("EVENT", "SEASON_EPISODES");
+                            startActivity(intent);
+
+                        }
+                    });
+
                 }
-
-
-                season_list.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(MovieView.this,CastViewActivity.class);
-                        intent.putExtra("ID",tvExampleModel.getId());
-                        intent.putExtra("SEASON_NUM",tvExampleModel.getSeasons().get(size - 1).getSeasonNumber());
-                        intent.putExtra("EVENT","SEASON_EPISODES");
-                        startActivity(intent);
-
-                    }
-                });
 
 
                 sb = new StringBuilder();
@@ -638,10 +678,31 @@ public class MovieView extends AppCompatActivity {
 
                 //Setting text to the textviews
                 movieDetailFull = gson.fromJson(response,MovieDetailFull.class);
-                String hours = String.valueOf(movieDetailFull.getRuntime() / 60);
-                String minutes = String.valueOf(movieDetailFull.getRuntime() % 60);
-                toolbar.setTitle(movieDetailFull.getTitle());
-                ratings.setText(String.valueOf(movieDetailFull.getVoteAverage()));
+
+
+                if (movieDetailFull.getRuntime() != null)
+                {
+                    String hours = String.valueOf(movieDetailFull.getRuntime() / 60);
+                    String minutes = String.valueOf(movieDetailFull.getRuntime() % 60);
+                    runtime.setText(hours + "h " + minutes  +"m");
+                }
+                else
+                {
+                    runtime_title.setVisibility(View.GONE);
+                    runtime.setVisibility(View.GONE);
+                }
+
+                if (movieDetailFull.getTitle() != null)
+                {
+                    toolbar.setTitle(movieDetailFull.getTitle());
+                }
+
+                if (movieDetailFull.getVoteAverage() != null)
+                {
+                    ratings.setText(String.valueOf(movieDetailFull.getVoteAverage()));
+                }
+
+
 
                 if (movieDetailFull.getOverview() != null)
                 {
@@ -653,27 +714,71 @@ public class MovieView extends AppCompatActivity {
                 }
 
 
+                if (movieDetailFull.getStatus() != null)
+                {
+                    status.setText(movieDetailFull.getStatus());
+                }
+                else
+                {
+                    status.setVisibility(View.GONE);
+                    status_title.setVisibility(View.GONE);
+                }
+                if (movieDetailFull.getReleaseDate() != null)
+                {
+                    release_date.setText(movieDetailFull.getReleaseDate());
+                }
+                else
+                {
+                    release_date.setVisibility(View.GONE);
+                    release_date_title.setVisibility(View.GONE);
+                }
+                if (movieDetailFull.getBudget() != null)
+                {
+                    budget.setText("$" + String.valueOf(movieDetailFull.getBudget()));
+                }
+                else
+                {
+                    budget.setVisibility(View.GONE);
+                    budget_title.setVisibility(View.GONE);
+                }
+                if (movieDetailFull.getRevenue() != null)
+                {
+                    revenue.setText("$" + String.valueOf(movieDetailFull.getRevenue()));
+                }
+                else
+                {
+                    revenue.setVisibility(View.GONE);
+                    revenue_title.setVisibility(View.GONE);
+                }
 
-                overview.setText(movieDetailFull.getOverview());
-                status.setText(movieDetailFull.getStatus());
-                release_date.setText(movieDetailFull.getReleaseDate());
-                budget.setText("$" + String.valueOf(movieDetailFull.getBudget()));
-                revenue.setText("$" + String.valueOf(movieDetailFull.getRevenue()));
-                runtime.setText(hours + "h " + minutes  +"m");
-                homepage.setText(movieDetailFull.getHomepage());
+
+                if (movieDetailFull.getHomepage() != null)
+                {
+                    homepage.setText(movieDetailFull.getHomepage());
+                }
+                else
+                {
+                    homepage.setVisibility(View.GONE);
+                    homepage_title.setVisibility(View.GONE);
+                }
+
 
                 //Setting text to genres
                 int value = movieDetailFull.getGenres().size();
 
-                sb = new StringBuilder();
-                String prefix = "";
-                for (i = 0;i<value;i++)
+                if (value != 0)
                 {
-                    sb.append(prefix);
-                    prefix = ",";
-                    sb.append(movieDetailFull.getGenres().get(i).getName());
+                    sb = new StringBuilder();
+                    String prefix = "";
+                    for (i = 0;i<value;i++)
+                    {
+                        sb.append(prefix);
+                        prefix = ",";
+                        sb.append(movieDetailFull.getGenres().get(i).getName());
+                    }
+                    genre1.setText(sb);
                 }
-                genre1.setText(sb);
+
 
                 //Setting Image to BAckDrop Imageview
                 if (movieDetailFull.getBelongsToCollection() == null)
@@ -704,12 +809,12 @@ public class MovieView extends AppCompatActivity {
 
 
                                         if (textSwatch == null ) {
-                                            Toast.makeText(MovieView.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(MovieView.this, "Null swatch :(", Toast.LENGTH_SHORT).show();
                                             return;
                                         }
                                         if (vibrantSwatch == null)
                                         {
-
+                                            //nothing here as well
                                         }
                                         else
                                         {

@@ -15,6 +15,7 @@
     <string name="top_billed_cast">Top Billed Cast</string>
     <string name="status">Status</string>
     <string name="release_date">Release Date</string>
+    <string name="first_air_date">First AIR Date</string>
     <string name="genres">Genres</string>
     <string name="budget">Budget</string>
     <string name="revenue">Revenue</string>
@@ -73,6 +74,12 @@
 
     <!--YOUTUBE ACTIVITY-->
     <string name="youtube_thumbnail_description">Thumbnail of Youtube Video</string>
+
+
+    <string name="upcoming_season">Upcoming Season</string>
+    <string name="current_season">Current Season</string>
+    <string name="last_season">Last Season</string>
+
 
 
 
