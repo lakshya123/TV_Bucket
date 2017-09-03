@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
 import com.example.wuntu.tv_bucket.Models.Result;
@@ -17,7 +16,6 @@ import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Wuntu on 05-07-2017.
@@ -25,14 +23,13 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    Result movie;
-    UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    private Result movie;
+    private UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private ArrayList<Result> moviesList = new ArrayList<>();
     private Context context;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
-    Fragment fragment;
-    String url;
+    private Fragment fragment;
 
     public MoviesAdapter(ArrayList<Result> moviesList, Fragment fragment) {
         this.moviesList = moviesList;
@@ -41,11 +38,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    private class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView backdrop_image;
-        public TextView title, date;
-        public MyViewHolder(View view) {
+        ImageView backdrop_image;
+        TextView title, date;
+        MyViewHolder(View view) {
             super(view);
             backdrop_image = (ImageView)view.findViewById(R.id.backdrop_image);
             title = (TextView) view.findViewById(R.id.title);
@@ -53,11 +50,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public class FooterViewHolder extends RecyclerView.ViewHolder
+    private class FooterViewHolder extends RecyclerView.ViewHolder
     {
-        public TextView previous_page,next_page;
+        TextView previous_page,next_page;
 
-        public FooterViewHolder(View itemView) {
+        FooterViewHolder(View itemView) {
             super(itemView);
             previous_page = (TextView)itemView.findViewById(R.id.previous_page);
             next_page = (TextView) itemView.findViewById(R.id.next_page);
@@ -76,6 +73,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return position != getItemCount() -1;
     }
 
+
+   /* private boolean isPositionItem(int position) {
+        return position == moviesList.size();
+    }*/
 
 
     @Override

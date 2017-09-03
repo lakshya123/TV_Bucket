@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -26,7 +23,6 @@ import com.example.wuntu.tv_bucket.Adapters.SearchAdapter;
 import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.MultiSearchModel;
 import com.example.wuntu.tv_bucket.Models.MultiSearchResultModel;
-import com.example.wuntu.tv_bucket.Models.Popular_Movies_Model;
 import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
@@ -170,7 +166,7 @@ public class SearchFragment extends Fragment {
                 }
                 if (multiSearchModel.getTotalResults() == 0)
                 {
-                    search_text.setText("No Results");
+                    search_text.setText(R.string.no_results);
                     search_text.setVisibility(View.VISIBLE);
                 }
                 searchAdapter.notifyDataSetChanged();
