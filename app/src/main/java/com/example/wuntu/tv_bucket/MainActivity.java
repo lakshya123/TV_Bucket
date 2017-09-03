@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Adapters.ExpandListAdapter;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     SearchFragment searchFragment;
     FrameLayout frameLayout;
     AppBarLayout.LayoutParams params;
+    private int lastExpandedPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,9 +251,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if (frameLayout.getVisibility() == View.VISIBLE)
+        {
+            viewPager.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.VISIBLE);
+            toggle.setDrawerIndicatorEnabled(true);
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                    | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+
+            frameLayout.setVisibility(GONE);
+
+            searchView.onActionViewCollapsed();
+        }
+        else {
             super.onBackPressed();
         }
     }
@@ -271,34 +290,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-               /*  Toast.makeText(getApplicationContext(),
-                 "Group Clicked " + listDataHeader.get(groupPosition),
-                 Toast.LENGTH_SHORT).show();*/
-
 
                 return false;
             }
+
         });
         // Listview Group expanded listener
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-              /*  Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();*/
+                if (lastExpandedPosition != -1
+                        && groupPosition != lastExpandedPosition) {
+                    expListView.collapseGroup(lastExpandedPosition);
+                }
+                lastExpandedPosition = groupPosition;
             }
         });
+
 
         // Listview Group collasped listener
         expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
             @Override
-            public void onGroupCollapse(int groupPosition) {
-                /*Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
-*/
+            public void onGroupCollapse(int groupPosition)
+            {
             }
         });
 
@@ -332,6 +348,28 @@ public class MainActivity extends AppCompatActivity {
                         default:
                             moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies,1);
                             drawer.closeDrawer(GravityCompat.START);
+                            break;
+                    }
+                }
+                else if (groupPosition == 1)
+                {
+                    switch (childPosition)
+                    {
+                        case 0:
+                            drawer.closeDrawer(GravityCompat.START);
+                            tvMainFragment.prepareOnlineData(urlConstants.URL_popular_tv_shows,1);
+                            break;
+                        case 1:
+                            tvMainFragment.prepareOnlineData(urlConstants.URL_top_rated_tv_shows,1);
+                            drawer.closeDrawer(GravityCompat.START);
+                            break;
+                        case 2:
+                            drawer.closeDrawer(GravityCompat.START);
+                            tvMainFragment.prepareOnlineData(urlConstants.URL_tv_on_air,1);
+                            break;
+                        case 3:
+                            drawer.closeDrawer(GravityCompat.START);
+                            tvMainFragment.prepareOnlineData(urlConstants.URL_tv_airing_today,1);
                             break;
                     }
                 }

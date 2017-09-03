@@ -19,8 +19,7 @@
                 android:id="@+id/poster_image"
                 android:layout_gravity="center"
                 android:layout_width="150dp"
-                android:layout_height="170dp"
-                android:src="@drawable/background"/>
+                android:layout_height="170dp" />
 
 
         <LinearLayout

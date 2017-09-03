@@ -65,7 +65,7 @@ public class MoviesMainFragment extends Fragment
     private Gson gson;
     Integer page_number = 1;
     Popular_Movies_Model example;
-    String url = URLconstants.URL_popular_movies;
+    String url = URLconstants.URL_now_playing_movies;
     String url1 = " ";
 
 

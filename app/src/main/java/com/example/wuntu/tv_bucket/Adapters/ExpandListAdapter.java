@@ -50,11 +50,11 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.expandable_list_item_child, null);
+            convertView = infalInflater.inflate(R.layout.list_item_child_drawer, null);
         }
 
         TextView txtListChild = (TextView) convertView
-                .findViewById(R.id.lblListItem);
+                .findViewById(R.id.expandedListItem);
 
         txtListChild.setText(childText);
         return convertView;
@@ -88,11 +88,28 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.expandable_list_item_parent, null);
+            convertView = infalInflater.inflate(R.layout.list_item_parent_drawer, null);
         }
 
         TextView lblListHeader = (TextView) convertView
-                .findViewById(R.id.lblListHeader);
+                .findViewById(R.id.listTitle);
+        TextView txt_list_item_close_open = (TextView) convertView
+                .findViewById(R.id.txt_list_item_close_open);
+
+
+        if(getChildrenCount(groupPosition)>0)
+        {
+            txt_list_item_close_open.setVisibility(View.VISIBLE);
+        }
+        else
+            txt_list_item_close_open.setVisibility(View.GONE);
+
+
+        if(isExpanded)
+        {
+            txt_list_item_close_open.setText(R.string.minus);
+        }
+        else txt_list_item_close_open.setText("+");
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
 

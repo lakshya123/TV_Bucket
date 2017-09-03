@@ -1,4 +1,5 @@
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -8,13 +9,16 @@
         xmlns:android="http://schemas.android.com/apk/res/android" >
 
         <LinearLayout
+            android:elevation="7dp"
+            android:layout_margin="10dp"
             android:padding="10dp"
-            android:background="#504141"
+            android:background="#c98b20"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+            android:layout_height="wrap_content"
+            tools:targetApi="lollipop">
             <LinearLayout
+
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

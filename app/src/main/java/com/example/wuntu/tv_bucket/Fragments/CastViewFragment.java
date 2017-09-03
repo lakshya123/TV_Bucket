@@ -25,7 +25,6 @@ import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.example.wuntu.tv_bucket.Utils.Utility;
-import com.example.wuntu.tv_bucket.YoutubeActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -37,6 +36,7 @@ public class CastViewFragment extends Fragment {
 
     ImageView person_image;
     TextView person_name,person_biography,person_birthday,person_deathday,person_birthplace,person_homepage;
+    TextView person_biography_title,person_birthday_title,person_deathday_title,person_birthplace_title,person_homepage_title,personal_info;
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Gson gson;
     CastDetailModel castDetailModel;
@@ -75,6 +75,16 @@ public class CastViewFragment extends Fragment {
         person_birthplace = (TextView) view.findViewById(R.id.person_birthplace);
         person_homepage = (TextView) view.findViewById(R.id.person_homepage);
 
+
+        //person_biography_title = (TextView) view.findViewById(R.id.person_biography_title);
+        person_birthday_title = (TextView) view.findViewById(R.id.person_birthday_title);
+        person_deathday_title = (TextView) view.findViewById(R.id.person_deathday_title);
+        person_birthplace_title = (TextView) view.findViewById(R.id.person_birthplace_title);
+        person_homepage_title = (TextView) view.findViewById(R.id.person_homepage_title);
+
+        personal_info = (TextView) view.findViewById(R.id.personal_info);
+
+
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
@@ -106,9 +116,16 @@ public class CastViewFragment extends Fragment {
                 castDetailModel = gson.fromJson(response,CastDetailModel.class);
                 String image_url = urlConstants.URL_Image + castDetailModel.getProfilePath();
 
+                if (castDetailModel.getHomepage() == null && castDetailModel.getPlaceOfBirth() == null
+                        && castDetailModel.getDeathday() == null && castDetailModel.getBirthday() == null)
+                {
+                    personal_info.setVisibility(View.GONE);
+                }
+
                 Picasso.with(getActivity())
                         .load(image_url)
                         .placeholder(R.drawable.not_available)
+                        .error(R.drawable.not_available)
                         .into(new Target() {
                             @Override
                             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
@@ -120,6 +137,7 @@ public class CastViewFragment extends Fragment {
                             public void onBitmapFailed(Drawable errorDrawable)
                             {
                                 Log.d("TAG", "FAILED");
+                                person_image.setImageDrawable(errorDrawable);
                             }
 
                             @Override
@@ -128,13 +146,56 @@ public class CastViewFragment extends Fragment {
                                 Log.d("TAG", "Prepare Load");
                             }
                         });
+                if (castDetailModel.getName() != null)
+                {
+                    person_name.setText(castDetailModel.getName());
+                }
+                if (castDetailModel.getBiography() != null)
+                {
+                    person_biography.setText(castDetailModel.getBiography());
+                }
+                else
+                {
+                    person_biography.setVisibility(View.GONE);
+                   // person_biography_title.setVisibility(View.GONE);
+                }
+                if (castDetailModel.getBirthday() != null)
+                {
+                    person_birthday.setText(castDetailModel.getBirthday());
+                }
+                else
+                {
+                    person_birthday.setVisibility(View.GONE);
+                    person_birthday_title.setVisibility(View.GONE);
+                }
+                if (castDetailModel.getDeathday() != null)
+                {
+                    person_deathday.setText(String.valueOf(castDetailModel.getDeathday()));
+                }
+                else
+                {
+                    person_deathday.setVisibility(View.GONE);
+                    person_deathday_title.setVisibility(View.GONE);
+                }
+                if (castDetailModel.getPlaceOfBirth() != null)
+                {
+                    person_birthplace.setText(castDetailModel.getPlaceOfBirth());
+                }
+                else
+                {
+                    person_birthplace.setVisibility(View.GONE);
+                    person_birthplace_title.setVisibility(View.GONE);
+                }
+                if (castDetailModel.getHomepage() != null)
+                {
+                    person_homepage.setText(castDetailModel.getHomepage());
+                }
+                else
+                {
+                    person_homepage.setVisibility(View.GONE);
+                    person_homepage_title.setVisibility(View.GONE);
+                }
 
-                person_name.setText(castDetailModel.getName());
-                person_biography.setText(castDetailModel.getBiography());
-                person_birthday.setText(castDetailModel.getBirthday());
-                person_deathday.setText(String.valueOf(castDetailModel.getDeathday()));
-                person_birthplace.setText(castDetailModel.getPlaceOfBirth());
-                person_homepage.setText(castDetailModel.getHomepage());
 
                 pDialog.hide();
             }

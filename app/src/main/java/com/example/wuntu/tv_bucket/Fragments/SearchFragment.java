@@ -1,6 +1,7 @@
 package com.example.wuntu.tv_bucket.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -134,6 +135,10 @@ public class SearchFragment extends Fragment {
         String tag_json_obj = "json_obj_req";
         boolean b = Utility.isNetworkAvailable(getContext());
 
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+
 
         if (!b)
         {
@@ -169,12 +174,13 @@ public class SearchFragment extends Fragment {
                     search_text.setVisibility(View.VISIBLE);
                 }
                 searchAdapter.notifyDataSetChanged();
+                progressDialog.hide();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-
+                progressDialog.hide();
             }
         });
 

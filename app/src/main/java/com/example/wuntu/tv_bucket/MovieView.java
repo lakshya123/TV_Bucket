@@ -145,6 +145,7 @@ public class MovieView extends AppCompatActivity {
         RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
         recycler_view.setLayoutManager(mLayoutManager);
         recycler_view.setItemAnimator(new DefaultItemAnimator());
+        recycler_view.setNestedScrollingEnabled(false);
         recycler_view.setAdapter(castDetailAdapter);
 
 
