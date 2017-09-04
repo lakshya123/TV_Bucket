@@ -151,6 +151,7 @@ public class TvMainFragment extends Fragment
 
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,url1, new Response.Listener<String>() {

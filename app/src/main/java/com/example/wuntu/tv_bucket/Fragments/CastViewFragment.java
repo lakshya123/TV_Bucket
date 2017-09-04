@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,6 +106,7 @@ public class CastViewFragment extends Fragment {
 
         final ProgressDialog pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
         StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -122,7 +122,31 @@ public class CastViewFragment extends Fragment {
                     personal_info.setVisibility(View.GONE);
                 }
 
+                Target target = new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        person_image.setBackground(new BitmapDrawable(getContext().getResources(),bitmap));
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                        person_image.setImageDrawable(errorDrawable);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                };
+
                 Picasso.with(getActivity())
+                        .load(image_url)
+                        .error(R.drawable.not_available)
+                        .into(target);
+
+                person_image.setTag(target);
+
+                /*Picasso.with(getActivity())
                         .load(image_url)
                         .placeholder(R.drawable.not_available)
                         .error(R.drawable.not_available)
@@ -145,20 +169,21 @@ public class CastViewFragment extends Fragment {
                             {
                                 Log.d("TAG", "Prepare Load");
                             }
-                        });
+                        });*/
                 if (castDetailModel.getName() != null)
                 {
                     person_name.setText(castDetailModel.getName());
                 }
-                if (castDetailModel.getBiography() != null)
+
+                if (!castDetailModel.getBiography().isEmpty() && castDetailModel.getBiography() != null)
                 {
                     person_biography.setText(castDetailModel.getBiography());
                 }
                 else
                 {
                     person_biography.setVisibility(View.GONE);
-                   // person_biography_title.setVisibility(View.GONE);
                 }
+
                 if (castDetailModel.getBirthday() != null)
                 {
                     person_birthday.setText(castDetailModel.getBirthday());

@@ -1,7 +1,9 @@
 package com.example.wuntu.tv_bucket;
 
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -43,6 +45,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
     private Gson gson;
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         setActionBar(toolbar);
 
         getActionBar().setTitle("Videos");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(true);
         getActionBar().setDisplayShowTitleEnabled(true);
@@ -130,6 +134,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         String tag_json_obj = "json_obj_req";
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
 

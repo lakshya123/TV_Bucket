@@ -83,7 +83,7 @@ public class SeasonView extends Fragment {
 
 
 
-        //Toast.makeText(getActivity(), seasonsArrayList.get(1).getAirDate() + "", Toast.LENGTH_SHORT).show();
+
 
 
         return view;

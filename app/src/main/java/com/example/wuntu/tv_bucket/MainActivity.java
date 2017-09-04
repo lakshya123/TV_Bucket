@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
 
         searchFragment = new SearchFragment();
@@ -102,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         moviesMainFragment = new MoviesMainFragment();
         tvMainFragment = new TvMainFragment();
-        adapter.addFragment(moviesMainFragment, "Movies");
-        adapter.addFragment(tvMainFragment, "TV Series");
+        adapter.addFragment(moviesMainFragment, getResources().getString(R.string.movies));
+        adapter.addFragment(tvMainFragment, getResources().getString(R.string.tv_series));
         viewPager.setAdapter(adapter);
     }
 

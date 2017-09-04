@@ -38,104 +38,112 @@
             android:textColor="@color/black"
             android:textSize="18sp"/>-->
         <TextView
+            android:visibility="visible"
+            android:padding="10dp"
+            android:background="@color/colorPrimary"
             android:id="@+id/person_biography"
-            android:layout_marginRight="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/personal_info"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"
+
+        <LinearLayout
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/personal_info"/>
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/personal_info"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
 
-        <TextView
-            android:id="@+id/person_birthday_title"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="15dp"
-            android:text="@string/birthday"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/person_birthday"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/personal_info"/>
 
-        <TextView
-            android:id="@+id/person_deathday_title"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="15sp"
-            android:text="@string/deathday"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/person_birthday_title"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="15sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:text="@string/birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/person_birthday"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/person_deathday"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/person_deathday_title"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="15sp"
+                android:text="@string/deathday"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/person_birthplace_title"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="15sp"
-            android:text="@string/birth_place"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/person_deathday"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/person_birthplace"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/person_birthplace_title"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="15sp"
+                android:text="@string/birth_place"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"/>
 
-        <TextView
-            android:id="@+id/person_homepage_title"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:textSize="15sp"
-            android:text="@string/homepage"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/person_birthplace"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:textColorLink="@color/black"
-            android:autoLink="web"
-            android:clickable="true"
-            android:linksClickable="true"
-            android:id="@+id/person_homepage"
-            android:layout_marginStart="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="4dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/person_homepage_title"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="15sp"
+                android:text="@string/homepage"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:textColorLink="@color/black"
+                android:autoLink="web"
+                android:clickable="true"
+                android:linksClickable="true"
+                android:id="@+id/person_homepage"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"

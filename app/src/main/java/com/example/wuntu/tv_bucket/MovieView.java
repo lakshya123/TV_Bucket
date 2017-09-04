@@ -2,7 +2,6 @@ package com.example.wuntu.tv_bucket;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -12,19 +11,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -52,7 +46,6 @@ import com.squareup.picasso.Target;
 
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout;
 
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -323,7 +316,7 @@ public class MovieView extends AppCompatActivity {
 
         top_billed_cast = (TextView) findViewById(R.id.top_billed_cast);
 
-        //season_cardview_layout = (View)findViewById(R.id.season_cardview_layout).findViewById(R.id.included_season_list).findViewById(R.id.season_list);
+
 
     }
 
@@ -333,6 +326,7 @@ public class MovieView extends AppCompatActivity {
 
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -539,17 +533,17 @@ public class MovieView extends AppCompatActivity {
                                         Palette.Swatch swatch = palette.getVibrantSwatch();
 
                                         if (textSwatch == null ) {
-                                            return;
+                                            overview_layout.setBackgroundColor(Color.GRAY);
+                                            facts_layout.setBackgroundColor(Color.GRAY);
                                         }
                                         if (swatch == null)
                                         {
-
+                                            return;
                                         }
                                         else
                                         {
                                             collapsingToolbarLayout.setExpandedTitleColor(swatch.getRgb());
                                         }
-
 
                                         overview_layout.setBackgroundColor(textSwatch.getRgb());
                                         overview.setTextColor(textSwatch.getTitleTextColor());
@@ -571,10 +565,13 @@ public class MovieView extends AppCompatActivity {
 
                                         Activity activity = MovieView.this;
                                         Window window = activity.getWindow();
+
+
+                                        int color =  mixColors(textSwatch.getRgb(),getResources().getColor(R.color.black));
+
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                                            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                                            window.setStatusBarColor(textSwatch.getRgb());
+                                            window.setStatusBarColor(color);
                                         }
 
 
@@ -669,6 +666,7 @@ public class MovieView extends AppCompatActivity {
 
         final ProgressDialog pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
+        pDialog.setCancelable(false);
         pDialog.show();
 
 
@@ -845,13 +843,14 @@ public class MovieView extends AppCompatActivity {
                                         homepage.setLinkTextColor(textSwatch.getTitleTextColor());
                                         collapsingToolbarLayout.setContentScrimColor(textSwatch.getRgb());
 
+                                        int color =  mixColors(textSwatch.getRgb(),getResources().getColor(R.color.black));
 
                                         Activity activity = MovieView.this;
                                         Window window = activity.getWindow();
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                                             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                                            window.setStatusBarColor(textSwatch.getRgb());
+                                            window.setStatusBarColor(color);
                                         }
                                     }
                                 });
@@ -944,6 +943,25 @@ public class MovieView extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public int mixColors(int col1, int col2) {
+        int r1, g1, b1, r2, g2, b2;
+
+        r1 = Color.red(col1);
+        g1 = Color.green(col1);
+        b1 = Color.blue(col1);
+
+        r2 = Color.red(col2);
+        g2 = Color.green(col2);
+        b2 = Color.blue(col2);
+
+        int r3 = (r1 + r2)/2;
+        int g3 = (g1 + g2)/2;
+        int b3 = (b1 + b2)/2;
+
+        return Color.rgb(r3, g3, b3);
     }
 
 

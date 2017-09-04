@@ -173,6 +173,7 @@ public class SeasonEpisodesFragment extends Fragment {
         String tag = "TAG";
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
+        progressDialog.setCancelable(false);
         progressDialog.show();
 
 
