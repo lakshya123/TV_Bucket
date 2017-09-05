@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,7 +28,9 @@ import com.example.wuntu.tv_bucket.Adapters.ExpandListAdapter;
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
 import com.example.wuntu.tv_bucket.Fragments.SearchFragment;
 import com.example.wuntu.tv_bucket.Fragments.TvMainFragment;
+import com.example.wuntu.tv_bucket.Utils.NetworkDialog;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
+import com.example.wuntu.tv_bucket.Utils.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +41,6 @@ import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     ArrayList<String> listDataHeader;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         frameLayout = (FrameLayout) findViewById(R.id.framelayout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -114,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -128,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
@@ -155,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(MainActivity.this.getComponentName()));
         }
 
+        assert searchView != null;
         final ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
 
 
@@ -272,8 +275,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void enableExpandableList() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+        listDataHeader = new ArrayList<>();
+        listDataChild = new HashMap<>();
         expListView = (ExpandableListView) findViewById(R.id.left_drawer);
 
         prepareListData(listDataHeader, listDataChild);
@@ -374,6 +377,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });}
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        /*boolean b = Utility.isNetworkAvailable(this);
+
+        if (!b)
+        {
+//            Snackbar.make(findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();
+            NetworkDialog networkDialog = new NetworkDialog(this);
+            networkDialog.show();
+        }*/
+    }
+
     private void prepareListData(List<String> listDataHeader, Map<String,
             List<String>> listDataChild) {
 
@@ -384,20 +400,20 @@ public class MainActivity extends AppCompatActivity {
         listDataHeader.add("People");
 
         // Adding child data
-        List<String> top = new ArrayList<String>();
+        List<String> top = new ArrayList<>();
         top.add("Popular");
         top.add("Top Rated");
         top.add("Upcoming");
         top.add("Now Playing");
 
 
-        List<String> mid = new ArrayList<String>();
+        List<String> mid = new ArrayList<>();
         mid.add("Popular");
         mid.add("Top Rated");
         mid.add("On TV");
         mid.add("Airing Today");
 
-        List<String> bottom = new ArrayList<String>();
+        List<String> bottom = new ArrayList<>();
         bottom.add("Popular People");
 
 

@@ -132,12 +132,6 @@ public class MoviesMainFragment extends Fragment
     public void prepareOnlineData(final String url, Integer page_number)
     {
 
-        boolean b = Utility.isNetworkAvailable(getContext());
-
-        if (!b)
-        {
-            Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();
-        }
         recyclerView.scrollToPosition(0);
         mAdapter.notifyDataSetChanged();
         String tag_json_obj = "json_obj_req";
@@ -196,6 +190,11 @@ public class MoviesMainFragment extends Fragment
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 pDialog.hide();
+                boolean b = Utility.isNetworkAvailable(getContext());
+                if (!b)
+                {
+                    Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();
+                }
             }
         });
 
