@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Models.TvSeasons;
-import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.squareup.picasso.Picasso;
@@ -34,17 +33,17 @@ public class SeasonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 {
 
     Context context;
-    ArrayList<TvSeasons> seasonsArrayList = new ArrayList<>();
-    UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    private ArrayList<TvSeasons> seasonsArrayList = new ArrayList<>();
+    private UrlConstants urlConstants = UrlConstants.getSingletonRef();
     public SeasonListAdapter(ArrayList<TvSeasons> seasonsArrayList)
     {
         this.seasonsArrayList = seasonsArrayList;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    private class MyViewHolder extends RecyclerView.ViewHolder {
         TextView season_number,current_season_year,current_season_episodes,current_season_tagline;
         ImageView poster_image;
-        public MyViewHolder(View itemView) {
+        MyViewHolder(View itemView) {
             super(itemView);
             season_number = (TextView) itemView.findViewById(R.id.season_number);
             current_season_year = (TextView) itemView.findViewById(R.id.current_season_year);

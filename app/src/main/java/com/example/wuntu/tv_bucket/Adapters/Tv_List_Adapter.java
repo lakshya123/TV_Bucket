@@ -27,14 +27,14 @@ import java.util.List;
 
 public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    TVListResultModel resultModel;
-    UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    private TVListResultModel resultModel;
+    private UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private ArrayList<TVListResultModel> tv_list = new ArrayList<>();
     private Context context;
     private final int VIEW_ITEM = 0;
     private final int VIEW_PROG = 1;
-    Fragment fragment;
-    String url;
+    private Fragment fragment;
+    private String url;
 
     public Tv_List_Adapter(ArrayList<TVListResultModel> tv_list, Fragment fragment, String url) {
         this.tv_list = tv_list;
@@ -44,11 +44,11 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    private class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public ImageView backdrop_image;
-        public TextView title, date;
-        public MyViewHolder(View view) {
+        ImageView backdrop_image;
+        TextView title, date;
+        MyViewHolder(View view) {
             super(view);
             backdrop_image = (ImageView)view.findViewById(R.id.backdrop_image);
             title = (TextView) view.findViewById(R.id.title);
@@ -56,11 +56,11 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public class FooterViewHolder extends RecyclerView.ViewHolder
+    private class FooterViewHolder extends RecyclerView.ViewHolder
     {
-        public TextView previous_page,next_page;
+        TextView previous_page,next_page;
 
-        public FooterViewHolder(View itemView) {
+        FooterViewHolder(View itemView) {
             super(itemView);
 
             previous_page = (TextView)itemView.findViewById(R.id.previous_page);

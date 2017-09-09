@@ -27,27 +27,22 @@ import java.util.ArrayList;
     public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-        UrlConstants urlConstants = UrlConstants.getSingletonRef();
+        private UrlConstants urlConstants = UrlConstants.getSingletonRef();
         private ArrayList<MultiSearchResultModel> searchModelArrayList = new ArrayList<>();
         private Context context;
-        private final int VIEW_ITEM = 0;
-        private final int VIEW_PROG = 1;
-        Fragment fragment;
-        String url;
-        MultiSearchResultModel multiSearchResultModel = new MultiSearchResultModel();
 
-        public SearchAdapter(ArrayList<MultiSearchResultModel> searchModelArrayList,Fragment fragment) {
+    public SearchAdapter(ArrayList<MultiSearchResultModel> searchModelArrayList,Fragment fragment) {
             this.searchModelArrayList = searchModelArrayList;
-            this.fragment = fragment;
+
         }
 
 
 
-        public class MySearchViewHolder extends RecyclerView.ViewHolder {
+        private class MySearchViewHolder extends RecyclerView.ViewHolder {
 
-            public ImageView search_image;
-            public TextView search_title,color_textview;
-            public MySearchViewHolder(View view) {
+            ImageView search_image;
+            TextView search_title,color_textview;
+            MySearchViewHolder(View view) {
                 super(view);
                 search_image = (ImageView)view.findViewById(R.id.search_image);
                 search_title = (TextView) view.findViewById(R.id.search_title);
@@ -77,7 +72,7 @@ import java.util.ArrayList;
 
             if (holder instanceof MySearchViewHolder)
             {
-                multiSearchResultModel = searchModelArrayList.get(position);
+                MultiSearchResultModel multiSearchResultModel = searchModelArrayList.get(position);
                 if (multiSearchResultModel.getMediaType()!= null && multiSearchResultModel.getMediaType().equalsIgnoreCase("movie"))
                 {
                     ((MySearchViewHolder)holder).search_title.setText(multiSearchResultModel.getTitle());

@@ -75,8 +75,6 @@ public class MovieView extends AppCompatActivity {
     ArrayList<TvSeasons> seasonsArrayList;
 
 
-    //View season_cardview_layout;
-
     LinearLayout season_list;
 
     TextView ratings,overview,status,release_date,genre1,budget,revenue,runtime,homepage,top_billed_cast;

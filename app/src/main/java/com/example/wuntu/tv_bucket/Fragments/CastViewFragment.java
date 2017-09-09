@@ -35,7 +35,7 @@ public class CastViewFragment extends Fragment {
 
     ImageView person_image;
     TextView person_name,person_biography,person_birthday,person_deathday,person_birthplace,person_homepage;
-    TextView person_biography_title,person_birthday_title,person_deathday_title,person_birthplace_title,person_homepage_title,personal_info;
+    TextView person_birthday_title,person_deathday_title,person_birthplace_title,person_homepage_title,personal_info;
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private Gson gson;
     CastDetailModel castDetailModel;
@@ -75,7 +75,6 @@ public class CastViewFragment extends Fragment {
         person_homepage = (TextView) view.findViewById(R.id.person_homepage);
 
 
-        //person_biography_title = (TextView) view.findViewById(R.id.person_biography_title);
         person_birthday_title = (TextView) view.findViewById(R.id.person_birthday_title);
         person_deathday_title = (TextView) view.findViewById(R.id.person_deathday_title);
         person_birthplace_title = (TextView) view.findViewById(R.id.person_birthplace_title);
@@ -146,30 +145,7 @@ public class CastViewFragment extends Fragment {
 
                 person_image.setTag(target);
 
-                /*Picasso.with(getActivity())
-                        .load(image_url)
-                        .placeholder(R.drawable.not_available)
-                        .error(R.drawable.not_available)
-                        .into(new Target() {
-                            @Override
-                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
-                            {
-                                person_image.setBackground(new BitmapDrawable(getContext().getResources(),bitmap));
-                            }
 
-                            @Override
-                            public void onBitmapFailed(Drawable errorDrawable)
-                            {
-                                Log.d("TAG", "FAILED");
-                                person_image.setImageDrawable(errorDrawable);
-                            }
-
-                            @Override
-                            public void onPrepareLoad(Drawable placeHolderDrawable)
-                            {
-                                Log.d("TAG", "Prepare Load");
-                            }
-                        });*/
                 if (castDetailModel.getName() != null)
                 {
                     person_name.setText(castDetailModel.getName());

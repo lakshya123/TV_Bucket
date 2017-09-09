@@ -115,7 +115,6 @@ public class CastViewActivity extends AppCompatActivity
 
     public void setViewtoCastList()
     {
-        //Toast.makeText(this, fullCastList.get(0).getName() + " ", Toast.LENGTH_SHORT).show();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("FULL CREW LIST",fullCastList);
         castViewListFragment.setArguments(bundle);

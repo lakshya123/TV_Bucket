@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setDisplayShowTitleEnabled(false);
                 viewPager.setVisibility(GONE);
                 tabLayout.setVisibility(GONE);
-                //Toast.makeText(MainActivity.this, "Now Opened", Toast.LENGTH_SHORT).show();
                 toggle.setDrawerIndicatorEnabled(false);
 
                 frameLayout.setVisibility(View.VISIBLE);
@@ -182,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
         searchClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(MainActivity.this, "Now CLosed", Toast.LENGTH_SHORT).show();
                 viewPager.setVisibility(View.VISIBLE);
                 tabLayout.setVisibility(View.VISIBLE);
                 toggle.setDrawerIndicatorEnabled(true);
@@ -208,11 +206,9 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Do your search
-
                 searchFragment = new SearchFragment();
                 String query1 = query.replaceAll(" ","%20");
-                //Toast.makeText(MainActivity.this,query1+ "", Toast.LENGTH_SHORT).show();
+
                 Bundle bundle = new Bundle();
                 bundle.putString("QUERY",query1);
                 searchFragment.setArguments(bundle);
@@ -224,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if(newText.isEmpty())
                 {
-                    //Toast.makeText(MainActivity.this, "Empty", Toast.LENGTH_SHORT).show();
                     searchFragment = new SearchFragment();
                     String query1 = newText.replaceAll(" ","%20");
                     Bundle bundle = new Bundle();
@@ -240,7 +235,6 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("QUERY",query1);
                     searchFragment.setArguments(bundle);
                     getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
-                    // Toast.makeText(MainActivity.this, query1+"", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -380,14 +374,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        /*boolean b = Utility.isNetworkAvailable(this);
 
-        if (!b)
-        {
-//            Snackbar.make(findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();
-            NetworkDialog networkDialog = new NetworkDialog(this);
-            networkDialog.show();
-        }*/
     }
 
     private void prepareListData(List<String> listDataHeader, Map<String,
@@ -413,13 +400,13 @@ public class MainActivity extends AppCompatActivity {
         mid.add("On TV");
         mid.add("Airing Today");
 
-        List<String> bottom = new ArrayList<>();
-        bottom.add("Popular People");
+       /* List<String> bottom = new ArrayList<>();
+        bottom.add("Popular People");*/
 
 
 
         listDataChild.put(listDataHeader.get(0), top);
         listDataChild.put(listDataHeader.get(1), mid);
-        listDataChild.put(listDataHeader.get(2), bottom);
+      //  listDataChild.put(listDataHeader.get(2), bottom);
     }
 }

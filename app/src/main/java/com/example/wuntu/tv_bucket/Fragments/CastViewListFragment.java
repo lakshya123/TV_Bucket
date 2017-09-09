@@ -12,13 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Adapters.FullCastListAdapter;
 import com.example.wuntu.tv_bucket.Adapters.MoviesAdapter_OnClickListener;
-import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.Cast;
-import com.example.wuntu.tv_bucket.MovieView;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.Utility;
 
@@ -47,6 +44,7 @@ public class CastViewListFragment extends Fragment {
         castArrayList = getArguments().getParcelableArrayList("FULL CREW LIST");
 
 
+        assert castArrayList != null;
         if (castArrayList.size()  == 0)
         {
             no_results.setVisibility(View.VISIBLE);

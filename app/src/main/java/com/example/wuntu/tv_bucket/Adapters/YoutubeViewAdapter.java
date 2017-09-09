@@ -26,16 +26,13 @@ import java.util.ArrayList;
 
 public class YoutubeViewAdapter extends RecyclerView.Adapter<YoutubeViewAdapter.VideoInfoHolder> {
 
-    //these ids are the unique id for each video
-    String[] VideoID = {"ndBdf1_oOGA", "7V-fIGMDsmE", "f7ihSQ44WO0"};
-    Context ctx;
-    public String DEVELOPER_KEY = "AIzaSyCbZWoplKqfMn6cKTWYXsKtWM1i5PnZrnI";
-    ArrayList<YoutubelinksFinalModel> youtubelinks = new ArrayList<>();
-    UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    private Context ctx;
+    private ArrayList<YoutubelinksFinalModel> youtubeLinks = new ArrayList<>();
+    private UrlConstants urlConstants = UrlConstants.getSingletonRef();
 
-    public YoutubeViewAdapter(Context context, ArrayList<YoutubelinksFinalModel> youtubelinks) {
+    public YoutubeViewAdapter(Context context, ArrayList<YoutubelinksFinalModel> youtubeLinks) {
         this.ctx = context;
-        this.youtubelinks = youtubelinks;
+        this.youtubeLinks = youtubeLinks;
     }
 
     @Override
@@ -47,12 +44,12 @@ public class YoutubeViewAdapter extends RecyclerView.Adapter<YoutubeViewAdapter.
     @Override
     public void onBindViewHolder(final VideoInfoHolder holder, final int position) {
 
-        holder.youtube_title.setText(youtubelinks.get(position).getName());
+        holder.youtube_title.setText(youtubeLinks.get(position).getName());
 
         holder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse(urlConstants.Youtube_URL + youtubelinks.get(position).getKey());
+                Uri uri = Uri.parse(urlConstants.Youtube_URL + youtubeLinks.get(position).getKey());
                 Intent intent = new Intent(Intent.ACTION_VIEW,uri);
                 ctx.startActivity(intent);
             }
@@ -72,11 +69,12 @@ public class YoutubeViewAdapter extends RecyclerView.Adapter<YoutubeViewAdapter.
             }
         };
 
+        String DEVELOPER_KEY = "AIzaSyCbZWoplKqfMn6cKTWYXsKtWM1i5PnZrnI";
         holder.youTubeThumbnailView.initialize(DEVELOPER_KEY, new YouTubeThumbnailView.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
 
-                youTubeThumbnailLoader.setVideo(youtubelinks.get(position).getKey());
+                youTubeThumbnailLoader.setVideo(youtubeLinks.get(position).getKey());
                 youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
             }
 
@@ -89,17 +87,17 @@ public class YoutubeViewAdapter extends RecyclerView.Adapter<YoutubeViewAdapter.
 
     @Override
     public int getItemCount() {
-        return youtubelinks.size();
+        return youtubeLinks.size();
     }
 
-    public class VideoInfoHolder extends RecyclerView.ViewHolder {
+    class VideoInfoHolder extends RecyclerView.ViewHolder {
 
-        protected RelativeLayout relativeLayoutOverYouTubeThumbnailView;
+        RelativeLayout relativeLayoutOverYouTubeThumbnailView;
         YouTubeThumbnailView youTubeThumbnailView;
-        protected ImageView playButton;
+        ImageView playButton;
         TextView youtube_title;
 
-        public VideoInfoHolder(View itemView) {
+        VideoInfoHolder(View itemView) {
             super(itemView);
             playButton=(ImageView)itemView.findViewById(R.id.btnYoutube_player);
             youtube_title = (TextView) itemView.findViewById(R.id.youtube_title);

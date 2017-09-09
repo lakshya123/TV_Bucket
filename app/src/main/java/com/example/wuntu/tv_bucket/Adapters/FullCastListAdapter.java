@@ -21,22 +21,21 @@ import java.util.ArrayList;
 
 public class FullCastListAdapter extends RecyclerView.Adapter {
 
-    ArrayList<Cast> castArrayList;
+    private ArrayList<Cast> castArrayList;
     private Context context;
-    Cast cast;
-    UrlConstants urlConstants = UrlConstants.getSingletonRef();
+    private UrlConstants urlConstants = UrlConstants.getSingletonRef();
 
     public FullCastListAdapter(ArrayList<Cast> castArrayList)
     {
         this.castArrayList = castArrayList;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder
+    private class ViewHolder extends RecyclerView.ViewHolder
     {
         ImageView cast_profile_picture;
         TextView cast_name,cast_character_name;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             cast_profile_picture = (ImageView) itemView.findViewById(R.id.thumbnail);
             cast_name = (TextView) itemView.findViewById(R.id.title);
@@ -56,7 +55,7 @@ public class FullCastListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position)
     {
-        cast = castArrayList.get(position);
+        Cast cast = castArrayList.get(position);
         ((ViewHolder)holder).cast_character_name.setText(cast.getCharacter());
         ((ViewHolder)holder).cast_name.setText(cast.getName());
         String url3 = urlConstants.URL_Image + cast.getProfilePath();

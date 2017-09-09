@@ -68,7 +68,6 @@ public class SearchFragment extends Fragment {
             query = getArguments().getString("QUERY");
         }
         else query = "";
-        //Toast.makeText(getActivity(), query + "", Toast.LENGTH_SHORT).show();
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();

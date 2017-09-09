@@ -74,9 +74,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-   /* private boolean isPositionItem(int position) {
-        return position == moviesList.size();
-    }*/
+
 
 
     @Override
@@ -137,14 +135,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onClick(View v)
                 {
-                    //Toast.makeText(context, movie.getURL() + "", Toast.LENGTH_SHORT).show();
+
                     ((MoviesMainFragment)fragment).prepareOnlineData(movie.getURL(),movie.getPage() - 1);
                 }
             });
             ((FooterViewHolder)holder).next_page.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Toast.makeText(context, movie.getURL() + "", Toast.LENGTH_SHORT).show();
+
                     ((MoviesMainFragment)fragment).prepareOnlineData(movie.getURL(),movie.getPage() + 1);
                 }
             });

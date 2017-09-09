@@ -35,7 +35,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
     RecyclerView youtube_recyclerview;
     YoutubeLinksGettingModel youtubeLinksGettingModel;
     YoutubelinksFinalModel youtubelinksFinalModel;
-    ArrayList<YoutubelinksFinalModel> youtubelinks;
+    ArrayList<YoutubelinksFinalModel> youtubeLinks;
     YoutubeViewAdapter youtubeViewAdapter;
     android.widget.Toolbar toolbar;
     LinearLayout linearLayout;
@@ -62,7 +62,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
 
         youtube_recyclerview = (RecyclerView) findViewById(R.id.youtube_recyclerview);
 
-        youtubelinks = new ArrayList<>();
+        youtubeLinks = new ArrayList<>();
 
         toolbar = (android.widget.Toolbar) findViewById(R.id.toolbar);
 
@@ -86,7 +86,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         String episodes_url = URLconstants.Episodes_Videos_1st_URL + ID + URLconstants.Episodes_Videos_2nd_URL + Season_number + URLconstants.Episodes_Videos_3rd_URL + Episode_number + URLconstants.Episodes_Videos_4th_URL;
 
 
-        youtubeViewAdapter = new YoutubeViewAdapter(this, youtubelinks);
+        youtubeViewAdapter = new YoutubeViewAdapter(this, youtubeLinks);
 
 
 
@@ -150,7 +150,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
                     youtubelinksFinalModel.setName(youtubeLinksGettingModel.getResults().get(i).getName());
                     youtubelinksFinalModel.setKey(youtubeLinksGettingModel.getResults().get(i).getKey());
 
-                    youtubelinks.add(i, youtubelinksFinalModel);
+                    youtubeLinks.add(i, youtubelinksFinalModel);
                 }
 
                 if (youtubeLinksGettingModel.getResults().size() == 0)

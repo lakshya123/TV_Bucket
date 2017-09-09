@@ -137,7 +137,7 @@
 
                 <TextView
                     android:id="@+id/overview_title"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/overview"
@@ -146,7 +146,7 @@
                 <TextView
                     android:id="@+id/overview"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -188,19 +188,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/facts"
                     android:textSize="24sp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/status_title"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/status"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/status"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
@@ -208,14 +208,14 @@
                 <TextView
                     android:id="@+id/release_date_title"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/release_date"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/release_date"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
@@ -223,7 +223,7 @@
                 <TextView
                     android:id="@+id/genres_title"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/genres"
@@ -238,14 +238,14 @@
                 <TextView
                     android:id="@+id/budget_title"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/budget"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/budget"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
@@ -253,14 +253,14 @@
                 <TextView
                     android:id="@+id/revenue_title"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/revenue"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/revenue"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
@@ -268,14 +268,14 @@
                 <TextView
                     android:id="@+id/runtime_title"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/runtime"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/runtime"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"/>
@@ -283,12 +283,13 @@
                 <TextView
                     android:id="@+id/homepage_title"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/homepage"
                     android:textSize="20sp"/>
                 <TextView
+                    android:textColorLink="@color/black"
                     android:autoLink="web"
                     android:clickable="true"
                     android:linksClickable="true"
