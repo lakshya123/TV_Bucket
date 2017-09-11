@@ -3,16 +3,13 @@ package com.example.wuntu.tv_bucket;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -45,7 +42,6 @@ public class YoutubeActivity extends YouTubeBaseActivity {
     private Gson gson;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +64,14 @@ public class YoutubeActivity extends YouTubeBaseActivity {
 
         setActionBar(toolbar);
 
-        getActionBar().setTitle("Videos");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        if (getActionBar() != null)
+        {
+            getActionBar().setTitle("Videos");
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.setTitleTextColor(getColor(R.color.white));
+        }
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setDisplayShowHomeEnabled(true);
         getActionBar().setDisplayShowTitleEnabled(true);
@@ -98,28 +100,20 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
-        if (view.equals("MOVIE"))
-        {
-            getYoutubeLinks(movie_url);
+        switch (view) {
+            case "MOVIE":
+                getYoutubeLinks(movie_url);
+                break;
+            case "TV":
+                getYoutubeLinks(tv_url);
+                break;
+            case "SEASON":
+                getYoutubeLinks(seasons_url);
+                break;
+            case "EPISODE":
+                getYoutubeLinks(episodes_url);
+                break;
         }
-        else if (view.equals("TV"))
-        {
-            getYoutubeLinks(tv_url);
-        }
-        else if (view.equals("SEASON"))
-        {
-            getYoutubeLinks(seasons_url);
-        }
-        else if (view.equals("EPISODE"))
-        {
-            getYoutubeLinks(episodes_url);
-        }
-
-
-
-
-        // youTubePlayerView.initialize(DEVELOPER_KEY, this);
-
 
     }
 
@@ -144,7 +138,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
             public void onResponse(String response) {
 
                 youtubeLinksGettingModel = gson.fromJson(response, YoutubeLinksGettingModel.class);
-                int i = 0;
+                int i ;
                 for (i = 0; i < youtubeLinksGettingModel.getResults().size(); i++) {
                     youtubelinksFinalModel = new YoutubelinksFinalModel();
                     youtubelinksFinalModel.setName(youtubeLinksGettingModel.getResults().get(i).getName());

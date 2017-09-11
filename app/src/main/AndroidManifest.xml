@@ -17,6 +17,8 @@
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
 
+
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

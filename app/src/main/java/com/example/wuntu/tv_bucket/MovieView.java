@@ -118,9 +118,13 @@ public class MovieView extends AppCompatActivity {
         toolbar.setContentInsetStartWithNavigation(0);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
 
         ID = getIntent().getStringExtra("ID");
 
@@ -418,44 +422,26 @@ public class MovieView extends AppCompatActivity {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                     Calendar calendar = Calendar.getInstance();
                     String date = dateFormat.format(calendar.getTime());
-                    String last_air_Date_string = tvExampleModel.getLastAirDate();
+                    String last_air_Date_string;
+
+
+
                     String last_season_air_date_string;
-                    last_season_air_date_string = tvExampleModel.getSeasons().get(size - 1).getAirDate();
 
-                    String last_season_year = last_season_air_date_string.substring(0, 4);
-                    current_season_year.setText(last_season_year);
+                    if (tvExampleModel.getSeasons().get(size - 1).getAirDate() != null && tvExampleModel.getLastAirDate() != null )
+                    {
+                        last_air_Date_string = tvExampleModel.getLastAirDate();
+                        last_season_air_date_string = tvExampleModel.getSeasons().get(size - 1).getAirDate();
+                        String last_season_year = last_season_air_date_string.substring(0, 4);
+                        current_season_year.setText(last_season_year);
 
-                    season_number.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                        try {
+                            Date today_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date);
+                            Date last_air_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(last_air_Date_string);
+                            Date last_season_air_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(last_season_air_date_string);
 
-                    current_season_episodes.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getEpisodeCount()));
-
-                    try {
-                        Date today_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(date);
-                        Date last_air_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(last_air_Date_string);
-                        Date last_season_air_date = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(last_season_air_date_string);
-
-                        if (last_air_date.compareTo(today_date) < 0) {
-                            current_season.setText(R.string.last_season);
-                            StringBuilder stringBuilder = new StringBuilder();
-                            stringBuilder.append("Season ");
-                            stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
-                            stringBuilder.append(" of ");
-                            stringBuilder.append(tvExampleModel.getName());
-                            stringBuilder.append(" premiered on ");
-                            stringBuilder.append(last_season_air_date_string);
-                            current_season_tagline.setText(stringBuilder);
-                        } else if (last_air_date.compareTo(today_date) > 0) {
-                            if (last_season_air_date.compareTo(today_date) > 0) {
-                                StringBuilder stringBuilder = new StringBuilder();
-                                stringBuilder.append("Season ");
-                                stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
-                                stringBuilder.append(" of ");
-                                stringBuilder.append(tvExampleModel.getName());
-                                stringBuilder.append(" will be premiered on ");
-                                stringBuilder.append(last_season_air_date_string);
-                                current_season_tagline.setText(stringBuilder);
-                                current_season.setText(R.string.upcoming_season);
-                            } else if (last_season_air_date.compareTo(today_date) < 0) {
+                            if (last_air_date.compareTo(today_date) < 0) {
+                                current_season.setText(R.string.last_season);
                                 StringBuilder stringBuilder = new StringBuilder();
                                 stringBuilder.append("Season ");
                                 stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
@@ -464,14 +450,50 @@ public class MovieView extends AppCompatActivity {
                                 stringBuilder.append(" premiered on ");
                                 stringBuilder.append(last_season_air_date_string);
                                 current_season_tagline.setText(stringBuilder);
-                                current_season.setText(R.string.current_season);
+                            } else if (last_air_date.compareTo(today_date) > 0) {
+                                if (last_season_air_date.compareTo(today_date) > 0) {
+                                    StringBuilder stringBuilder = new StringBuilder();
+                                    stringBuilder.append("Season ");
+                                    stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                                    stringBuilder.append(" of ");
+                                    stringBuilder.append(tvExampleModel.getName());
+                                    stringBuilder.append(" will be premiered on ");
+                                    stringBuilder.append(last_season_air_date_string);
+                                    current_season_tagline.setText(stringBuilder);
+                                    current_season.setText(R.string.upcoming_season);
+                                } else if (last_season_air_date.compareTo(today_date) < 0) {
+                                    StringBuilder stringBuilder = new StringBuilder();
+                                    stringBuilder.append("Season ");
+                                    stringBuilder.append(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                                    stringBuilder.append(" of ");
+                                    stringBuilder.append(tvExampleModel.getName());
+                                    stringBuilder.append(" premiered on ");
+                                    stringBuilder.append(last_season_air_date_string);
+                                    current_season_tagline.setText(stringBuilder);
+                                    current_season.setText(R.string.current_season);
+                                }
                             }
-                        }
 
-                    } catch (ParseException e) {
-                        Toast.makeText(MovieView.this, "try catch error", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
+                        } catch (ParseException e) {
+                            Toast.makeText(MovieView.this, "try catch error", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace();
+                        }
                     }
+
+
+
+
+
+                    if (tvExampleModel.getSeasons().size() != 0)
+                    {
+                        season_number.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getSeasonNumber()));
+                        current_season_episodes.setText(String.valueOf(tvExampleModel.getSeasons().get(size - 1).getEpisodeCount()));
+                    }
+
+
+
+
+
 
 
                     season_list.setOnClickListener(new View.OnClickListener() {
@@ -543,6 +565,7 @@ public class MovieView extends AppCompatActivity {
                                             collapsingToolbarLayout.setExpandedTitleColor(swatch.getRgb());
                                         }
 
+                                        assert textSwatch != null;
                                         overview_layout.setBackgroundColor(textSwatch.getRgb());
                                         overview.setTextColor(textSwatch.getTitleTextColor());
                                         overview_title.setTextColor(textSwatch.getTitleTextColor());

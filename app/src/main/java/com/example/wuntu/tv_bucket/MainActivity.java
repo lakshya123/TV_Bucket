@@ -2,7 +2,9 @@ package com.example.wuntu.tv_bucket;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -23,11 +25,13 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Adapters.ExpandListAdapter;
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
 import com.example.wuntu.tv_bucket.Fragments.SearchFragment;
 import com.example.wuntu.tv_bucket.Fragments.TvMainFragment;
+import com.example.wuntu.tv_bucket.Utils.MySuggestionProvider;
 import com.example.wuntu.tv_bucket.Utils.NetworkDialog;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.example.wuntu.tv_bucket.Utils.Utility;
@@ -73,9 +77,15 @@ public class MainActivity extends AppCompatActivity {
 
         searchFragment = new SearchFragment();
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setTitle("TV Bucket");
-        getSupportActionBar().setElevation(0);
+
+        if (getSupportActionBar() != null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setTitle("TV Bucket");
+            getSupportActionBar().setElevation(0);
+        }
+
+
 
         enableExpandableList();
 
@@ -96,6 +106,16 @@ public class MainActivity extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+
+        Intent intent  = getIntent();
+
+       /* if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
+            Toast.makeText(this, query +"", Toast.LENGTH_SHORT).show();
+        }*/
 
 
 
@@ -167,7 +187,11 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
+                if (getSupportActionBar() != null)
+                {
+                    getSupportActionBar().setDisplayShowTitleEnabled(false);
+                }
+
                 viewPager.setVisibility(GONE);
                 tabLayout.setVisibility(GONE);
                 toggle.setDrawerIndicatorEnabled(false);
@@ -191,7 +215,11 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().popBackStack();
                 }
                 getSupportFragmentManager().beginTransaction().remove(searchFragment).commit();
-                getSupportActionBar().setDisplayShowTitleEnabled(true);
+                if (getSupportActionBar() != null)
+                {
+                    getSupportActionBar().setDisplayShowTitleEnabled(true);
+                }
+
 
                 frameLayout.setVisibility(GONE);
 
@@ -257,7 +285,11 @@ public class MainActivity extends AppCompatActivity {
             params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
                     | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
 
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            if (getSupportActionBar() != null)
+            {
+                getSupportActionBar().setDisplayShowTitleEnabled(true);
+            }
+
 
             frameLayout.setVisibility(GONE);
 
@@ -323,22 +355,27 @@ public class MainActivity extends AppCompatActivity {
                 {
                     switch (childPosition) {
                         case 0:
+                            viewPager.setCurrentItem(0);
                             moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         case 1:
+                            viewPager.setCurrentItem(0);
                             moviesMainFragment.prepareOnlineData(urlConstants.URL_top_rated_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         case 2:
+                            viewPager.setCurrentItem(0);
                             moviesMainFragment.prepareOnlineData(urlConstants.URL_upcoming_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         case 3:
+                            viewPager.setCurrentItem(0);
                             moviesMainFragment.prepareOnlineData(urlConstants.URL_now_playing_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         default:
+                            viewPager.setCurrentItem(0);
                             moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies,1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
@@ -349,18 +386,22 @@ public class MainActivity extends AppCompatActivity {
                     switch (childPosition)
                     {
                         case 0:
+                            viewPager.setCurrentItem(1);
                             drawer.closeDrawer(GravityCompat.START);
                             tvMainFragment.prepareOnlineData(urlConstants.URL_popular_tv_shows,1);
                             break;
                         case 1:
+                            viewPager.setCurrentItem(1);
                             tvMainFragment.prepareOnlineData(urlConstants.URL_top_rated_tv_shows,1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         case 2:
+                            viewPager.setCurrentItem(1);
                             drawer.closeDrawer(GravityCompat.START);
                             tvMainFragment.prepareOnlineData(urlConstants.URL_tv_on_air,1);
                             break;
                         case 3:
+                            viewPager.setCurrentItem(1);
                             drawer.closeDrawer(GravityCompat.START);
                             tvMainFragment.prepareOnlineData(urlConstants.URL_tv_airing_today,1);
                             break;
@@ -384,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
         // Adding child data
         listDataHeader.add("Movies");
         listDataHeader.add("TV Shows");
-        listDataHeader.add("People");
+//        listDataHeader.add("People");
 
         // Adding child data
         List<String> top = new ArrayList<>();
@@ -401,12 +442,12 @@ public class MainActivity extends AppCompatActivity {
         mid.add("Airing Today");
 
        /* List<String> bottom = new ArrayList<>();
-        bottom.add("Popular People");*/
-
+        bottom.add("Popular People");
+*/
 
 
         listDataChild.put(listDataHeader.get(0), top);
         listDataChild.put(listDataHeader.get(1), mid);
-      //  listDataChild.put(listDataHeader.get(2), bottom);
+       // listDataChild.put(listDataHeader.get(2), bottom);
     }
 }

@@ -1,12 +1,9 @@
 package com.example.wuntu.tv_bucket;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.example.wuntu.tv_bucket.Fragments.CastViewFragment;
 import com.example.wuntu.tv_bucket.Fragments.CastViewListFragment;
@@ -58,28 +55,21 @@ public class CastViewActivity extends AppCompatActivity
         }
 
 
-
-
-
-        if (check.equals("TOUCH EVENT") )
-        {
-            id = getIntent().getIntExtra("ID",0);
-            setViewtoCastView(id);
-        }
-        else if (check.equals("FULL LIST CAST"))
-        {
-            fullCastList = getIntent().getParcelableArrayListExtra("LIST");
-            setViewtoCastList();
-        }
-        else if (check.equals("VIEW_SEASONS"))
-        {
-
-            setViewtoSeasonList();
-
-        }
-        else if (check.equals("SEASON_EPISODES"))
-        {
-            setViewtoSeasonEpisodes();
+        switch (check) {
+            case "TOUCH EVENT":
+                id = getIntent().getIntExtra("ID", 0);
+                setViewtoCastView(id);
+                break;
+            case "FULL LIST CAST":
+                fullCastList = getIntent().getParcelableArrayListExtra("LIST");
+                setViewtoCastList();
+                break;
+            case "VIEW_SEASONS":
+                setViewtoSeasonList();
+                break;
+            case "SEASON_EPISODES":
+                setViewtoSeasonEpisodes();
+                break;
         }
     }
 

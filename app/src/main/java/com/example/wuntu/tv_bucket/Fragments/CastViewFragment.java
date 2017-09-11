@@ -51,10 +51,14 @@ public class CastViewFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_cast_view, container, false);
 
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("TV Bucket");
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        if (((AppCompatActivity)getActivity()).getSupportActionBar() != null)
+        {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("TV Bucket");
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        }
+
 
 
 
