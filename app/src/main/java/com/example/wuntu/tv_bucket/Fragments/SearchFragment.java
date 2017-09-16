@@ -2,16 +2,24 @@ package com.example.wuntu.tv_bucket.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -24,6 +32,7 @@ import com.example.wuntu.tv_bucket.CastViewActivity;
 import com.example.wuntu.tv_bucket.Models.MultiSearchModel;
 import com.example.wuntu.tv_bucket.Models.MultiSearchResultModel;
 import com.example.wuntu.tv_bucket.MovieView;
+import com.example.wuntu.tv_bucket.MySuggestionProvider;
 import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
@@ -43,7 +52,7 @@ public class SearchFragment extends Fragment {
     SearchAdapter searchAdapter;
     private Gson gson;
     MultiSearchModel multiSearchModel;
-
+    ListView listView;
 
 
     @Override
@@ -52,6 +61,32 @@ public class SearchFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_search, container, false);
         search_text = (TextView) view.findViewById(R.id.search_text);
+
+        /*listView = (ListView) view.findViewById(R.id.search_listview);*/
+
+
+        /*  if (query.length() == 0)
+        {
+            ContentResolver contentResolver = getContext().getContentResolver();
+            String contentURI = "content://" + MySuggestionProvider.AUTHORITY + '/' + SearchManager.SUGGEST_URI_PATH_QUERY;
+
+            Uri uri = Uri.parse(contentURI);
+
+            Cursor cursor = contentResolver.query(uri, null, null, null, null);
+
+            assert cursor != null;
+            cursor.moveToFirst();
+
+
+            String[] columns = new String[] { SearchManager.SUGGEST_COLUMN_TEXT_1 };
+            int[] views = new int[] { R.id.search_title };
+
+
+           *//* SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity(), R.layout.search_item, cursor, columns, views, 0);
+            listView.setAdapter(listAdapter);
+            search_text.setVisibility(View.GONE);*//*
+        }*/
+
 
         recyclerView = (RecyclerView) view.findViewById(R.id.search_recyler_view);
         searchModelArrayList = new ArrayList<>();
@@ -71,6 +106,7 @@ public class SearchFragment extends Fragment {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
+
 
         if (query.length() > 0)
         {

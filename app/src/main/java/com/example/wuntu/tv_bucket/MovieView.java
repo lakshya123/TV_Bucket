@@ -39,6 +39,9 @@ import com.example.wuntu.tv_bucket.Models.TvSeasons;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.example.wuntu.tv_bucket.Utils.Utility;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
@@ -92,6 +95,13 @@ public class MovieView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_movie_view);
+
+        AdView adView = new AdView(this);
+        adView.setAdSize(AdSize.SMART_BANNER);
+        adView.setAdUnitId(getString(R.string.banner_ad_unit_id) );
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
         initviews();
 

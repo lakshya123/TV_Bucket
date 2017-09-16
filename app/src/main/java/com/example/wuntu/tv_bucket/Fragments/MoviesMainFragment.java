@@ -42,6 +42,9 @@ import com.example.wuntu.tv_bucket.R;
 import com.example.wuntu.tv_bucket.Utils.AppSingleton;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
 import com.example.wuntu.tv_bucket.Utils.Utility;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -56,7 +59,6 @@ import static com.android.volley.VolleyLog.TAG;
  */
 public class MoviesMainFragment extends Fragment
 {
-
     public RelativeLayout relativeLayout;
     private ArrayList<Result> movie = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -74,6 +76,9 @@ public class MoviesMainFragment extends Fragment
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_movie_main, container, false);
+
+
+
 
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_movie_main);

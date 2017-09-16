@@ -97,10 +97,11 @@ public class SeasonListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         Calendar calendar = Calendar.getInstance();
         String date = dateFormat.format(calendar.getTime());
-        String last_air_Date_string = seasonsArrayList.get(position).getLastAirDate();
+        String last_air_Date_string;
         String last_season_air_date_string;
-        if (seasonsArrayList.get(position).getAirDate() != null)
+        if (seasonsArrayList.get(position).getAirDate() != null && seasonsArrayList.get(position).getLastAirDate() != null)
         {
+            last_air_Date_string = seasonsArrayList.get(position).getLastAirDate();
             last_season_air_date_string = seasonsArrayList.get(position).getAirDate();
             String last_season_year = last_season_air_date_string.substring(0,4);
             ((MyViewHolder)holder).current_season_year.setText(last_season_year);

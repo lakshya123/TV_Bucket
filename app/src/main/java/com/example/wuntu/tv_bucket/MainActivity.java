@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -31,10 +30,10 @@ import com.example.wuntu.tv_bucket.Adapters.ExpandListAdapter;
 import com.example.wuntu.tv_bucket.Fragments.MoviesMainFragment;
 import com.example.wuntu.tv_bucket.Fragments.SearchFragment;
 import com.example.wuntu.tv_bucket.Fragments.TvMainFragment;
-import com.example.wuntu.tv_bucket.Utils.MySuggestionProvider;
-import com.example.wuntu.tv_bucket.Utils.NetworkDialog;
 import com.example.wuntu.tv_bucket.Utils.UrlConstants;
-import com.example.wuntu.tv_bucket.Utils.Utility;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +43,7 @@ import java.util.Map;
 import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity {
+
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -71,6 +71,15 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+        AdView adView = new AdView(this);
+        adView.setAdSize(AdSize.SMART_BANNER);
+        adView.setAdUnitId(getString(R.string.banner_ad_unit_id) );
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
 
 
         params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
@@ -240,7 +249,14 @@ public class MainActivity extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 bundle.putString("QUERY",query1);
                 searchFragment.setArguments(bundle);
+
+                Toast.makeText(MainActivity.this, MySuggestionProvider.AUTHORITY + "", Toast.LENGTH_SHORT).show();
+                SearchRecentSuggestions suggestions = new SearchRecentSuggestions(MainActivity.this,
+                        MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
+                suggestions.saveRecentQuery(query, null);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, searchFragment).commit();
+
                 return false;
             }
 
@@ -310,6 +326,10 @@ public class MainActivity extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
+        expListView.expandGroup(0);
+
+        expListView.expandGroup(1);
+
         expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
             @Override
@@ -321,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
         // Listview Group expanded listener
-        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+       /* expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -331,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 lastExpandedPosition = groupPosition;
             }
-        });
+        });*/
 
 
         // Listview Group collasped listener

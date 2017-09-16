@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <meta-data
-            android:name="firebase_analytics_collection_enabled"
-            android:value="false" />
 
 
+        <provider android:name=".MySuggestionProvider"
+            android:authorities="com.example.wuntu.tv_bucket"
+            android:exported="false"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -25,6 +25,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".MovieView" />
         <activity android:name=".CastViewActivity" />
