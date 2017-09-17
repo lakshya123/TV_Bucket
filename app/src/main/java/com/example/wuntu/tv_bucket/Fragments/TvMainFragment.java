@@ -17,6 +17,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,12 @@ public class TvMainFragment extends Fragment
     TVListGettingModel gettingModel;
     String url = URLconstants.URL_tv_on_air;
     String url1;
+    LinearLayoutManager mLayoutManager;
+    public static String static_url ;
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 5;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
 
 
     @Override
@@ -83,10 +90,42 @@ public class TvMainFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.tv_recycler_view);
         mAdapter = new Tv_List_Adapter(tv_list,TvMainFragment.this,url);
 
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    if (totalItemCount > previousTotal) {
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
+                    // End has been reached
+
+                    Log.i("Yaeye!", "end called");
+
+                    // Do something
+                    page_number = page_number + 1;
+                    prepareOnlineData(static_url,page_number);
+
+                    loading = true;
+                }
+            }
+        });
 
 
 
@@ -95,17 +134,11 @@ public class TvMainFragment extends Fragment
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        if (position == tv_list.size() - 1)
-                        {
 
-                        }
-                        else
-                        {
                             Intent intent = new Intent(getActivity(), MovieView.class);
                             intent.putExtra("ID",tv_list.get(position).getId().toString());
                             intent.putExtra("VIEW","TV");
                             startActivity(intent);
-                        }
 
 
 
@@ -135,10 +168,20 @@ public class TvMainFragment extends Fragment
     public void prepareOnlineData(String url,int page_number)
     {
 
+        if (url.equals(static_url))
+        {
+            Log.d("CHANGE","Same URL");
+        }
+        else
+        {
+            previousTotal = 0;
+            tv_list.clear();
+        }
+        static_url = url;
         final boolean b = Utility.isNetworkAvailable(getContext());
 
 
-        recyclerView.scrollToPosition(0);
+       // recyclerView.scrollToPosition(0);
         mAdapter.notifyDataSetChanged();
         String tag_json_obj = "json_obj_req";
         String page_String = String.valueOf(page_number);
@@ -157,8 +200,10 @@ public class TvMainFragment extends Fragment
             public void onResponse(String response) {
 
                 gettingModel = gson.fromJson(response,TVListGettingModel.class);
-                tv_list.clear();
+                //tv_list.clear();
                 mAdapter.notifyDataSetChanged();
+
+                int j = tv_list.size();
 
                 for(int i = 0;i<gettingModel.getResults().size();i++)
                 {
@@ -170,10 +215,12 @@ public class TvMainFragment extends Fragment
                     result.setFirstAirDate(gettingModel.getResults().get(i).getFirstAirDate());
                     result.setPage(gettingModel.getPage());
                     result.setTotalPages(gettingModel.getTotalPages());
-                    tv_list.add(i,result);
+
+                    tv_list.add(j,result);
+                    j= j+ 1;
                 }
 
-                TVListResultModel result = new TVListResultModel();
+                /*TVListResultModel result = new TVListResultModel();
                 result.setId(0);
                 result.setName("a");
                 result.setOriginalName("b");
@@ -181,7 +228,7 @@ public class TvMainFragment extends Fragment
                 result.setFirstAirDate("we");
                 result.setPage(gettingModel.getPage());
                 result.setTotalPages(gettingModel.getTotalPages());
-                tv_list.add(gettingModel.getResults().size(),result);
+                tv_list.add(gettingModel.getResults().size(),result);*/
                 mAdapter.notifyDataSetChanged();
 
                 pDialog.hide();

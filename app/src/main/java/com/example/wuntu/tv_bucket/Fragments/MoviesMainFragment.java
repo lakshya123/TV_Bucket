@@ -17,6 +17,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ import com.google.gson.GsonBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
 import static android.view.View.GONE;
 import static com.android.volley.VolleyLog.TAG;
 
@@ -69,6 +71,13 @@ public class MoviesMainFragment extends Fragment
     Popular_Movies_Model example;
     String url = URLconstants.URL_now_playing_movies;
     String url1 = " ";
+    LinearLayoutManager mLayoutManager;
+    public static String static_url ;
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 5;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
+
 
 
     @Override
@@ -85,10 +94,46 @@ public class MoviesMainFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
 
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    //Log.d("STATUS","LOADING TRUE BUT NOT IF");
+                    if (totalItemCount > previousTotal) {
+                        //Log.d("STATUS","LOADING TRUE");
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
+                    // End has been reached
+
+                    //Log.d("STATUS", "end called");
+
+                    // Do something
+                    page_number = page_number + 1;
+                    prepareOnlineData(static_url,page_number);
+
+                    loading = true;
+                }
+            }
+        });
+
 
 
 
@@ -97,17 +142,11 @@ public class MoviesMainFragment extends Fragment
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        if (position == movie.size() - 1)
-                        {
+                        Intent intent = new Intent(getActivity(), MovieView.class);
+                        intent.putExtra("ID",movie.get(position).getId().toString());
+                        intent.putExtra("VIEW","MOVIE");
+                        startActivity(intent);
 
-                        }
-                        else
-                        {
-                            Intent intent = new Intent(getActivity(), MovieView.class);
-                            intent.putExtra("ID",movie.get(position).getId().toString());
-                            intent.putExtra("VIEW","MOVIE");
-                            startActivity(intent);
-                        }
 
 
 
@@ -133,12 +172,21 @@ public class MoviesMainFragment extends Fragment
     }
 
 
-
     public void prepareOnlineData(final String url, Integer page_number)
     {
 
-        recyclerView.scrollToPosition(0);
-        mAdapter.notifyDataSetChanged();
+
+        if (url.equals(static_url))
+        {
+            Log.d("CHANGE","Same URL");
+        }
+        else
+        {
+            previousTotal = 0;
+            movie.clear();
+        }
+        static_url = url;
+
         String tag_json_obj = "json_obj_req";
         String page_String = String.valueOf(page_number);
 
@@ -156,8 +204,10 @@ public class MoviesMainFragment extends Fragment
             public void onResponse(String response) {
 
                 example = gson.fromJson(response,Popular_Movies_Model.class);
-                movie.clear();
+//                movie.clear();
                 mAdapter.notifyDataSetChanged();
+               // Toast.makeText(getActivity(), "movie arraylist size = " + movie.size(), Toast.LENGTH_SHORT).show();
+                int j = movie.size();
 
                 for(int i = 0;i<example.getResults().size();i++)
                 {
@@ -171,21 +221,12 @@ public class MoviesMainFragment extends Fragment
                     result.setPage(example.getPage());
                     result.setTotal_pages(example.getTotalPages());
                     result.setURL(url);
-                    movie.add(i,result);
+
+                    movie.add(j,result);
+                    j= j+ 1;
+                    mAdapter.notifyDataSetChanged();
                 }
 
-                Result result = new Result();
-                result.setId(0);
-                result.setTitle("a");
-                result.setOriginalTitle("b");
-                result.setBackdropPath("aas");
-                result.setReleaseDate("we");
-                result.setVoteAverage(1.2);
-                result.setPage(example.getPage());
-                result.setTotal_pages(example.getTotalPages());
-                result.setURL(url);
-                movie.add(example.getResults().size(),result);
-                mAdapter.notifyDataSetChanged();
 
                 pDialog.hide();
 

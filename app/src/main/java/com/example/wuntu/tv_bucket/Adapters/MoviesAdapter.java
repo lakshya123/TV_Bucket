@@ -62,7 +62,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    @Override
+    /*@Override
     public int getItemViewType(int position) {
         if (isPositionItem(position))
             return VIEW_ITEM;
@@ -71,7 +71,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private boolean isPositionItem(int position) {
         return position != getItemCount() -1;
-    }
+    }*/
 
 
 
@@ -82,17 +82,17 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         context = parent.getContext();
 
-        if (viewType == VIEW_ITEM) {
+//        if (viewType == VIEW_ITEM) {
             View v =  LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.movie_list, parent, false);
             return new MyViewHolder(v);
-        } else if (viewType == VIEW_PROG){
+       /* } else if (viewType == VIEW_PROG){
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.footer_layout, parent, false);
             return new FooterViewHolder(v);
-        }
+        }*/
 
-        return null;
+//        return null;
     }
 
 
@@ -111,7 +111,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .placeholder(R.drawable.not_available)
                     .into(((MyViewHolder)holder).backdrop_image);
         }
-        else if (holder instanceof FooterViewHolder)
+     /*   else if (holder instanceof FooterViewHolder)
         {
             movie = moviesList.get(position);
             if(movie.getPage() == 1)
@@ -145,8 +145,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                     ((MoviesMainFragment)fragment).prepareOnlineData(movie.getURL(),movie.getPage() + 1);
                 }
-            });
-        }
+            });*/
+
 
 
 
