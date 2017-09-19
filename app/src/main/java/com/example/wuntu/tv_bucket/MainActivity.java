@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -214,25 +215,33 @@ public class MainActivity extends AppCompatActivity {
         searchClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewPager.setVisibility(View.VISIBLE);
-                tabLayout.setVisibility(View.VISIBLE);
-                toggle.setDrawerIndicatorEnabled(true);
-                params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-                        | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-                if (getSupportFragmentManager().getBackStackEntryCount()>0)
+
+                if (searchView.getQuery().length() > 1)
                 {
-                    getSupportFragmentManager().popBackStack();
+                    //Toast.makeText(MainActivity.this, searchView.getQuery().length() + "", Toast.LENGTH_SHORT).show();
+                    searchView.setQuery("",false);
                 }
-                getSupportFragmentManager().beginTransaction().remove(searchFragment).commit();
-                if (getSupportActionBar() != null)
+                else
                 {
-                    getSupportActionBar().setDisplayShowTitleEnabled(true);
+                    //Toast.makeText(MainActivity.this, " length is 1", Toast.LENGTH_SHORT).show();
+                    viewPager.setVisibility(View.VISIBLE);
+                    tabLayout.setVisibility(View.VISIBLE);
+                    toggle.setDrawerIndicatorEnabled(true);
+                    params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+                            | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                    if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+                        getSupportFragmentManager().popBackStack();
+                    }
+                    getSupportFragmentManager().beginTransaction().remove(searchFragment).commit();
+                    if (getSupportActionBar() != null) {
+                        getSupportActionBar().setDisplayShowTitleEnabled(true);
+                    }
+
+
+                    frameLayout.setVisibility(GONE);
+
+                    searchView.onActionViewCollapsed();
                 }
-
-
-                frameLayout.setVisibility(GONE);
-
-                searchView.onActionViewCollapsed();
 
             }
         });
@@ -243,6 +252,11 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+
                 searchFragment = new SearchFragment();
                 String query1 = query.replaceAll(" ","%20");
 
@@ -250,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("QUERY",query1);
                 searchFragment.setArguments(bundle);
 
-                Toast.makeText(MainActivity.this, MySuggestionProvider.AUTHORITY + "", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(MainActivity.this, MySuggestionProvider.AUTHORITY + "", Toast.LENGTH_SHORT).show();
                 SearchRecentSuggestions suggestions = new SearchRecentSuggestions(MainActivity.this,
                         MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
                 suggestions.saveRecentQuery(query, null);
@@ -336,7 +350,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
 
-                return false;
+                return true;
             }
 
         });
@@ -468,6 +482,6 @@ public class MainActivity extends AppCompatActivity {
 
         listDataChild.put(listDataHeader.get(0), top);
         listDataChild.put(listDataHeader.get(1), mid);
-       // listDataChild.put(listDataHeader.get(2), bottom);
+        // listDataChild.put(listDataHeader.get(2), bottom);
     }
 }

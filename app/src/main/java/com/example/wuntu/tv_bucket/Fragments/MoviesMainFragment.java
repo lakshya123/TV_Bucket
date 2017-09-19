@@ -92,7 +92,7 @@ public class MoviesMainFragment extends Fragment
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_movie_main);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mAdapter = new MoviesAdapter(movie,MoviesMainFragment.this);
+        mAdapter = new MoviesAdapter(movie);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);

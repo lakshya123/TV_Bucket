@@ -27,13 +27,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private ArrayList<Result> moviesList = new ArrayList<>();
     private Context context;
-    private final int VIEW_ITEM = 0;
-    private final int VIEW_PROG = 1;
-    private Fragment fragment;
 
-    public MoviesAdapter(ArrayList<Result> moviesList, Fragment fragment) {
+    public MoviesAdapter(ArrayList<Result> moviesList) {
         this.moviesList = moviesList;
-        this.fragment = fragment;
     }
 
 
@@ -50,55 +46,21 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class FooterViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView previous_page,next_page;
-
-        FooterViewHolder(View itemView) {
-            super(itemView);
-            previous_page = (TextView)itemView.findViewById(R.id.previous_page);
-            next_page = (TextView) itemView.findViewById(R.id.next_page);
-
-        }
-    }
-
-    /*@Override
-    public int getItemViewType(int position) {
-        if (isPositionItem(position))
-            return VIEW_ITEM;
-        return VIEW_PROG;
-    }
-
-    private boolean isPositionItem(int position) {
-        return position != getItemCount() -1;
-    }*/
-
-
-
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         context = parent.getContext();
 
-//        if (viewType == VIEW_ITEM) {
+
             View v =  LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.movie_list, parent, false);
             return new MyViewHolder(v);
-       /* } else if (viewType == VIEW_PROG){
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.footer_layout, parent, false);
-            return new FooterViewHolder(v);
-        }*/
-
-//        return null;
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
 
         if (holder instanceof MyViewHolder)
         {
@@ -111,45 +73,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .placeholder(R.drawable.not_available)
                     .into(((MyViewHolder)holder).backdrop_image);
         }
-     /*   else if (holder instanceof FooterViewHolder)
-        {
-            movie = moviesList.get(position);
-            if(movie.getPage() == 1)
-            {
-                ((FooterViewHolder)holder).previous_page.setVisibility(View.INVISIBLE);
-            }
-            else
-            {
-                ((FooterViewHolder)holder).previous_page.setVisibility(View.VISIBLE);
-            }
-            if (movie.getPage() == movie.getTotal_pages())
-            {
-                ((FooterViewHolder)holder).next_page.setVisibility(View.INVISIBLE);
-            }
-            else
-            {
-                ((FooterViewHolder)holder).next_page.setVisibility(View.VISIBLE);
-            }
-
-            ((FooterViewHolder)holder).previous_page.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-
-                    ((MoviesMainFragment)fragment).prepareOnlineData(movie.getURL(),movie.getPage() - 1);
-                }
-            });
-            ((FooterViewHolder)holder).next_page.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    ((MoviesMainFragment)fragment).prepareOnlineData(movie.getURL(),movie.getPage() + 1);
-                }
-            });*/
-
-
-
-
     }
 
     @Override

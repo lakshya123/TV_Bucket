@@ -93,23 +93,8 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
 
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.listTitle);
-        TextView txt_list_item_close_open = (TextView) convertView
-                .findViewById(R.id.txt_list_item_close_open);
 
 
-        if(getChildrenCount(groupPosition)>0)
-        {
-            txt_list_item_close_open.setVisibility(View.VISIBLE);
-        }
-        else
-            txt_list_item_close_open.setVisibility(View.GONE);
-
-
-        if(isExpanded)
-        {
-            txt_list_item_close_open.setText(R.string.minus);
-        }
-        else txt_list_item_close_open.setText("+");
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
 

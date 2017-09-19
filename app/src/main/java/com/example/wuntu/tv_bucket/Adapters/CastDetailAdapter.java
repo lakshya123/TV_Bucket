@@ -36,7 +36,7 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     MovieView a;
     ArrayList<Cast> fullArrayList = new ArrayList<>();
 
-    public CastDetailAdapter( ArrayList<Cast> detailArrayList,ArrayList<Cast> subCastArrayList)
+    public CastDetailAdapter(ArrayList<Cast> detailArrayList,ArrayList<Cast> subCastArrayList)
     {
 
         this.subArrayList = subCastArrayList;
@@ -72,9 +72,12 @@ public class CastDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        if (isPositionItem(position))
-            return VIEW_ITEM;
-        return VIEW_PROG;
+        if (subArrayList.size() >7) {
+            if (isPositionItem(position))
+                return VIEW_ITEM;
+            return VIEW_PROG;
+        }
+        else return VIEW_ITEM;
     }
 
     private boolean isPositionItem(int position) {

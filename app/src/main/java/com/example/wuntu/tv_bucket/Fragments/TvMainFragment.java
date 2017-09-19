@@ -88,7 +88,7 @@ public class TvMainFragment extends Fragment
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_tv_main);
         recyclerView = (RecyclerView) view.findViewById(R.id.tv_recycler_view);
-        mAdapter = new Tv_List_Adapter(tv_list,TvMainFragment.this,url);
+        mAdapter = new Tv_List_Adapter(tv_list);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);

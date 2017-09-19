@@ -17,6 +17,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -159,10 +160,22 @@ public class MovieView extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position)
                     {
-                        if (position == subCastArrayList.size() - 1)
-                        {
-                            // Done things in Adapter for this
 
+                        if (subCastArrayList.size()>7)
+                        {
+                            if (position == subCastArrayList.size() - 1)
+                            {
+                                // Done things in Adapter for this
+                                Log.d("Nothing","Nothing");
+
+                            }
+                            else
+                            {
+                                Intent intent = new Intent(MovieView.this,CastViewActivity.class);
+                                intent.putExtra("ID",subCastArrayList.get(position).getId());
+                                intent.putExtra("EVENT","TOUCH EVENT");
+                                startActivity(intent);
+                            }
                         }
                         else
                         {
@@ -171,6 +184,7 @@ public class MovieView extends AppCompatActivity {
                             intent.putExtra("EVENT","TOUCH EVENT");
                             startActivity(intent);
                         }
+
 
 
 

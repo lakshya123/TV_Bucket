@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -45,14 +47,19 @@ import java.util.ArrayList;
 public class SearchFragment extends Fragment {
 
     RecyclerView recyclerView;
-    String query;
-    TextView search_text;
+    String query= "";
+    TextView search_text,no_result_textview;
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
     ArrayList<MultiSearchResultModel> searchModelArrayList;
     SearchAdapter searchAdapter;
     private Gson gson;
     MultiSearchModel multiSearchModel;
-    ListView listView;
+    private int previousTotal = 0;
+    private boolean loading = true;
+    private int visibleThreshold = 5;
+    int firstVisibleItem, visibleItemCount, totalItemCount;
+    LinearLayoutManager mLayoutManager;
+    int page_number = 1;
 
 
     @Override
@@ -62,30 +69,7 @@ public class SearchFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_search, container, false);
         search_text = (TextView) view.findViewById(R.id.search_text);
 
-        /*listView = (ListView) view.findViewById(R.id.search_listview);*/
-
-
-        /*  if (query.length() == 0)
-        {
-            ContentResolver contentResolver = getContext().getContentResolver();
-            String contentURI = "content://" + MySuggestionProvider.AUTHORITY + '/' + SearchManager.SUGGEST_URI_PATH_QUERY;
-
-            Uri uri = Uri.parse(contentURI);
-
-            Cursor cursor = contentResolver.query(uri, null, null, null, null);
-
-            assert cursor != null;
-            cursor.moveToFirst();
-
-
-            String[] columns = new String[] { SearchManager.SUGGEST_COLUMN_TEXT_1 };
-            int[] views = new int[] { R.id.search_title };
-
-
-           *//* SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(getActivity(), R.layout.search_item, cursor, columns, views, 0);
-            listView.setAdapter(listAdapter);
-            search_text.setVisibility(View.GONE);*//*
-        }*/
+        no_result_textview = (TextView) view.findViewById(R.id.no_result_textview);
 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.search_recyler_view);
@@ -93,7 +77,7 @@ public class SearchFragment extends Fragment {
 
         searchAdapter = new SearchAdapter(searchModelArrayList,SearchFragment.this);
 
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(searchAdapter);
@@ -101,22 +85,65 @@ public class SearchFragment extends Fragment {
         if(getArguments() != null)
         {
             query = getArguments().getString("QUERY");
+            //Toast.makeText(getActivity(), "Not Null Arguments query " + query.length(), Toast.LENGTH_SHORT).show();
         }
-        else query = "";
+
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gson = gsonBuilder.create();
 
-
-        if (query.length() > 0)
+        if (query.length() == 0)
         {
+            search_text.setVisibility(View.VISIBLE);
+            no_result_textview.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+        }
+
+        if (query.length() >= 1)
+        {
+            no_result_textview.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
             search_text.setVisibility(View.GONE);
         }
 
-        if (query.length()>2)
+        if (query.length()>1)
         {
-            preparedata(query);
+            preparedata(query,page_number);
         }
+
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+
+                if (loading) {
+                    //Log.d("STATUS","LOADING TRUE BUT NOT IF");
+                    if (totalItemCount > previousTotal) {
+                        //Log.d("STATUS","LOADING TRUE");
+                        loading = false;
+                        previousTotal = totalItemCount;
+                    }
+                }
+                if (!loading && (totalItemCount - visibleItemCount)
+                        <= (firstVisibleItem + visibleThreshold)) {
+                    // End has been reached
+
+                    //Log.d("STATUS", "end called");
+
+                    // Do something
+                    page_number = page_number + 1;
+                    preparedata(query,page_number);
+
+                    loading = true;
+                }
+            }
+        });
 
 
 
@@ -161,22 +188,24 @@ public class SearchFragment extends Fragment {
         return view;
     }
 
-    public void preparedata(String query)
+    public void preparedata(String query,int page_number)
     {
         String tag_json_obj = "json_obj_req";
         boolean b = Utility.isNetworkAvailable(getContext());
 
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+       /* final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
-        progressDialog.show();
+        progressDialog.show();*/
 
 
         if (!b)
         {
             Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();
         }
-        String url = urlConstants.URL_multi_search + query;
+        String pg_no = String.valueOf(page_number);
+        String page_url = urlConstants.URL_multi_search_2 + pg_no;
+        String url = urlConstants.URL_multi_search + query + page_url;
 
 
 
@@ -187,6 +216,7 @@ public class SearchFragment extends Fragment {
                 multiSearchModel = gson.fromJson(response,MultiSearchModel.class);
 
                 int i;
+                int j = searchModelArrayList.size();
                 for (i=0;i<multiSearchModel.getResults().size();i++)
                 {
                     MultiSearchResultModel multiSearchResultModel = new MultiSearchResultModel();
@@ -198,21 +228,23 @@ public class SearchFragment extends Fragment {
                     multiSearchResultModel.setProfilePath(multiSearchModel.getResults().get(i).getProfilePath());
                     multiSearchResultModel.setMediaType(multiSearchModel.getResults().get(i).getMediaType());
 
-                    searchModelArrayList.add(i,multiSearchResultModel);
+                    searchModelArrayList.add(j,multiSearchResultModel);
+                    j = j+ 1;
                 }
                 if (multiSearchModel.getTotalResults() == 0)
                 {
-                    search_text.setText(R.string.no_results);
-                    search_text.setVisibility(View.VISIBLE);
+                    no_result_textview.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    search_text.setVisibility(View.GONE);
                 }
                 searchAdapter.notifyDataSetChanged();
-                progressDialog.hide();
+               // progressDialog.hide();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                progressDialog.hide();
+                //progressDialog.hide();
             }
         });
 

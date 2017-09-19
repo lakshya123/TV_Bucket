@@ -31,15 +31,9 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private UrlConstants urlConstants = UrlConstants.getSingletonRef();
     private ArrayList<TVListResultModel> tv_list = new ArrayList<>();
     private Context context;
-    private final int VIEW_ITEM = 0;
-    private final int VIEW_PROG = 1;
-    private Fragment fragment;
-    private String url;
 
-    public Tv_List_Adapter(ArrayList<TVListResultModel> tv_list, Fragment fragment, String url) {
+    public Tv_List_Adapter(ArrayList<TVListResultModel> tv_list) {
         this.tv_list = tv_list;
-        this.fragment = fragment;
-        this.url = url;
     }
 
 
@@ -56,48 +50,15 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private class FooterViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView previous_page,next_page;
-
-        FooterViewHolder(View itemView) {
-            super(itemView);
-
-            previous_page = (TextView)itemView.findViewById(R.id.previous_page);
-            next_page = (TextView) itemView.findViewById(R.id.next_page);
-
-        }
-    }
-
-   /* @Override
-    public int getItemViewType(int position) {
-        if (isPositionItem(position))
-            return VIEW_ITEM;
-        return VIEW_PROG;
-    }
-
-    private boolean isPositionItem(int position) {
-        return position != getItemCount() -1;
-    }*/
-
-
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         context = parent.getContext();
 
-//        if (viewType == VIEW_ITEM) {
             View v =  LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.movie_list, parent, false);
             return new MyViewHolder(v);
-        /*} else if (viewType == VIEW_PROG){
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.footer_layout, parent, false);
-            return new FooterViewHolder(v);
-        }
 
-        return null;*/
     }
 
 
@@ -116,40 +77,7 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     .placeholder(R.drawable.not_available)
                     .into(((MyViewHolder)holder).backdrop_image);
         }
-        else if (holder instanceof FooterViewHolder)
-        {
-            resultModel = tv_list.get(position);
-            if(resultModel.getPage() == 1)
-            {
-                ((FooterViewHolder)holder).previous_page.setVisibility(View.INVISIBLE);
-            }
-            else
-            {
-                ((FooterViewHolder)holder).previous_page.setVisibility(View.VISIBLE);
-            }
-            if (resultModel.getPage() == resultModel.getTotalPages())
-            {
-                ((FooterViewHolder)holder).next_page.setVisibility(View.INVISIBLE);
-            }
-            else
-            {
-                ((FooterViewHolder)holder).next_page.setVisibility(View.VISIBLE);
-            }
 
-            ((FooterViewHolder)holder).previous_page.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v)
-                {
-                    ((TvMainFragment)fragment).prepareOnlineData(url,resultModel.getPage() - 1);
-                }
-            });
-            ((FooterViewHolder)holder).next_page.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((TvMainFragment)fragment).prepareOnlineData(url,resultModel.getPage() + 1);
-                }
-            });
-        }
 
 
 
