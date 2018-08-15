@@ -4,8 +4,7 @@
     android:id="@+id/activity_youtube"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.wuntu.tv_bucket.YoutubeActivity">
+    android:orientation="vertical">
 
     <Toolbar
         android:id="@+id/toolbar"
@@ -33,7 +32,6 @@
 
     <android.support.v7.widget.RecyclerView
         android:background="@color/viewBg"
-        android:layout_marginBottom="40dp"
         android:id="@+id/youtube_recyclerview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

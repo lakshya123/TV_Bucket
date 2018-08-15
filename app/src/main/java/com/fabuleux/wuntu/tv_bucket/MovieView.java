@@ -99,9 +99,9 @@ public class MovieView extends AppCompatActivity {
         initviews();
 
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
-        final Typeface tf = Typeface.createFromAsset(this.getAssets(), "Titillium-Bold.otf");
+        /*final Typeface tf = Typeface.createFromAsset(this.getAssets(), "Titillium-Bold.otf");
         collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
-        collapsingToolbarLayout.setExpandedTitleTypeface(tf);
+        collapsingToolbarLayout.setExpandedTitleTypeface(tf);*/
 
 
 
