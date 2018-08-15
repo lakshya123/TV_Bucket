@@ -116,6 +116,7 @@ public class CastViewFragment extends Fragment {
             @Override
             public void onResponse(String response)
             {
+                pDialog.dismiss();
                 castDetailModel = gson.fromJson(response,CastDetailModel.class);
                 String image_url = urlConstants.URL_Image + castDetailModel.getProfilePath();
 
@@ -202,13 +203,12 @@ public class CastViewFragment extends Fragment {
                 }
 
 
-                pDialog.hide();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
-                pDialog.hide();
+                pDialog.dismiss();
 
             }
         });

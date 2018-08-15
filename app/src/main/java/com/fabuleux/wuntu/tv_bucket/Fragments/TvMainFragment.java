@@ -181,6 +181,7 @@ public class TvMainFragment extends Fragment
             @Override
             public void onResponse(String response) {
 
+                pDialog.dismiss();
                 gettingModel = gson.fromJson(response,TVListGettingModel.class);
                 //tv_list.clear();
                 mAdapter.notifyDataSetChanged();
@@ -213,14 +214,13 @@ public class TvMainFragment extends Fragment
                 tv_list.add(gettingModel.getResults().size(),result);*/
                 mAdapter.notifyDataSetChanged();
 
-                pDialog.hide();
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                pDialog.hide();
+                pDialog.dismiss();
                 if (!b)
                 {
                     Snackbar.make(getActivity().findViewById(R.id.coordinator_layout),"No Internet Connection",Snackbar.LENGTH_LONG).show();

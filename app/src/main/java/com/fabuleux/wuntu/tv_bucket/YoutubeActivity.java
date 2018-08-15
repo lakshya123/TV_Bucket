@@ -143,6 +143,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
             @Override
             public void onResponse(String response) {
 
+                pDialog.dismiss();
                 youtubeLinksGettingModel = gson.fromJson(response, YoutubeLinksGettingModel.class);
                 int i ;
                 for (i = 0; i < youtubeLinksGettingModel.getResults().size(); i++) {
@@ -161,7 +162,6 @@ public class YoutubeActivity extends YouTubeBaseActivity {
                 youtubeViewAdapter.notifyDataSetChanged();
 
 
-                pDialog.hide();
 
             }
 
@@ -169,7 +169,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                pDialog.hide();
+                pDialog.dismiss();
             }
         });
 

@@ -36,7 +36,6 @@ public class CastViewListFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Full Cast List");
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
 
 
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerview);

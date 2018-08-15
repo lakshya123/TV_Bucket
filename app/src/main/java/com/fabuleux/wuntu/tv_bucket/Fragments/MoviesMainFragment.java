@@ -197,6 +197,7 @@ public class MoviesMainFragment extends Fragment
 
             @Override
             public void onResponse(String response) {
+                pDialog.dismiss();
 
                 example = gson.fromJson(response,Popular_Movies_Model.class);
 //                movie.clear();
@@ -223,14 +224,13 @@ public class MoviesMainFragment extends Fragment
                 }
 
 
-                pDialog.hide();
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                pDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                pDialog.hide();
                 boolean b = Utility.isNetworkAvailable(getContext());
                 if (!b)
                 {

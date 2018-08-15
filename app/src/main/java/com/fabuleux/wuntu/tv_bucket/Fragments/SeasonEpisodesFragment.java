@@ -181,6 +181,7 @@ public class SeasonEpisodesFragment extends Fragment {
             @Override
             public void onResponse(String response)
             {
+                progressDialog.dismiss();
                 seasonDetailGettingModel = gson.fromJson(response,SeasonDetailGettingModel.class);
 
                 episode_total.setText(String.valueOf(seasonDetailGettingModel.getEpisodes().size()));
@@ -256,13 +257,12 @@ public class SeasonEpisodesFragment extends Fragment {
                 }
 
 
-                progressDialog.hide();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-                progressDialog.hide();
+                progressDialog.dismiss();
             }
         });
 

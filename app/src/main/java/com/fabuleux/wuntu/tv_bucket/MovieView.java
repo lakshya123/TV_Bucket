@@ -349,6 +349,8 @@ public class MovieView extends AppCompatActivity {
             @Override
             public void onResponse(String response)
             {
+
+                pDialog.dismiss();
                 tvExampleModel = gson.fromJson(response,TvExampleModel.class);
 
 
@@ -670,21 +672,19 @@ public class MovieView extends AppCompatActivity {
                 }
 
 
-                pDialog.hide();
-
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error)
             {
+                pDialog.dismiss();
                 boolean b = Utility.isNetworkAvailable(MovieView.this);
 
                 if (!b)
                 {
                     Snackbar.make(coordinator_layout_movie_view,"No Internet Connection",Snackbar.LENGTH_LONG).show();
                 }
-                pDialog.hide();
 
             }
         });
@@ -710,6 +710,7 @@ public class MovieView extends AppCompatActivity {
             public void onResponse(String response)
             {
 
+                pDialog.dismiss();
                 //Setting text to the textviews
                 movieDetailFull = gson.fromJson(response,MovieDetailFull.class);
 
@@ -949,18 +950,17 @@ public class MovieView extends AppCompatActivity {
 
 
 
-                pDialog.hide();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                pDialog.dismiss();
                 boolean b = Utility.isNetworkAvailable(MovieView.this);
 
                 if (!b)
                 {
                     Snackbar.make(coordinator_layout_movie_view,"No Internet Connection",Snackbar.LENGTH_LONG).show();
                 }
-                pDialog.hide();
 
             }
         });
