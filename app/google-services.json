@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "145125399103",
+    "firebase_url": "https://tv-bucket.firebaseio.com",
+    "project_id": "tv-bucket",
+    "storage_bucket": "tv-bucket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145125399103:android:50c0214c8a7d41e1",
+        "android_client_info": {
+          "package_name": "com.example.wuntu.tv_bucket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145125399103-3cigdfjh4t2is7nt65prdupcm79j7rs3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wuntu.tv_bucket",
+            "certificate_hash": "3380317497b2adea23cc2130cbb3b65b169e32c8"
+          }
+        },
+        {
+          "client_id": "145125399103-bic7je4a9ekvg373nalf3d3667nm5nrq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSKztjAgbt8JNq-_FYGhIYORNPjTjx8CM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145125399103-bic7je4a9ekvg373nalf3d3667nm5nrq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-7666416834761539~5927999510"
+    }
+  ],
+  "configuration_version": "1"
+}

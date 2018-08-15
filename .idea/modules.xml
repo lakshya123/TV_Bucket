@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TV_Bucket.iml" filepath="$PROJECT_DIR$/TV_Bucket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TV-Bucket.iml" filepath="$PROJECT_DIR$/TV-Bucket.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

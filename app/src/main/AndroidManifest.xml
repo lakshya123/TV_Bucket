@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.wuntu.tv_bucket">
+    package="com.fabuleux.wuntu.tv_bucket">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -14,20 +14,12 @@
         android:theme="@style/MyMaterialTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-
-        <provider android:name=".MySuggestionProvider"
-            android:authorities="com.example.wuntu.tv_bucket"
-            android:exported="false"/>
-
         <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".MovieView" android:screenOrientation="portrait" />
         <activity android:name=".CastViewActivity" android:screenOrientation="portrait" />
