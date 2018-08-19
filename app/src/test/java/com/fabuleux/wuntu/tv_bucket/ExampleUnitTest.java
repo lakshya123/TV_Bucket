@@ -1,4 +1,4 @@
-package com.example.wuntu.tv_bucket;
+package com.fabuleux.wuntu.tv_bucket;
 
 import org.junit.Test;
 
