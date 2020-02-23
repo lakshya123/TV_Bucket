@@ -1,30 +1,21 @@
 package com.fabuleux.wuntu.tv_bucket.Fragments;
 
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -45,10 +36,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static android.nfc.tech.MifareUltralight.PAGE_SIZE;
-import static android.view.View.GONE;
 import static com.android.volley.VolleyLog.TAG;
 
 /**
@@ -56,7 +44,6 @@ import static com.android.volley.VolleyLog.TAG;
  */
 public class MoviesMainFragment extends Fragment
 {
-    public RelativeLayout relativeLayout;
     private ArrayList<Result> movie = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
@@ -73,27 +60,19 @@ public class MoviesMainFragment extends Fragment
     private int visibleThreshold = 5;
     int firstVisibleItem, visibleItemCount, totalItemCount;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_movie_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_tv_main, container, false);
 
-
-
-
-
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.fragment_movie_main);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(R.id.tv_recycler_view);
         mAdapter = new MoviesAdapter(movie);
 
         mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
 
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -129,9 +108,6 @@ public class MoviesMainFragment extends Fragment
             }
         });
 
-
-
-
         recyclerView.addOnItemTouchListener(
                 new MoviesAdapter_OnClickListener(getContext(), recyclerView ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
                     @Override
@@ -141,10 +117,6 @@ public class MoviesMainFragment extends Fragment
                         intent.putExtra("ID",movie.get(position).getId().toString());
                         intent.putExtra("VIEW","MOVIE");
                         startActivity(intent);
-
-
-
-
                     }
 
                     @Override public void onLongItemClick(View view, int position) {
@@ -170,7 +142,6 @@ public class MoviesMainFragment extends Fragment
     public void prepareOnlineData(final String url, Integer page_number)
     {
 
-
         if (url.equals(static_url))
         {
             Log.d("CHANGE","Same URL");
@@ -188,21 +159,21 @@ public class MoviesMainFragment extends Fragment
         url1 = url + page_String;
         mAdapter.notifyDataSetChanged();
 
-        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        final ProgressDialog pDialog =
+                new ProgressDialog(getActivity());
         pDialog.setMessage("Loading...");
         pDialog.setCancelable(false);
         pDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,url1, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,url1,
+                new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
                 pDialog.dismiss();
 
                 example = gson.fromJson(response,Popular_Movies_Model.class);
-//                movie.clear();
                 mAdapter.notifyDataSetChanged();
-               // Toast.makeText(getActivity(), "movie arraylist size = " + movie.size(), Toast.LENGTH_SHORT).show();
                 int j = movie.size();
 
                 for(int i = 0;i<example.getResults().size();i++)

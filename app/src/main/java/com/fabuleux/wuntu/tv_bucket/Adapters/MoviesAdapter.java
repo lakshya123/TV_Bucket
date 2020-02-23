@@ -1,8 +1,8 @@
 package com.fabuleux.wuntu.tv_bucket.Adapters;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +53,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
             View v =  LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.movie_list, parent, false);
+                    .inflate(R.layout.item_movie_list, parent, false);
             return new MyViewHolder(v);
     }
 

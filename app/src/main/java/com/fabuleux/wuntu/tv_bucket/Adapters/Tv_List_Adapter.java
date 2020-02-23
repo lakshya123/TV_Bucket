@@ -1,14 +1,13 @@
 package com.fabuleux.wuntu.tv_bucket.Adapters;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fabuleux.wuntu.tv_bucket.Models.TVListResultModel;
 import com.fabuleux.wuntu.tv_bucket.R;
@@ -16,7 +15,6 @@ import com.fabuleux.wuntu.tv_bucket.Utils.UrlConstants;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Wuntu on 05-07-2017.
@@ -53,7 +51,7 @@ public class Tv_List_Adapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         context = parent.getContext();
 
             View v =  LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.movie_list, parent, false);
+                    .inflate(R.layout.item_movie_list, parent, false);
             return new MyViewHolder(v);
 
     }

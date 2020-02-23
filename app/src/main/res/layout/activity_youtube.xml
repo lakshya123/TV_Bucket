@@ -30,7 +30,7 @@
             android:layout_height="match_parent" />
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:background="@color/viewBg"
         android:id="@+id/youtube_recyclerview"
         android:layout_width="wrap_content"

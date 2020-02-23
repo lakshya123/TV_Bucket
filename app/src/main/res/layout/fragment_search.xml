@@ -29,14 +29,14 @@
 
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:visibility="visible"
         android:layout_marginBottom="50dp"
         android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/search_recyler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 

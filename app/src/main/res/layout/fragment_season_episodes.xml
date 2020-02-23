@@ -59,14 +59,14 @@
             android:text="@string/regular_cast" />
 
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:padding="10dp"
             android:background="@color/viewBg"
             android:layout_width="match_parent"
             android:clipToPadding="false"
             android:id="@+id/recycler_view_season_view"
             android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <LinearLayout
             android:padding="10dp"
@@ -90,14 +90,14 @@
 
         </LinearLayout>
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_margin="5dp"
             android:id="@+id/recycler_view_episodes_view"
             android:background="@color/viewBg"
             android:layout_width="match_parent"
             android:clipToPadding="false"
             android:layout_height="wrap_content">
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <View
             android:layout_width="match_parent"

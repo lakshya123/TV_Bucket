@@ -5,18 +5,17 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.graphics.Palette;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.palette.graphics.Palette;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -129,13 +128,6 @@ public class MovieView extends AppCompatActivity {
 
 
         ID = getIntent().getStringExtra("ID");
-
-
-
-
-
-
-
 
         castDetailAdapter = new CastDetailAdapter(castArrayList,subCastArrayList);
 
@@ -561,7 +553,6 @@ public class MovieView extends AppCompatActivity {
                     public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from)
                     {
                         backdrop_image.setImageBitmap(bitmap);
-
                         Palette.from(bitmap)
                                 .generate(new Palette.PaletteAsyncListener() {
                                     @Override
@@ -641,7 +632,6 @@ public class MovieView extends AppCompatActivity {
 
                 backdrop_image.setTag(target);
 
-
                 //Making Arraylist for RecyclerView
                 int i;
                 for (i=0;i<tvExampleModel.getCredits().getCast().size();i++)
@@ -706,15 +696,14 @@ public class MovieView extends AppCompatActivity {
         pDialog.show();
 
 
-        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
             @Override
             public void onResponse(String response)
             {
-
                 pDialog.dismiss();
                 //Setting text to the textviews
                 movieDetailFull = gson.fromJson(response,MovieDetailFull.class);
-
 
                 if (movieDetailFull.getRuntime() != null)
                 {
@@ -738,8 +727,6 @@ public class MovieView extends AppCompatActivity {
                     ratings.setText(String.valueOf(movieDetailFull.getVoteAverage()));
                 }
 
-
-
                 if (movieDetailFull.getOverview() != null)
                 {
                     overview.setText(movieDetailFull.getOverview());
@@ -748,7 +735,6 @@ public class MovieView extends AppCompatActivity {
                 {
                     overview_layout.setVisibility(View.GONE);
                 }
-
 
                 if (movieDetailFull.getStatus() != null)
                 {
@@ -815,7 +801,6 @@ public class MovieView extends AppCompatActivity {
                     genre1.setText(sb);
                 }
 
-
                 //Setting Image to BAckDrop Imageview
                 if (movieDetailFull.getBelongsToCollection() == null)
                 {
@@ -827,8 +812,6 @@ public class MovieView extends AppCompatActivity {
                 }
 
                 String url3 = urlConstants.URL_Image + url2;
-
-
 
                 Target target = new Target() {
                     @Override
