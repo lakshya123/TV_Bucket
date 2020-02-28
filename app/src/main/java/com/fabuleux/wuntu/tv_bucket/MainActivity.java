@@ -6,6 +6,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.fabuleux.wuntu.tv_bucket.kotlin.fragments.MoviesListFragment;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
@@ -50,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListView expListView;
     ExpandListAdapter listAdapter;
     UrlConstants urlConstants = UrlConstants.getSingletonRef();
-    MoviesMainFragment moviesMainFragment = null;
+//    MoviesMainFragment moviesMainFragment = null;
+    MoviesListFragment moviesMainFragment = null;
     TvMainFragment tvMainFragment = null;
     DrawerLayout drawer;
     SearchView searchView = null;
@@ -121,7 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        moviesMainFragment = new MoviesMainFragment();
+//        moviesMainFragment = new MoviesMainFragment();
+        moviesMainFragment = new MoviesListFragment();
         tvMainFragment = new TvMainFragment();
         adapter.addFragment(moviesMainFragment, getResources().getString(R.string.movies));
         adapter.addFragment(tvMainFragment, getResources().getString(R.string.tv_series));
@@ -378,27 +382,27 @@ public class MainActivity extends AppCompatActivity {
                     switch (childPosition) {
                         case 0:
                             viewPager.setCurrentItem(0);
-                            moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies, 1);
+//                            moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         case 1:
                             viewPager.setCurrentItem(0);
-                            moviesMainFragment.prepareOnlineData(urlConstants.URL_top_rated_movies, 1);
+//                            moviesMainFragment.prepareOnlineData(urlConstants.URL_top_rated_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         case 2:
                             viewPager.setCurrentItem(0);
-                            moviesMainFragment.prepareOnlineData(urlConstants.URL_upcoming_movies, 1);
+//                            moviesMainFragment.prepareOnlineData(urlConstants.URL_upcoming_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         case 3:
                             viewPager.setCurrentItem(0);
-                            moviesMainFragment.prepareOnlineData(urlConstants.URL_now_playing_movies, 1);
+//                            moviesMainFragment.prepareOnlineData(urlConstants.URL_now_playing_movies, 1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                         default:
                             viewPager.setCurrentItem(0);
-                            moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies,1);
+                            //moviesMainFragment.prepareOnlineData(urlConstants.URL_popular_movies,1);
                             drawer.closeDrawer(GravityCompat.START);
                             break;
                     }

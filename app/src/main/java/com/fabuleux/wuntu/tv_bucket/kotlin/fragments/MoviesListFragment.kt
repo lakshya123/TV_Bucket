@@ -25,12 +25,12 @@ class MoviesListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MoviesListViewModel::class.java)
+        viewModel.getMovies()
     }
 
 }

@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 object RequestModel
 {
-    data class ResponseModel<A>(@SerializedName("page") val page: Int,
+    data class ResponseModel<T>(@SerializedName("page") val page: Int,
                                 @SerializedName("total_results") var total_results: Int,
                                 @SerializedName("total_pages") var total_pages:Int,
-                                @SerializedName("result") var result: List<A>)
+                                @SerializedName("result") var result: List<T>)
 
     data class Movie(@SerializedName("URL") var URL: String,
                      @SerializedName("page") var page:String,

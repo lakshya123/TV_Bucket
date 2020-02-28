@@ -91,31 +91,16 @@ public class MovieView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_movie_view);
-
-
         initviews();
 
         collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.CollapsedAppBar);
-        /*final Typeface tf = Typeface.createFromAsset(this.getAssets(), "Titillium-Bold.otf");
-        collapsingToolbarLayout.setCollapsedTitleTypeface(tf);
-        collapsingToolbarLayout.setExpandedTitleTypeface(tf);*/
-
-
-
-
 
         movieDetailFull = new MovieDetailFull();
         castArrayList = new ArrayList<>();
         subCastArrayList = new ArrayList<>();
         tvExampleModel = new TvExampleModel();
         seasonsArrayList = new ArrayList<>();
-
-
-
-
-
 
         toolbar.setContentInsetStartWithNavigation(0);
         toolbar.setTitle("");
@@ -125,8 +110,6 @@ public class MovieView extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
-
         ID = getIntent().getStringExtra("ID");
 
         castDetailAdapter = new CastDetailAdapter(castArrayList,subCastArrayList);
