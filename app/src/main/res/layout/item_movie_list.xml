@@ -1,11 +1,15 @@
 <layout>
 
     <data>
+        <variable
+            name="Movie"
+            type="com.fabuleux.wuntu.tv_bucket.kotlin.models.MovieListPojo"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,6 +32,7 @@
                     android:id="@+id/backdrop_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/poster_height"
+                    app:image="@{Movie.poster_path}"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:clickable="true"
                     android:scaleType="fitXY" />
@@ -41,6 +46,7 @@
                     android:paddingLeft="@dimen/album_title_padding"
                     android:paddingRight="@dimen/album_title_padding"
                     android:paddingTop="@dimen/album_title_padding"
+                    android:text="@{Movie.title}"
                     android:textColor="@color/album_title"
                     android:textSize="@dimen/album_title" />
 
@@ -52,8 +58,7 @@
                     android:layout_below="@id/title"
                     android:paddingBottom="@dimen/songs_count_padding_bottom"
                     android:paddingLeft="@dimen/album_title_padding"
-                    android:paddingRight="@dimen/album_title_padding"
-                    >
+                    android:paddingRight="@dimen/album_title_padding">
 
                     <ImageView
                         android:contentDescription="@string/calendar_image_description"
@@ -69,11 +74,10 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:text="@{Movie.release_date}"
                         android:textSize="@dimen/songs_count" />
 
                 </LinearLayout>
-
-
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>

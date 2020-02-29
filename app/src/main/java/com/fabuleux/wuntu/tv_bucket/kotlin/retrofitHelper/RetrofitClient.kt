@@ -3,6 +3,7 @@ package com.fabuleux.wuntu.tv_bucket.kotlin.retrofitHelper
 import com.fabuleux.wuntu.tv_bucket.kotlin.utils.API
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,9 +26,13 @@ object RetrofitClient
         chain.proceed(newRequest)
     }
 
+    private val loggingInterceptor = HttpLoggingInterceptor()
+
+
     //OkhttpClient for building http request url
     private val tmdbClient = OkHttpClient().newBuilder()
             .addInterceptor(authInterceptor)
+            .addInterceptor(loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
 
@@ -39,15 +44,4 @@ object RetrofitClient
 
 
     val tmdbApi : RequestInterface = retrofit().create(RequestInterface::class.java)
-
 }
-
-//class CallBackKt<T> : Callback<T> {
-//    override fun onFailure(call: Call<T>, t: Throwable) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//    }
-//
-//    override fun onResponse(call: Call<T>, response: Response<T>) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//    }
-//}

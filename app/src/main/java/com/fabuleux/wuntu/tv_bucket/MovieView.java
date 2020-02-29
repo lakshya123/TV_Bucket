@@ -114,19 +114,20 @@ public class MovieView extends AppCompatActivity {
 
         castDetailAdapter = new CastDetailAdapter(castArrayList,subCastArrayList);
 
-        RecyclerView.LayoutManager mLayoutManager = new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
+        RecyclerView.LayoutManager mLayoutManager = new
+                StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL);
         recycler_view.setLayoutManager(mLayoutManager);
         recycler_view.setItemAnimator(new DefaultItemAnimator());
         recycler_view.setNestedScrollingEnabled(false);
         recycler_view.setAdapter(castDetailAdapter);
 
-
         recycler_view.addOnItemTouchListener(
-                new MoviesAdapter_OnClickListener(MovieView.this, recycler_view ,new MoviesAdapter_OnClickListener.OnItemClickListener() {
+                new MoviesAdapter_OnClickListener(
+                        MovieView.this, recycler_view ,
+                        new MoviesAdapter_OnClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position)
                     {
-
                         if (subCastArrayList.size()>7)
                         {
                             if (position == subCastArrayList.size() - 1)

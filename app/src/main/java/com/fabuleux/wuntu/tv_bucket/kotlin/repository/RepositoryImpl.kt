@@ -1,10 +1,9 @@
 package com.fabuleux.wuntu.tv_bucket.kotlin.repository
 
 import androidx.lifecycle.LiveData
-import com.fabuleux.wuntu.tv_bucket.kotlin.Models.RequestModel
-import com.fabuleux.wuntu.tv_bucket.kotlin.fragments.MoviesListFragment
+import com.fabuleux.wuntu.tv_bucket.kotlin.models.CommonResponse
+import com.fabuleux.wuntu.tv_bucket.kotlin.models.MovieListPojo
 import com.fabuleux.wuntu.tv_bucket.kotlin.retrofitHelper.NetworkCall
-import com.fabuleux.wuntu.tv_bucket.kotlin.retrofitHelper.RequestInterface
 import com.fabuleux.wuntu.tv_bucket.kotlin.retrofitHelper.Resource
 import com.fabuleux.wuntu.tv_bucket.kotlin.retrofitHelper.RetrofitClient
 
@@ -19,9 +18,9 @@ class RepositoryImpl : Repository{
     }
 
     override fun getPopularMovies(page: Int):
-            LiveData<Resource<RequestModel.ResponseModel<RequestModel.Movie>>>
+            LiveData<Resource<CommonResponse<MovieListPojo>>>
     {
-        val foreCastWeatherCall = NetworkCall<RequestModel.ResponseModel<RequestModel.Movie>>()
-        return foreCastWeatherCall.makeCall(RetrofitClient.tmdbApi.getMoviesList(1))
+        val call = NetworkCall<CommonResponse<MovieListPojo>>()
+        return call.makeCall(RetrofitClient.tmdbApi.getMoviesList(1))
     }
 }
