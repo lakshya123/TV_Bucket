@@ -3,7 +3,7 @@
     <data>
         <variable
             name="Movie"
-            type="com.fabuleux.wuntu.tv_bucket.kotlin.models.MovieListPojo"/>
+            type="com.fabuleux.wuntu.tv_bucket.kotlin.models.MoviePojo"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

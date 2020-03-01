@@ -7,9 +7,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.fabuleux.wuntu.tv_bucket.R
 import com.fabuleux.wuntu.tv_bucket.databinding.ItemMovieListBinding
-import com.fabuleux.wuntu.tv_bucket.kotlin.models.MovieListPojo
+import com.fabuleux.wuntu.tv_bucket.kotlin.models.MoviePojo
 
-class MoviesListAdapter(private val movies: List<MovieListPojo>) :
+class MoviesListAdapter(private val movies: List<MoviePojo>) :
         RecyclerView.Adapter<MoviesListAdapter.MoviesViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {

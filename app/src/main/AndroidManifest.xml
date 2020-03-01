@@ -13,15 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/MyMaterialTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".kotlin.MovieViewActivity"></activity>
         <activity android:name=".kotlin.SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MovieView"
             android:screenOrientation="portrait" />
@@ -31,7 +33,7 @@
         <activity
             android:name=".YoutubeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".SplashActivity"/>
+        <activity android:name=".SplashActivity" />
     </application>
 
 </manifest>

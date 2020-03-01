@@ -149,7 +149,6 @@ public class TvMainFragment extends Fragment
 
     public void prepareOnlineData(String url,int page_number)
     {
-
         if (url.equals(static_url))
         {
             Log.d("CHANGE","Same URL");
@@ -161,7 +160,6 @@ public class TvMainFragment extends Fragment
         }
         static_url = url;
         final boolean b = Utility.isNetworkAvailable(getContext());
-
 
        // recyclerView.scrollToPosition(0);
         mAdapter.notifyDataSetChanged();

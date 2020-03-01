@@ -78,15 +78,12 @@ public class MainActivity extends AppCompatActivity {
 
         searchFragment = new SearchFragment();
 
-
         if (getSupportActionBar() != null)
         {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             getSupportActionBar().setTitle("TV Bucket");
             getSupportActionBar().setElevation(0);
         }
-
-
 
         enableExpandableList();
 
@@ -107,32 +104,16 @@ public class MainActivity extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-
-        Intent intent  = getIntent();
-
-       /* if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-                    MySuggestionProvider.AUTHORITY, MySuggestionProvider.MODE);
-            suggestions.saveRecentQuery(query, null);
-            Toast.makeText(this, query +"", Toast.LENGTH_SHORT).show();
-        }*/
-
-
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-//        moviesMainFragment = new MoviesMainFragment();
         moviesMainFragment = new MoviesListFragment();
         tvMainFragment = new TvMainFragment();
         adapter.addFragment(moviesMainFragment, getResources().getString(R.string.movies));
         adapter.addFragment(tvMainFragment, getResources().getString(R.string.tv_series));
         viewPager.setAdapter(adapter);
     }
-
-
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
