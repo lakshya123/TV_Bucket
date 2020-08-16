@@ -1,7 +1,7 @@
 <layout>
     <data>
         <variable
-            name="Movie"
+            name="movie"
             type="com.fabuleux.wuntu.tv_bucket.kotlin.models.MoviePojo"/>
     </data>
 
@@ -48,7 +48,7 @@
                         android:contentInsetStart="0dp"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                         app:layout_collapseMode="pin"
-                        app:title="@{Movie.title}"
+                        app:title="@{movie.title}"
                         tools:targetApi="lollipop">
                     </androidx.appcompat.widget.Toolbar>
 
@@ -98,7 +98,7 @@
                                 android:layout_marginStart="4dp"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="@{String.valueOf(Movie.vote_average)}"
+                                android:text="@{String.valueOf(movie.vote_average)}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="30dp"
                                 android:textSize="20sp"/>
@@ -157,7 +157,7 @@
                             android:layout_marginTop="10dp"
                             android:textColor="@color/black"
                             android:textSize="16sp"
-                            android:text="@{Movie.overview}"
+                            android:text="@{movie.overview}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
@@ -212,7 +212,7 @@
                             android:id="@+id/status"
                             android:textColor="@color/black"
                             android:layout_width="match_parent"
-                            android:text="@{Movie.status}"
+                            android:text="@{movie.status}"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"/>
 
@@ -225,7 +225,7 @@
                             android:text="@string/release_date"
                             android:textSize="20sp"/>
                         <TextView
-                            android:text="@{Movie.release_date}"
+                            android:text="@{movie.release_date}"
                             android:id="@+id/release_date"
                             android:textColor="@color/black"
                             android:layout_width="match_parent"
@@ -260,7 +260,7 @@
                             android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{String.valueOf(Movie.budget)}"
+                            android:text="@{String.valueOf(movie.budget)}"
                             android:textSize="16sp"/>
 
                         <TextView
@@ -276,7 +276,7 @@
                             android:textColor="@color/black"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@{String.valueOf(Movie.revenue)}"
+                            android:text="@{String.valueOf(movie.revenue)}"
                             android:textSize="16sp"/>
 
                         <TextView
@@ -293,7 +293,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
-                            android:text="@{String.valueOf(Movie.runtime)}"/>
+                            android:text="@{String.valueOf(movie.runtime)}"/>
 
                         <TextView
                             android:id="@+id/homepage_title"
@@ -307,7 +307,7 @@
                             android:textColorLink="@color/black"
                             android:autoLink="web"
                             android:clickable="true"
-                            android:text="@{Movie.homepage}"
+                            android:text="@{movie.homepage}"
                             android:linksClickable="true"
                             android:id="@+id/homepage"
                             android:textColor="@color/white"

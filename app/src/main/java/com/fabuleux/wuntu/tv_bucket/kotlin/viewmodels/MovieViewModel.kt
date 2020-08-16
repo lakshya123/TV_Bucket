@@ -28,7 +28,6 @@ class MovieViewModel : ViewModel() {
             }
             Resource.Status.SUCCESS -> {
                 movie.value = response.data
-//                movie.postValue(response.data)
                 Log.d("STATUS","SUCCESS")
             }
             Resource.Status.ERROR -> {
